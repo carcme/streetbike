@@ -41,7 +41,7 @@ function Index() {
           className="text-lg px-8 py-6 h-auto"
         >
           <a
-            href="https://github.com/carc/moto-build"
+            href="https://github.com/carcme/streetbike"
             target="_blank"
             rel="noreferrer"
           >
