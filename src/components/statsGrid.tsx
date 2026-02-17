@@ -1,0 +1,46 @@
+import React, { useRef } from "react";
+
+import { statsData } from "@/data/basicStats";
+
+const calculateDaysActive = () => {
+  const purchaseDate = new Date("2026-02-21"); // purchase date
+  const today = new Date();
+  const timeDiff = today.getTime() - purchaseDate.getTime();
+  const daysActive = Math.floor(timeDiff / (1000 * 3600 * 24));
+  return daysActive;
+};
+
+const StatsGrid = ({ showDays }: { showDays?: boolean }) => {
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-16 max-w-6xl mx-auto">
+      {statsData.data.map((stat) => {
+        return (
+          <div key={stat.label} className="mechanical-border p-4 rounded-lg">
+            <div className="text-2xl font-display text-foreground">
+              {stat.value}
+            </div>
+            <div className="text-xs text-primary uppercase tracking-wider">
+              {stat.label}
+            </div>
+          </div>
+        );
+      })}
+
+      {showDays && (
+        <div className="mechanical-border p-4 rounded-lg">
+          <div
+            className="text-2xl font-display text-foreground"
+            id="days-counter"
+          >
+            {calculateDaysActive()}
+          </div>
+          <div className="text-xs text-primary uppercase tracking-wider">
+            Days Active
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default StatsGrid;

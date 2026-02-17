@@ -9,10 +9,34 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UpdatesRouteImport } from './routes/updates'
+import { Route as ThemeRouteImport } from './routes/theme'
+import { Route as TasksRouteImport } from './routes/tasks'
+import { Route as StoryRouteImport } from './routes/story'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TimelineIndexRouteImport } from './routes/timeline.index'
 import { Route as TimelineStepIdRouteImport } from './routes/timeline.$stepId'
 
+const UpdatesRoute = UpdatesRouteImport.update({
+  id: '/updates',
+  path: '/updates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ThemeRoute = ThemeRouteImport.update({
+  id: '/theme',
+  path: '/theme',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TasksRoute = TasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StoryRoute = StoryRouteImport.update({
+  id: '/story',
+  path: '/story',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,36 +55,102 @@ const TimelineStepIdRoute = TimelineStepIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/story': typeof StoryRoute
+  '/tasks': typeof TasksRoute
+  '/theme': typeof ThemeRoute
+  '/updates': typeof UpdatesRoute
   '/timeline/$stepId': typeof TimelineStepIdRoute
   '/timeline/': typeof TimelineIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/story': typeof StoryRoute
+  '/tasks': typeof TasksRoute
+  '/theme': typeof ThemeRoute
+  '/updates': typeof UpdatesRoute
   '/timeline/$stepId': typeof TimelineStepIdRoute
   '/timeline': typeof TimelineIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/story': typeof StoryRoute
+  '/tasks': typeof TasksRoute
+  '/theme': typeof ThemeRoute
+  '/updates': typeof UpdatesRoute
   '/timeline/$stepId': typeof TimelineStepIdRoute
   '/timeline/': typeof TimelineIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/timeline/$stepId' | '/timeline/'
+  fullPaths:
+    | '/'
+    | '/story'
+    | '/tasks'
+    | '/theme'
+    | '/updates'
+    | '/timeline/$stepId'
+    | '/timeline/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/timeline/$stepId' | '/timeline'
-  id: '__root__' | '/' | '/timeline/$stepId' | '/timeline/'
+  to:
+    | '/'
+    | '/story'
+    | '/tasks'
+    | '/theme'
+    | '/updates'
+    | '/timeline/$stepId'
+    | '/timeline'
+  id:
+    | '__root__'
+    | '/'
+    | '/story'
+    | '/tasks'
+    | '/theme'
+    | '/updates'
+    | '/timeline/$stepId'
+    | '/timeline/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  StoryRoute: typeof StoryRoute
+  TasksRoute: typeof TasksRoute
+  ThemeRoute: typeof ThemeRoute
+  UpdatesRoute: typeof UpdatesRoute
   TimelineStepIdRoute: typeof TimelineStepIdRoute
   TimelineIndexRoute: typeof TimelineIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/updates': {
+      id: '/updates'
+      path: '/updates'
+      fullPath: '/updates'
+      preLoaderRoute: typeof UpdatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/theme': {
+      id: '/theme'
+      path: '/theme'
+      fullPath: '/theme'
+      preLoaderRoute: typeof ThemeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tasks': {
+      id: '/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof TasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/story': {
+      id: '/story'
+      path: '/story'
+      fullPath: '/story'
+      preLoaderRoute: typeof StoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +177,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  StoryRoute: StoryRoute,
+  TasksRoute: TasksRoute,
+  ThemeRoute: ThemeRoute,
+  UpdatesRoute: UpdatesRoute,
   TimelineStepIdRoute: TimelineStepIdRoute,
   TimelineIndexRoute: TimelineIndexRoute,
 }

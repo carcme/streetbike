@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { steps } from "@/lib/data";
+import { steps } from "@/data/data";
 
 export const Route = createFileRoute("/timeline/")({
   component: Timeline,
@@ -15,11 +15,11 @@ export const Route = createFileRoute("/timeline/")({
 
 function Timeline() {
   return (
-    <div className="space-y-8">
-      <div className="text-center space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">
-          The Build Timeline
-        </h2>
+    <div className="space-y-8 px-4">
+      <div className="text-center mb-8">
+        <h3 className="page-title bg-linear-to-r from-white to-gray-500 bg-clip-text text-transparent">
+          <span className="text-gold">Build</span> Timeline
+        </h3>
         <p className="text-muted-foreground">
           Witness the transformation step by step.
         </p>
@@ -33,8 +33,8 @@ function Timeline() {
             params={{ stepId: step.id }}
             className="block h-full"
           >
-            <Card className="h-full overflow-hidden bg-card border-none shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl cursor-pointer">
-              <div className="aspect-video relative overflow-hidden">
+            <Card className="h-full overflow-hidden border-none shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl cursor-pointer">
+              <div className="aspect-video relative overflow-hidden ">
                 <img
                   src={step.imageUrl}
                   alt={step.title}

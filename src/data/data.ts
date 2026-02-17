@@ -64,8 +64,7 @@ export const steps: Step[] = [
       "Putting it all back together. New wiring loom, LED headlight, digital dash, and performance exhaust fitted.",
     date: "2023-08-15",
     category: "build",
-    imageUrl:
-      "https://images.unsplash.com/photo-1515777315835-281b94c9589f?auto=format&fit=crop&q=80&w=1000",
+    imageUrl: "/concept.jpeg",
   },
   {
     id: "7",
@@ -74,7 +73,6 @@ export const steps: Step[] = [
       "Finished. Dyno tuned and ready for the track. It screams. 160HP at the wheel and looks mean standing still.",
     date: "2023-09-01",
     category: "finish",
-    imageUrl:
-      "https://images.unsplash.com/photo-1599819811279-d5ad9cccf838?auto=format&fit=crop&q=80&w=1000",
+    imageUrl: "/final.png",
   },
 ];
