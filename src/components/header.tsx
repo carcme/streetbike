@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ModeToggle } from "@/components/mode-toggle";
 
@@ -9,12 +8,9 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
 export function Header() {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
     <header className="sticky top-0 z-50 w-full border-b">
       <div className="mx-auto max-w-6xl bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 ">

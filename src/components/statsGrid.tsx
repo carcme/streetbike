@@ -1,5 +1,3 @@
-import React, { useRef } from "react";
-
 import { statsData } from "@/data/basicStats";
 
 const calculateDaysActive = () => {

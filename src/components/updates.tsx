@@ -58,7 +58,7 @@ const Updates = () => {
         </div>
 
         <div className="mt-8 text-center">
-          <Link to="/progress">
+          <Link to="/updates">
             <Button
               variant={"secondary"}
               className="hover:bg-gold bg-goldSatin text-motor-dark transition-colors duration-300"
