@@ -1,38 +1,54 @@
 import { useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { steps } from "@/data/data";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+// import { steps } from "@/data/data"; // No longer needed
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ChevronLeft, ChevronRight, X, Maximize2 } from "lucide-react";
+import { ChevronLeft, X, Maximize2 } from "lucide-react";
+import { Header } from "@/components/header";
+import Footer from "@/components/footer";
+import { queryClient } from "@/main"; // Import queryClient
+import { getStepQueryKey, getStepQueryFn } from "@/hooks/useSteps"; // Import query functions
+import type { Step } from "@/types/database"; // Import Step type
 
 export const Route = createFileRoute("/timeline/$stepId")({
-  component: StepDetail,
-  loader: ({ params }) => {
-    return steps.find((s) => s.id === params.stepId);
+  loader: async ({ params }) => {
+    const step = await queryClient.ensureQueryData({
+      queryKey: getStepQueryKey(params.stepId),
+      queryFn: () => getStepQueryFn(params.stepId),
+    });
+    if (!step) {
+      throw redirect({ to: "/timeline" });
+    }
+    return step;
   },
+  component: StepDetail,
 });
 
 function StepDetail() {
-  const step = Route.useLoaderData();
-  const { stepId } = Route.useParams();
+  const step = Route.useLoaderData() as Step; // Type the step
+  // const { stepId } = Route.useParams(); // stepId is not directly used in the component anymore
   const [isFullScreen, setIsFullScreen] = useState(false);
 
-  if (!step) {
-    return <div className="p-8 text-center text-red-500">Step not found</div>;
-  }
+  // No longer needed as data is fetched from Supabase and redirect handles not found
+  // if (!step) {
+  //   return <div className="p-8 text-center text-red-500">Step not found</div>;
+  // }
 
   // !!HACK!! - get the 'find' photo from public -- TODO: change this once sourced all images from Rob
-  if (step.imageUrl.startsWith("shed")) {
-    step.imageUrl = "/" + step.imageUrl;
-  }
+  // This hack is no longer necessary as image_url will come directly from Supabase
+  // if (step.imageUrl.startsWith("shed")) {
+  //   step.imageUrl = "/" + step.imageUrl;
+  // }
 
-  const currentIndex = steps.findIndex((s) => s.id === stepId);
-  const prevStep = steps[currentIndex - 1];
-  const nextStep = steps[currentIndex + 1];
+  // Temporarily remove prev/next step logic as it requires all steps
+  // const currentIndex = steps.findIndex((s) => s.id === stepId);
+  // const prevStep = steps[currentIndex - 1];
+  // const nextStep = steps[currentIndex + 1];
 
   return (
     <>
       {/* Full Screen Modal */}
+      <Header />
       {isFullScreen && (
         <div
           className="fixed inset-0 z-100 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
@@ -47,7 +63,7 @@ function StepDetail() {
             <X className="h-8 w-8" />
           </Button>
           <img
-            src={step.imageUrl}
+            src={step.image_url}
             alt={step.title}
             className="max-w-full max-h-[95vh] object-contain shadow-2xl"
           />
@@ -104,7 +120,7 @@ function StepDetail() {
               onClick={() => setIsFullScreen(true)}
             >
               <img
-                src={step.imageUrl}
+                src={step.image_url}
                 alt={step.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
@@ -116,39 +132,11 @@ function StepDetail() {
                   <span className="text-sm font-medium">Click to Expand</span>
                 </div>
               </div>
-
-              {/* Navigation Overlay */}
-              <div className="absolute inset-0 flex items-center justify-between p-4 pointer-events-none">
-                {prevStep ? (
-                  <Link
-                    to="/timeline/$stepId"
-                    params={{ stepId: prevStep.id }}
-                    className="pointer-events-auto p-2 rounded-full bg-black/50 text-white hover:bg-white hover:text-black transition-all hover:scale-110"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <ChevronLeft className="h-8 w-8" />
-                  </Link>
-                ) : (
-                  <div />
-                )}
-
-                {nextStep ? (
-                  <Link
-                    to="/timeline/$stepId"
-                    params={{ stepId: nextStep.id }}
-                    className="pointer-events-auto p-2 rounded-full bg-black/50 text-white hover:bg-white hover:text-black transition-all hover:scale-110"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <ChevronRight className="h-8 w-8" />
-                  </Link>
-                ) : (
-                  <div />
-                )}
-              </div>
             </div>
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

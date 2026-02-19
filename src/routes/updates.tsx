@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { progress } from "@/data/basicStats";
+import { timelineProgress } from "@/data/updateData";
+import Footer from "@/components/footer";
+import { Header } from "@/components/header";
 
 export const Route = createFileRoute("/updates")({
   component: RouteComponent,
@@ -8,6 +10,7 @@ export const Route = createFileRoute("/updates")({
 function RouteComponent() {
   return (
     <>
+      <Header />
       <div className="flex flex-col items-center justify-center text-center space-y-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 ">
@@ -19,8 +22,8 @@ function RouteComponent() {
             </p>
           </div>
 
-          <div className="flex justify-center flex-col space-y-4  animate-bottom-in">
-            {progress.section.map((section) => {
+          <div className="flex justify-center flex-col space-y-4  animate-bottom-in pb-16">
+            {timelineProgress.section.map((section) => {
               return (
                 <article
                   key={section.title}
@@ -62,6 +65,7 @@ function RouteComponent() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

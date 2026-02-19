@@ -3,7 +3,7 @@ export type Step = {
   title: string;
   description: string;
   date: string;
-  category: "find" | "strip" | "build" | "finish";
+  category: "find" | "strip" | "build" | "respray" | "finish";
   imageUrl: string;
 };
 

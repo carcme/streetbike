@@ -1,0 +1,457 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import {
+  useTimelinePhasesWithTasks,
+  useCreatePhase,
+  useUpdatePhase,
+  useDeletePhase,
+  useCreateTask,
+  useUpdateTask,
+  useDeleteTask,
+} from "@/hooks/useTasks";
+import type { TimelinePhase, Task } from "@/types/database";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Pencil, Trash2, Plus, X, ChevronDown, ChevronUp } from "lucide-react";
+import { uploadImage } from "@/lib/supabase"; // Import uploadImage
+
+const phaseSchema = z.object({
+  phase_number: z.string()
+    .transform((val) => Number(val))
+    .refine((val) => !isNaN(val) && val >= 1, { message: "Phase number must be a valid number and at least 1" }),
+  title: z.string().min(1, "Title is required"),
+  duration: z.string().min(1, "Duration is required"),
+  image_url: z.string().optional().nullable(),
+  image_alt: z.string().optional().nullable(),
+});
+
+const taskSchema = z.object({
+  phase_id: z.string().min(1),
+  task_id: z.string().min(1, "Task ID is required"),
+  task: z.string().min(1, "Task name is required"),
+  details: z.string().min(1, "Details are required"),
+  technical_notes: z.string().nullable(),
+  status: z.enum(["pending", "completed"]),
+});
+
+type PhaseForm = z.infer<typeof phaseSchema>;
+type TaskForm = z.infer<typeof taskSchema>;
+
+export const Route = createFileRoute("/admin/_admin/tasks")({
+  component: TasksPage,
+});
+
+function TasksPage() {
+  const { data: phases, isLoading } = useTimelinePhasesWithTasks();
+  const createPhase = useCreatePhase();
+  const updatePhase = useUpdatePhase();
+  const deletePhase = useDeletePhase();
+  const createTask = useCreateTask();
+  const updateTask = useUpdateTask();
+  const deleteTask = useDeleteTask();
+
+  const [expandedPhases, setExpandedPhases] = useState<Set<string>>(new Set());
+  const [editingPhaseId, setEditingPhaseId] = useState<string | null>(null);
+  const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
+  const [isCreatingPhase, setIsCreatingPhase] = useState(false);
+  const [creatingTaskForPhase, setCreatingTaskForPhase] = useState<
+    string | null
+  >(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null); // New state for selected image
+
+  const phaseForm = useForm<PhaseForm>({
+    resolver: zodResolver(phaseSchema) as any,
+    defaultValues: {
+      phase_number: 1,
+      title: "",
+      duration: "",
+      image_url: null,
+      image_alt: null,
+    },
+  });
+
+  const taskForm = useForm<TaskForm>({
+    resolver: zodResolver(taskSchema),
+  });
+
+  const togglePhase = (id: string) => {
+    setExpandedPhases((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
+  const onSubmitPhase = async (data: PhaseForm) => {
+    let finalImageUrl: string | null = null;
+    const finalImageAlt: string | null = data.image_alt || null; // Use existing alt or null
+
+    if (selectedImage) {
+      const uploadedUrl = await uploadImage(selectedImage, "timeline-images");
+      if (uploadedUrl) {
+        finalImageUrl = uploadedUrl;
+      } else {
+        alert("Failed to upload image.");
+        return;
+      }
+    } else {
+      // If no new image selected, retain existing image_url if available
+      finalImageUrl = data.image_url || null;
+    }
+
+    if (editingPhaseId) {
+      await updatePhase.mutateAsync({
+        id: editingPhaseId,
+        ...data,
+        image_url: finalImageUrl,
+        image_alt: finalImageAlt,
+      });
+      setEditingPhaseId(null);
+    } else {
+      // Creating a new phase
+      await createPhase.mutateAsync({
+        ...data,
+        image_url: finalImageUrl,
+        image_alt: finalImageAlt,
+      });
+      setIsCreatingPhase(false);
+    }
+    phaseForm.reset();
+    setSelectedImage(null); // Clear selected image after submission
+  };
+
+  const onSubmitTask = async (data: TaskForm) => {
+    if (editingTaskId) {
+      await updateTask.mutateAsync({ id: editingTaskId, ...data });
+      setEditingTaskId(null);
+    } else {
+      await createTask.mutateAsync(data);
+      setCreatingTaskForPhase(null);
+    }
+    taskForm.reset();
+  };
+
+  const handleEditPhase = (phase: TimelinePhase) => {
+    setEditingPhaseId(phase.id);
+    setIsCreatingPhase(false);
+    phaseForm.reset({
+      phase_number: phase.phase_number,
+      title: phase.title,
+      duration: phase.duration,
+      image_url: phase.image_url,
+      image_alt: phase.image_alt,
+    });
+    setSelectedImage(null); // Clear selected image when editing a phase
+  };
+
+  const handleEditTask = (task: Task) => {
+    setEditingTaskId(task.id);
+    setCreatingTaskForPhase(null);
+    taskForm.reset({
+      phase_id: task.phase_id,
+      task_id: task.task_id,
+      task: task.task,
+      details: task.details,
+      technical_notes: task.technical_notes,
+      status: task.status,
+    });
+  };
+
+  const handleDeletePhase = async (id: string) => {
+    if (confirm("Delete this phase and all its tasks?")) {
+      await deletePhase.mutateAsync(id);
+    }
+  };
+
+  const handleDeleteTask = async (id: string) => {
+    if (confirm("Delete this task?")) {
+      await deleteTask.mutateAsync(id);
+    }
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold">Rebuild Todo's</h1>
+          <p className="text-muted-foreground">
+            Manage project phases and tasks
+          </p>
+        </div>
+        {!isCreatingPhase && !editingPhaseId && (
+          <Button onClick={() => setIsCreatingPhase(true)}>
+            <Plus className="w-4 h-4 mr-2" />
+            Add Phase
+          </Button>
+        )}
+      </div>
+
+      {/* Phase Form */}
+      {(isCreatingPhase || editingPhaseId) && (
+        <form
+          onSubmit={phaseForm.handleSubmit(onSubmitPhase)}
+          className="p-6 bg-card rounded-lg border space-y-4"
+        >
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-semibold">
+              {editingPhaseId ? "Edit Phase" : "New Phase"}
+            </h2>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setEditingPhaseId(null);
+                setIsCreatingPhase(false);
+                phaseForm.reset();
+                setSelectedImage(null); // Clear selected image on cancel
+              }}
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Phase Number</label>
+              <Input type="number" {...phaseForm.register("phase_number")} />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Title</label>
+              <Input {...phaseForm.register("title")} />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Duration</label>
+              <Input
+                {...phaseForm.register("duration")}
+                placeholder="e.g., 2-3 Weeks"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Image Upload</label>
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setSelectedImage(e.target.files?.[0] || null)}
+              />
+              {selectedImage && (
+                <p className="text-sm text-muted-foreground">
+                  Selected: {selectedImage.name}
+                </p>
+              )}
+              {!selectedImage && phaseForm.watch("image_url") && (
+                <p className="text-sm text-muted-foreground">
+                  Current image:{" "}
+                  <a
+                    href={phaseForm.watch("image_url")?.toString()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    View
+                  </a>
+                </p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Image Alt</label>
+              <Input {...phaseForm.register("image_alt")} />
+            </div>
+          </div>
+
+          <Button type="submit">
+            {editingPhaseId ? "Update Phase" : "Create Phase"}
+          </Button>
+        </form>
+      )}
+
+      {/* Phases List */}
+      <div className="space-y-4">
+        {phases?.map((phase) => (
+          <div
+            key={phase.id}
+            className="bg-card rounded-lg border overflow-hidden"
+          >
+            <div
+              className="p-4 flex items-center justify-between cursor-pointer hover:bg-muted/50"
+              onClick={() => togglePhase(phase.id)}
+            >
+              <div className="flex items-center gap-3">
+                {expandedPhases.has(phase.id) ? (
+                  <ChevronUp className="w-5 h-5" />
+                ) : (
+                  <ChevronDown className="w-5 h-5" />
+                )}
+                <div>
+                  <span className="font-semibold">
+                    Phase {phase.phase_number}: {phase.title}
+                  </span>
+                  <span className="ml-2 text-sm text-muted-foreground">
+                    ({phase.duration})
+                  </span>
+                </div>
+              </div>
+              <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleEditPhase(phase)}
+                >
+                  <Pencil className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleDeletePhase(phase.id)}
+                >
+                  <Trash2 className="w-4 h-4 text-destructive" />
+                </Button>
+              </div>
+            </div>
+
+            {expandedPhases.has(phase.id) && (
+              <div className="p-4 pt-0 space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium">
+                    Tasks ({phase.tasks.length})
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setCreatingTaskForPhase(phase.id);
+                      taskForm.reset({ phase_id: phase.id, status: "pending" });
+                    }}
+                  >
+                    <Plus className="w-3 h-3 mr-1" />
+                    Add Task
+                  </Button>
+                </div>
+
+                {/* Task Form */}
+                {(creatingTaskForPhase === phase.id ||
+                  (editingTaskId &&
+                    phase.tasks.some((t) => t.id === editingTaskId))) && (
+                  <form
+                    onSubmit={taskForm.handleSubmit(onSubmitTask)}
+                    className="p-4 bg-muted/50 rounded-md space-y-3"
+                  >
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <Input
+                        {...taskForm.register("task_id")}
+                        placeholder="Task ID (e.g., 1.1)"
+                      />
+                      {/* {phase.id} . {phase.tasks.length() + 1} */}
+
+                      <Input
+                        {...taskForm.register("task")}
+                        placeholder="Task name"
+                      />
+                      <Input
+                        {...taskForm.register("details")}
+                        placeholder="Details"
+                        className="md:col-span-2"
+                      />
+                      <Input
+                        {...taskForm.register("technical_notes")}
+                        placeholder="Technical notes (optional)"
+                      />
+                      <select
+                        {...taskForm.register("status")}
+                        className="px-3 py-2 rounded-md border bg-background"
+                      >
+                        <option value="pending">Pending</option>
+                        <option value="completed">Completed</option>
+                      </select>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button type="submit" size="sm">
+                        {editingTaskId ? "Update" : "Create"}
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          setEditingTaskId(null);
+                          setCreatingTaskForPhase(null);
+                          taskForm.reset();
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </form>
+                )}
+
+                {/* Tasks List */}
+                <div className="space-y-2">
+                  {phase.tasks.map((task) => (
+                    <div
+                      key={task.id}
+                      className="p-3 bg-background rounded border flex items-center justify-between"
+                    >
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-mono bg-muted px-1 rounded">
+                            {task.task_id}
+                          </span>
+                          <span
+                            className={`text-xs px-1.5 py-0.5 rounded ${
+                              task.status === "completed"
+                                ? "bg-green-500/10 text-green-500"
+                                : "bg-yellow-500/10 text-yellow-500"
+                            }`}
+                          >
+                            {task.status}
+                          </span>
+                        </div>
+                        <p className="font-medium text-sm mt-1">{task.task}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {task.details}
+                        </p>
+                      </div>
+                      <div className="flex gap-1">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleEditTask(task)}
+                        >
+                          <Pencil className="w-3 h-3" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDeleteTask(task.id)}
+                        >
+                          <Trash2 className="w-3 h-3 text-destructive" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+
+        {phases?.length === 0 && (
+          <div className="p-8 text-center text-muted-foreground">
+            No phases yet. Create your first phase to get started.
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

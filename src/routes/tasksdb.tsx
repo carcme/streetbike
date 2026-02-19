@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import RebuildTimeline from "@/components/rebuildTimeline";
 import { Header } from "@/components/header";
 import Footer from "@/components/footer";
+import RebuildTimelineDB from "@/components/rebuildTimelineDb";
 
-export const Route = createFileRoute("/tasks")({
+export const Route = createFileRoute("/tasksdb")({
   component: RouteComponent,
 });
 
@@ -11,7 +11,7 @@ function RouteComponent() {
   return (
     <>
       <Header />
-      <RebuildTimeline />
+      <RebuildTimelineDB />
       <Footer />
     </>
   );

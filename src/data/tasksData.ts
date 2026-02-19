@@ -14,11 +14,15 @@ const tasksData = {
           id: "1.1",
           task: "Photographic Documentation",
           details: "Focus on cable routing and wiring harness paths.",
+          img: "bmw.svg",
+          imgAlt: "bmw logo",
           status: "completed",
         },
         {
           id: "1.2",
           task: "Fluid Evacuation",
+          img: "",
+          imgAlt: "",
           details:
             "Drain engine, transmission, driveshaft, and final drive oils.",
           status: "completed",
@@ -27,18 +31,24 @@ const tasksData = {
           id: "1.3",
           task: "Major Component Removal",
           details: "Remove seat, tank, battery, exhaust, and carburetors.",
+          img: "https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg?semt=ais_user_personalization&w=740&q=80",
+          imgAlt: "image of an image",
           status: "completed",
         },
         {
           id: "1.4",
           task: "Wiring Harvest",
           details: "Label every plug on the loom before disconnecting.",
+          img: "",
+          imgAlt: "",
           status: "completed",
         },
         {
           id: "1.5",
           task: "Engine Extraction",
           details: "Pull engine and transmission as a unit or separately.",
+          img: "",
+          imgAlt: "",
           status: "completed",
         },
       ],
@@ -54,12 +64,16 @@ const tasksData = {
           id: "2.1",
           task: "Structural Inspection",
           details: "Check for cracks near side-stand and subframe mounts.",
+          img: "",
+          imgAlt: "",
           status: "pending",
         },
         {
           id: "2.2",
           task: "Powder Coating/Paint",
           details: "Send frame, subframe, and swingarm for refinishing.",
+          img: "",
+          imgAlt: "",
           status: "pending",
         },
         {
@@ -89,6 +103,8 @@ const tasksData = {
           task: "Top End Overhaul",
           details:
             "Measure piston-to-wall clearance; replace pushrod tube seals.",
+          img: "",
+          imgAlt: "",
           status: "pending",
         },
         {
@@ -98,6 +114,8 @@ const tasksData = {
             "Inspect valve seats; evaluate for unleaded fuel conversion.",
           technical_notes:
             "Valve Clearances: $0.10mm$ Intake / $0.15mm$ Exhaust",
+          img: "",
+          imgAlt: "",
           status: "pending",
         },
         {
@@ -202,6 +220,8 @@ const tasksData = {
           id: "6.2",
           task: "First Fire",
           details: "Monitor oil pressure light and check for immediate leaks.",
+          img: "bmw.svg",
+          imgAlt: "bmw logo",
           status: "pending",
         },
         {

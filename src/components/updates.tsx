@@ -1,4 +1,4 @@
-import { progress } from "@/data/basicStats";
+import { timelineProgress } from "@/data/updateData";
 import { Link } from "@tanstack/react-router";
 import { Button } from "./ui/button";
 
@@ -16,7 +16,7 @@ const Updates = () => {
         </div>
 
         <div className="space-y-4">
-          {progress.section.slice(0, 3).map((section) => {
+          {timelineProgress.section.slice(0, 3).map((section) => {
             return (
               <article
                 key={section.title}

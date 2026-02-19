@@ -11,11 +11,19 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UpdatesRouteImport } from './routes/updates'
 import { Route as ThemeRouteImport } from './routes/theme'
+import { Route as TasksdbRouteImport } from './routes/tasksdb'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as StoryRouteImport } from './routes/story'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TimelineIndexRouteImport } from './routes/timeline.index'
 import { Route as TimelineStepIdRouteImport } from './routes/timeline.$stepId'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminAdminRouteImport } from './routes/admin/_admin'
+import { Route as AdminAdminIndexRouteImport } from './routes/admin/_admin/index'
+import { Route as AdminAdminUpdatesRouteImport } from './routes/admin/_admin/updates'
+import { Route as AdminAdminTasksRouteImport } from './routes/admin/_admin/tasks'
+import { Route as AdminAdminStepsRouteImport } from './routes/admin/_admin/steps'
+import { Route as AdminAdminStatsRouteImport } from './routes/admin/_admin/stats'
 
 const UpdatesRoute = UpdatesRouteImport.update({
   id: '/updates',
@@ -25,6 +33,11 @@ const UpdatesRoute = UpdatesRouteImport.update({
 const ThemeRoute = ThemeRouteImport.update({
   id: '/theme',
   path: '/theme',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TasksdbRoute = TasksdbRouteImport.update({
+  id: '/tasksdb',
+  path: '/tasksdb',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TasksRoute = TasksRouteImport.update({
@@ -52,34 +65,92 @@ const TimelineStepIdRoute = TimelineStepIdRouteImport.update({
   path: '/timeline/$stepId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAdminRoute = AdminAdminRouteImport.update({
+  id: '/admin/_admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAdminIndexRoute = AdminAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminAdminRoute,
+} as any)
+const AdminAdminUpdatesRoute = AdminAdminUpdatesRouteImport.update({
+  id: '/updates',
+  path: '/updates',
+  getParentRoute: () => AdminAdminRoute,
+} as any)
+const AdminAdminTasksRoute = AdminAdminTasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => AdminAdminRoute,
+} as any)
+const AdminAdminStepsRoute = AdminAdminStepsRouteImport.update({
+  id: '/steps',
+  path: '/steps',
+  getParentRoute: () => AdminAdminRoute,
+} as any)
+const AdminAdminStatsRoute = AdminAdminStatsRouteImport.update({
+  id: '/stats',
+  path: '/stats',
+  getParentRoute: () => AdminAdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/story': typeof StoryRoute
   '/tasks': typeof TasksRoute
+  '/tasksdb': typeof TasksdbRoute
   '/theme': typeof ThemeRoute
   '/updates': typeof UpdatesRoute
+  '/admin': typeof AdminAdminRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
   '/timeline/$stepId': typeof TimelineStepIdRoute
   '/timeline/': typeof TimelineIndexRoute
+  '/admin/stats': typeof AdminAdminStatsRoute
+  '/admin/steps': typeof AdminAdminStepsRoute
+  '/admin/tasks': typeof AdminAdminTasksRoute
+  '/admin/updates': typeof AdminAdminUpdatesRoute
+  '/admin/': typeof AdminAdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/story': typeof StoryRoute
   '/tasks': typeof TasksRoute
+  '/tasksdb': typeof TasksdbRoute
   '/theme': typeof ThemeRoute
   '/updates': typeof UpdatesRoute
+  '/admin/login': typeof AdminLoginRoute
   '/timeline/$stepId': typeof TimelineStepIdRoute
   '/timeline': typeof TimelineIndexRoute
+  '/admin/stats': typeof AdminAdminStatsRoute
+  '/admin/steps': typeof AdminAdminStepsRoute
+  '/admin/tasks': typeof AdminAdminTasksRoute
+  '/admin/updates': typeof AdminAdminUpdatesRoute
+  '/admin': typeof AdminAdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/story': typeof StoryRoute
   '/tasks': typeof TasksRoute
+  '/tasksdb': typeof TasksdbRoute
   '/theme': typeof ThemeRoute
   '/updates': typeof UpdatesRoute
+  '/admin/_admin': typeof AdminAdminRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
   '/timeline/$stepId': typeof TimelineStepIdRoute
   '/timeline/': typeof TimelineIndexRoute
+  '/admin/_admin/stats': typeof AdminAdminStatsRoute
+  '/admin/_admin/steps': typeof AdminAdminStepsRoute
+  '/admin/_admin/tasks': typeof AdminAdminTasksRoute
+  '/admin/_admin/updates': typeof AdminAdminUpdatesRoute
+  '/admin/_admin/': typeof AdminAdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -87,36 +158,62 @@ export interface FileRouteTypes {
     | '/'
     | '/story'
     | '/tasks'
+    | '/tasksdb'
     | '/theme'
     | '/updates'
+    | '/admin'
+    | '/admin/login'
     | '/timeline/$stepId'
     | '/timeline/'
+    | '/admin/stats'
+    | '/admin/steps'
+    | '/admin/tasks'
+    | '/admin/updates'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/story'
     | '/tasks'
+    | '/tasksdb'
     | '/theme'
     | '/updates'
+    | '/admin/login'
     | '/timeline/$stepId'
     | '/timeline'
+    | '/admin/stats'
+    | '/admin/steps'
+    | '/admin/tasks'
+    | '/admin/updates'
+    | '/admin'
   id:
     | '__root__'
     | '/'
     | '/story'
     | '/tasks'
+    | '/tasksdb'
     | '/theme'
     | '/updates'
+    | '/admin/_admin'
+    | '/admin/login'
     | '/timeline/$stepId'
     | '/timeline/'
+    | '/admin/_admin/stats'
+    | '/admin/_admin/steps'
+    | '/admin/_admin/tasks'
+    | '/admin/_admin/updates'
+    | '/admin/_admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   StoryRoute: typeof StoryRoute
   TasksRoute: typeof TasksRoute
+  TasksdbRoute: typeof TasksdbRoute
   ThemeRoute: typeof ThemeRoute
   UpdatesRoute: typeof UpdatesRoute
+  AdminAdminRoute: typeof AdminAdminRouteWithChildren
+  AdminLoginRoute: typeof AdminLoginRoute
   TimelineStepIdRoute: typeof TimelineStepIdRoute
   TimelineIndexRoute: typeof TimelineIndexRoute
 }
@@ -135,6 +232,13 @@ declare module '@tanstack/react-router' {
       path: '/theme'
       fullPath: '/theme'
       preLoaderRoute: typeof ThemeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tasksdb': {
+      id: '/tasksdb'
+      path: '/tasksdb'
+      fullPath: '/tasksdb'
+      preLoaderRoute: typeof TasksdbRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tasks': {
@@ -172,15 +276,87 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TimelineStepIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/_admin': {
+      id: '/admin/_admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/_admin/': {
+      id: '/admin/_admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminAdminIndexRouteImport
+      parentRoute: typeof AdminAdminRoute
+    }
+    '/admin/_admin/updates': {
+      id: '/admin/_admin/updates'
+      path: '/updates'
+      fullPath: '/admin/updates'
+      preLoaderRoute: typeof AdminAdminUpdatesRouteImport
+      parentRoute: typeof AdminAdminRoute
+    }
+    '/admin/_admin/tasks': {
+      id: '/admin/_admin/tasks'
+      path: '/tasks'
+      fullPath: '/admin/tasks'
+      preLoaderRoute: typeof AdminAdminTasksRouteImport
+      parentRoute: typeof AdminAdminRoute
+    }
+    '/admin/_admin/steps': {
+      id: '/admin/_admin/steps'
+      path: '/steps'
+      fullPath: '/admin/steps'
+      preLoaderRoute: typeof AdminAdminStepsRouteImport
+      parentRoute: typeof AdminAdminRoute
+    }
+    '/admin/_admin/stats': {
+      id: '/admin/_admin/stats'
+      path: '/stats'
+      fullPath: '/admin/stats'
+      preLoaderRoute: typeof AdminAdminStatsRouteImport
+      parentRoute: typeof AdminAdminRoute
+    }
   }
 }
+
+interface AdminAdminRouteChildren {
+  AdminAdminStatsRoute: typeof AdminAdminStatsRoute
+  AdminAdminStepsRoute: typeof AdminAdminStepsRoute
+  AdminAdminTasksRoute: typeof AdminAdminTasksRoute
+  AdminAdminUpdatesRoute: typeof AdminAdminUpdatesRoute
+  AdminAdminIndexRoute: typeof AdminAdminIndexRoute
+}
+
+const AdminAdminRouteChildren: AdminAdminRouteChildren = {
+  AdminAdminStatsRoute: AdminAdminStatsRoute,
+  AdminAdminStepsRoute: AdminAdminStepsRoute,
+  AdminAdminTasksRoute: AdminAdminTasksRoute,
+  AdminAdminUpdatesRoute: AdminAdminUpdatesRoute,
+  AdminAdminIndexRoute: AdminAdminIndexRoute,
+}
+
+const AdminAdminRouteWithChildren = AdminAdminRoute._addFileChildren(
+  AdminAdminRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   StoryRoute: StoryRoute,
   TasksRoute: TasksRoute,
+  TasksdbRoute: TasksdbRoute,
   ThemeRoute: ThemeRoute,
   UpdatesRoute: UpdatesRoute,
+  AdminAdminRoute: AdminAdminRouteWithChildren,
+  AdminLoginRoute: AdminLoginRoute,
   TimelineStepIdRoute: TimelineStepIdRoute,
   TimelineIndexRoute: TimelineIndexRoute,
 }
