@@ -1,17 +1,20 @@
 import { Link } from "@tanstack/react-router";
 import { ModeToggle } from "@/components/mode-toggle";
 import { headerItems } from "@/data/headerItems";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import { Shield, ShieldCheck } from "lucide-react";
+
+import { Menu, Shield, ShieldCheck } from "lucide-react";
 import { Button } from "./ui/button";
 import { useAuth } from "@/hooks/useAuth";
+
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 export function Header() {
   const { isAuthenticated } = useAuth();
@@ -27,34 +30,7 @@ export function Header() {
             </Link>
           </div>
           <div className="grow">
-            <NavigationMenu className="block md:hidden">
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger
-                    className="bg-transparent"
-                    onPointerMove={(event) => event.preventDefault()}
-                    onPointerLeave={(event) => event.preventDefault()}
-                  >
-                    Menu
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="w-96">
-                      {headerItems.map((item) => (
-                        <ListItem
-                          key={item.title}
-                          href={item.href}
-                          title={item.title}
-                        >
-                          {item.description}
-                        </ListItem>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-
-            <nav className="hidden md:flex items-start space-x-3 lg:space-x-6 text-sm font-medium">
+            <nav className="hidden md:flex items-start space-x-3 lg:space-x-6 text-sm font-medium" aria-label="Main navigation">
               {headerItems.map((item) => (
                 <Link
                   key={item.title}
@@ -69,40 +45,68 @@ export function Header() {
           <div className="grow-0">
             <div className="flex justify-center items-center gap-2">
               <ModeToggle />
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                            >
+                              <Link to="/admin" aria-label="Admin Panel">
+                                {isAuthenticated && (
+                                  <ShieldCheck className="size-5 text-green-600" />
+                                )}
+                                {!isAuthenticated && <Shield className="size-5" />}
+                                <span className="sr-only">To Admin Panel</span>
+                              </Link>
+                            </Button>
 
-              <Button variant="ghost" size="icon">
-                <Link to="/admin">
-                  {isAuthenticated && (
-                    <ShieldCheck className="size-5 text-green-600" />
-                  )}
-                  {!isAuthenticated && <Shield className="size-5" />}
-
-                  <span className="sr-only">To Admin Panel</span>
-                </Link>
-              </Button>
+              {/* add md:hidden to this div */}
+              <div className="block">
+                <Sheet>
+                  <SheetTrigger asChild aria-label="Open main menu">
+                    <Menu />
+                  </SheetTrigger>
+                  <SheetContent
+                    className="absolute top-14"
+                  >
+                    <SheetHeader>
+                      <SheetTitle>
+                        {/* Project <span className="text-gold">R65</span> */}
+                      </SheetTitle>
+                    </SheetHeader>
+                    <div className="grid flex-1 auto-rows-min gap-4 px-2">
+                      {headerItems.map((item) => (
+                        <Link
+                          key={item.title}
+                          to={item.href}
+                          className="transition-colors hover:text-gold group"
+                        >
+                          <div className="flex flex-col gap-1 text-sm">
+                            <div className="leading-none font-medium px-2 group-hover:underline">
+                              {item.title}
+                            </div>
+                            <div className="text-muted-foreground line-clamp-2 px-2">
+                              {item.description}
+                            </div>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                    <SheetFooter>
+                      {isAuthenticated && (
+                        <Button>Log out</Button>
+                      )}
+                      <SheetClose asChild>
+                        <Button variant="outline">
+                          Close
+                        </Button>
+                      </SheetClose>
+                    </SheetFooter>
+                  </SheetContent>
+                </Sheet>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </header>
-  );
-}
-function ListItem({
-  title,
-  children,
-  href,
-  ...props
-}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
-  return (
-    <li {...props}>
-      <NavigationMenuLink asChild>
-        <Link to={href}>
-          <div className="flex flex-col gap-1 text-sm">
-            <div className="leading-none font-medium">{title}</div>
-            <div className="text-muted-foreground line-clamp-2">{children}</div>
-          </div>
-        </Link>
-      </NavigationMenuLink>
-    </li>
   );
 }

@@ -52,7 +52,9 @@ const RebuildTimelineDB = () => {
             <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-px timeline-line hidden md:block " />
 
             {phases.map((phase, order) => {
-              const isPhaseComplete = phase.tasks.every(task => task.status === "completed"); // Determine phase completion
+              const isPhaseComplete = phase.tasks.every(
+                (task) => task.status === "completed",
+              ); // Determine phase completion
 
               return (
                 <div key={phase.id} className="relative mb-12 md:mb-24">
@@ -104,7 +106,7 @@ const RebuildTimelineDB = () => {
                     <div
                       className={cn(
                         "absolute left-1/2 transform -translate-x-1/2 size-5  rounded-full z-10 hidden md:block",
-                        isPhaseComplete ? "bg-green-600 border-0" : "bg-rust", // Use isPhaseComplete here
+                        isPhaseComplete ? "bg-green-600" : "bg-gold ",
                       )}
                     />
                     {/* image */}

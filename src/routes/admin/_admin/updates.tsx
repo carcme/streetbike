@@ -126,6 +126,7 @@ function ProgressPage() {
               variant="ghost"
               size="sm"
               onClick={handleCancel}
+              aria-label="Cancel Update Creation/Edit"
             >
               <X className="w-4 h-4" />
             </Button>
@@ -261,6 +262,7 @@ function ProgressPage() {
                 variant="ghost"
                 size="sm"
                 onClick={() => handleEdit(item)}
+                aria-label={`Edit Update: ${item.title}`}
               >
                 <Pencil className="w-4 h-4" />
               </Button>
@@ -268,6 +270,7 @@ function ProgressPage() {
                 variant="ghost"
                 size="sm"
                 onClick={() => handleDelete(item.id)}
+                aria-label={`Delete Update: ${item.title}`}
               >
                 <Trash2 className="w-4 h-4 text-destructive" />
               </Button>

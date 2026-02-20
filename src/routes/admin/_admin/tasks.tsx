@@ -217,6 +217,7 @@ function TasksPage() {
                 phaseForm.reset();
                 setSelectedImage(null); // Clear selected image on cancel
               }}
+              aria-label="Cancel Phase Creation/Edit"
             >
               <X className="w-4 h-4" />
             </Button>
@@ -307,6 +308,7 @@ function TasksPage() {
                   variant="ghost"
                   size="sm"
                   onClick={() => handleEditPhase(phase)}
+                  aria-label={`Edit Phase: ${phase.title}`}
                 >
                   <Pencil className="w-4 h-4" />
                 </Button>
@@ -314,6 +316,7 @@ function TasksPage() {
                   variant="ghost"
                   size="sm"
                   onClick={() => handleDeletePhase(phase.id)}
+                  aria-label={`Delete Phase: ${phase.title}`}
                 >
                   <Trash2 className="w-4 h-4 text-destructive" />
                 </Button>
@@ -427,6 +430,7 @@ function TasksPage() {
                           variant="ghost"
                           size="sm"
                           onClick={() => handleEditTask(task)}
+                          aria-label={`Edit Task: ${task.task}`}
                         >
                           <Pencil className="w-3 h-3" />
                         </Button>
@@ -434,6 +438,7 @@ function TasksPage() {
                           variant="ghost"
                           size="sm"
                           onClick={() => handleDeleteTask(task.id)}
+                          aria-label={`Delete Task: ${task.task}`}
                         >
                           <Trash2 className="w-3 h-3 text-destructive" />
                         </Button>

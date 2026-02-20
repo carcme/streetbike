@@ -106,7 +106,13 @@ function AdminDashboard() {
             to="/admin/tasks"
             className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md text-sm font-medium hover:bg-secondary/90 transition-colors"
           >
-            Manage Tasks
+            Manage Todo's
+          </Link>
+          <Link
+            to="/admin/stats"
+            className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md text-sm font-medium hover:bg-secondary/90 transition-colors"
+          >
+            Stats's
           </Link>
         </div>
       </div>

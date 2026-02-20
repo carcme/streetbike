@@ -59,6 +59,7 @@ function StepDetail() {
             size="icon"
             className="absolute top-4 right-4 text-white hover:bg-white/20 rounded-full h-12 w-12"
             onClick={() => setIsFullScreen(false)}
+            aria-label="Close full screen image"
           >
             <X className="h-8 w-8" />
           </Button>
@@ -118,6 +119,8 @@ function StepDetail() {
             <div
               className="relative aspect-video w-full rounded-xl overflow-hidden shadow-2xl bg-black border border-white/10 group cursor-zoom-in"
               onClick={() => setIsFullScreen(true)}
+              role="button"
+              aria-label="Expand image"
             >
               <img
                 src={step.image_url}

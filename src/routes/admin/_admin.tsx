@@ -1,7 +1,9 @@
 import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
-import { AdminLayout } from "@/components/admin/AdminLayout";
 import { useEffect } from "react";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/admin/sidebar/app-sidebar";
+import { SiteHeader } from "@/components/admin/sidebar/site-header";
 
 export const Route = createFileRoute("/admin/_admin")({
   component: AdminLayoutRoute,
@@ -30,8 +32,22 @@ function AdminLayoutRoute() {
   }
 
   return (
-    <AdminLayout>
-      <Outlet />
-    </AdminLayout>
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 55)",
+          "--header-height": "calc(var(--spacing) * 14)",
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="inset" />
+      <SidebarInset className="p-4">
+        <SiteHeader />
+        <Outlet />
+      </SidebarInset>
+    </SidebarProvider>
+    // <AdminLayout>
+    //   <Outlet />
+    // </AdminLayout>
   );
 }

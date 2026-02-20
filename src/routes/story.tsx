@@ -10,13 +10,18 @@ function RouteComponent() {
   return (
     <>
       <Header />
-      <section className="">
+      <section className="pb-8">
         <div className="page-title text-center mb-8">
-          <h3 className="bg-linear-to-r from-white to-gray-500 bg-clip-text text-transparent">
+          <h3 className="">
             <span className="text-gold">The How </span>and Why
           </h3>
         </div>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p className="italic text-center font-bold pt-4 pb-8">
+          From the Shadows of the Shed
+          <span className="text-gold"> to the Center of the Circuit</span>
+        </p>
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 animate-bottom-in">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1">
               <div className="inline-block px-3 py-1 bg-rust/20 text-rust rounded-full text-xs uppercase tracking-wider mb-4 border border-rust/20">

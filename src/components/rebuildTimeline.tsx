@@ -1,4 +1,4 @@
-import { CheckCircle, LockKeyhole } from "lucide-react";
+import { CheckCircle, Image, LockKeyhole } from "lucide-react";
 import tasksData from "@/data/tasksData";
 import { cn } from "@/lib/utils";
 
@@ -17,8 +17,8 @@ const RebuildTimeline = () => {
               {tasksData.model_type}
             </span>
             <p className="italic font-bold pt-4 pb-8">
-              Discovered in the Dust{" "}
-              <span className="text-gold">Rebuilt for the Redline</span>
+              Discovered in the Dust
+              <span className="text-gold"> Rebuilt for the Redline</span>
             </p>
           </div>
 
@@ -53,11 +53,12 @@ const RebuildTimeline = () => {
                           >
                             {task.task}
                           </p>
-                          <div className="mt-3 flex gap-1 text-xs justify-center items-center text-muted-foreground col-span-1 row-span-2">
+                          <div className="mt-3 flex gap-1 text-xs justify-center items-center text-muted-foreground col-span-1">
                             {task.status === "completed" && (
                               <>
                                 {/* <span>{task.status}</span> */}
                                 <CheckCircle className="size-4 text-green-500" />
+                                <Image className="size-4 text-muted-foreground" />
                                 {(complete = true)}
                               </>
                             )}
@@ -65,11 +66,12 @@ const RebuildTimeline = () => {
                               <>
                                 {/* <span>{task.status}</span> */}
                                 <CheckCircle className="size-4 text-muted-foreground" />
+                                <Image className="size-4 text-muted-foreground" />
                                 {(complete = false)}
                               </>
                             )}
                           </div>
-                          <p className="text-gray-400 text-xs  col-span-11">
+                          <p className="text-muted-foreground text-xs  col-span-11">
                             {task.details}
                           </p>
                         </div>
@@ -79,8 +81,8 @@ const RebuildTimeline = () => {
                   {/* timeline dot */}
                   <div
                     className={cn(
-                      "absolute left-1/2 transform -translate-x-1/2 size-5  rounded-full z-10 hidden md:block",
-                      complete ? "bg-green-600 border-0" : "bg-rust",
+                      "absolute left-1/2 transform -translate-x-1/2 size-5  rounded-full z-10 hidden md:block border border-foreground",
+                      complete ? "bg-green-600" : "bg-gold ",
                     )}
                   />
                   {/* image */}

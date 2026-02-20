@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 
 const Updates = () => {
   return (
-    <section className="pt-16 bg-background">
+    <section className="pt-16 bg-background pb-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
           <h2 className="font-display text-4xl text-foreground mb-2">

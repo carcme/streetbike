@@ -127,6 +127,7 @@ function StepsPage() {
               variant="ghost"
               size="sm"
               onClick={handleCancel}
+              aria-label="Cancel Step Creation/Edit"
             >
               <X className="w-4 h-4" />
             </Button>
@@ -250,6 +251,7 @@ function StepsPage() {
                 variant="ghost"
                 size="sm"
                 onClick={() => handleEdit(step)}
+                aria-label={`Edit Step: ${step.title}`}
               >
                 <Pencil className="w-4 h-4" />
               </Button>
@@ -257,6 +259,7 @@ function StepsPage() {
                 variant="ghost"
                 size="sm"
                 onClick={() => handleDelete(step.id)}
+                aria-label={`Delete Step: ${step.title}`}
               >
                 <Trash2 className="w-4 h-4 text-destructive" />
               </Button>

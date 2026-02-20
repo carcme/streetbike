@@ -37,15 +37,7 @@ export interface Stat {
   id: string;
   label: string;
   value: string;
-  created_at?: string;
-}
-
-export interface Spec {
-  id: string;
-  section_title: string;
-  label: string;
-  value: string;
-  sort_order: number;
+  featured: boolean;
   created_at?: string;
 }
 
@@ -92,11 +84,6 @@ export interface Database {
         Row: Stat;
         Insert: Omit<Stat, "id" | "created_at"> & { id?: string };
         Update: Partial<Omit<Stat, "id" | "created_at">>;
-      };
-      specs: {
-        Row: Spec;
-        Insert: Omit<Spec, "id" | "created_at"> & { id?: string };
-        Update: Partial<Omit<Spec, "id" | "created_at">>;
       };
       progress: {
         Row: Progress;

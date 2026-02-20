@@ -16,7 +16,6 @@ import {
 import StatsGrid from "@/components/statsGrid";
 import Specifications from "@/components/specs";
 import Updates from "@/components/updates";
-import { Newsletter } from "@/components/newsletter";
 import { Badge } from "@/components/ui/badge";
 import { Header } from "@/components/header";
 import Footer from "@/components/footer";
@@ -41,40 +40,47 @@ function Index() {
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center justify-center text-center space-y-8 animate-in fade-in duration-700 slide-in-from-bottom-40">
+      <div className="flex flex-col items-center justify-center text-center space-y-8 ">
         <div className="space-y-4">
-          <h1 className="page-title bg-linear-to-r from-white to-gray-500 bg-clip-text text-transparent">
+          <h1 className="page-title">
             <span className="text-gold">R65</span> Street Fighter
           </h1>
-          <p className="text-xl text-muted-foreground leading-relaxed">
-            From a rusted shed find to a track-tearing monster. Follow the
+          <p className="text-base text-muted-foreground leading-relaxed">
+            From rusted shed find to a track-tearing monster. Follow the
             complete restoration journey of the BMW R65.
             <br />
-            <span className="text-sm italic opacity-70">
-              "It's not just a bike, it's an obsession."
-            </span>
+            <p className="italic text-lg text-center font-bold pt-4 pb-8">
+              "It's not just a Bike,
+              <span className="text-gold"> it's an Obsession.</span>"
+            </p>
           </p>
         </div>
+
         <StatsGrid showDays={true} />
         <div className="flex flex-col sm:flex-row gap-4">
           <Button asChild size="lg" className="text-lg px-8 py-6 h-auto">
             <Link to="/timeline">Start the Journey</Link>
           </Button>
+
           <Button
             asChild
-            variant="secondary"
             size="lg"
-            className="text-lg px-8 py-6 h-auto text-primary"
+            variant={"secondary"}
+            className="text-lg px-8 py-6 h-auto"
           >
-            <a
-              href="https://github.com/carcme/streetbike"
-              target="_blank"
-              rel="noreferrer"
-            >
-              GitHub Repo
-            </a>
+            <a href="#specs">Technical Specifications</a>
+          </Button>
+
+          <Button
+            asChild
+            size="lg"
+            variant={"secondary"}
+            className="text-lg px-8 py-6 h-auto"
+          >
+            <a href="#updates">Build Updates</a>
           </Button>
         </div>
+        <PersonalStats />
         <Carousel className="w-full max-w-5xl mx-auto" opts={{ loop: true }}>
           <CarouselContent>
             {imageList.map((src, index) => (
@@ -97,11 +103,13 @@ function Index() {
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>
-
-        <Specifications />
-        <Updates />
-        <PersonalStats />
-        <Newsletter />
+        <div id={"specs"}>
+          <Specifications />
+        </div>
+        <div id="updates">
+          <Updates />
+        </div>
+        {/* <Newsletter /> */}
       </div>
       <Footer />
     </>

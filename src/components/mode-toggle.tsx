@@ -10,6 +10,7 @@ export function ModeToggle() {
     <Button
       variant="ghost"
       size="icon"
+      aria-label="Toggle theme"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       <Sun className="size-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
