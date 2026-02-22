@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ModeToggle } from "@/components/mode-toggle";
 import { headerItems } from "@/data/headerItems";
 
-import { Menu, Shield, ShieldCheck } from "lucide-react";
+import { Menu, Shield, ShieldCheck, UserSearch } from "lucide-react";
 import { Button } from "./ui/button";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -47,6 +47,9 @@ export function Header() {
           </div>
           <div className="grow-0">
             <div className="flex justify-center items-center gap-2">
+              <Link to="/about">
+                <UserSearch />
+              </Link>
               <ModeToggle />
               <Button variant="ghost" size="icon">
                 <Link to="/admin" aria-label="Admin Panel">

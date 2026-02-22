@@ -1,16 +1,6 @@
-export type StepCategory = "find" | "strip" | "build" | "respray" | "finish";
-export type TaskStatus = "pending" | "completed";
-
-export interface Step {
-  id: string;
-  title: string;
-  description: string;
-  date: string;
-  category: StepCategory;
-  image_url: string;
-  sort_order: number;
-  created_at?: string;
-}
+export type Stat = Database["public"]["Tables"]["stats"]["Row"];
+export type Progress = Database["public"]["Tables"]["progress"]["Row"];
+export type Step = Database["public"]["Tables"]["steps"]["Row"];
 
 export interface TimelinePhase {
   id: string;
@@ -22,84 +12,439 @@ export interface TimelinePhase {
   created_at?: string;
 }
 
-export interface Task {
-  id: string;
-  phase_id: string;
-  task_id: string;
-  task: string;
-  details: string;
-  technical_notes: string | null;
-  status: TaskStatus;
-  created_at?: string;
-}
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[];
 
-export interface Stat {
-  id: string;
-  label: string;
-  value: string;
-  featured: boolean;
-  created_at?: string;
-}
-
-export interface Progress {
-  id: string;
-  title: string;
-  date: string;
-  tag: string;
-  image_url: string;
-  image_alt: string;
-  description: string;
-  sort_order: number;
-  created_at?: string;
-}
-
-export interface ProjectMeta {
-  id: string;
-  project_name: string;
-  model_type: string;
-  tags: string[];
-  created_at?: string;
-}
-
-// Supabase Database type for typed client
-export interface Database {
+export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.1";
+  };
   public: {
     Tables: {
-      steps: {
-        Row: Step;
-        Insert: Omit<Step, "id" | "created_at"> & { id?: string };
-        Update: Partial<Omit<Step, "id" | "created_at">>;
-      };
-      timeline_phases: {
-        Row: TimelinePhase;
-        Insert: Omit<TimelinePhase, "id" | "created_at"> & { id?: string };
-        Update: Partial<Omit<TimelinePhase, "id" | "created_at">>;
-      };
-      tasks: {
-        Row: Task;
-        Insert: Omit<Task, "id" | "created_at"> & { id?: string };
-        Update: Partial<Omit<Task, "id" | "created_at">>;
-      };
-      stats: {
-        Row: Stat;
-        Insert: Omit<Stat, "id" | "created_at"> & { id?: string };
-        Update: Partial<Omit<Stat, "id" | "created_at">>;
+      images: {
+        Row: {
+          alt_text: string | null;
+          created_at: string;
+          id: string;
+          uploaded_by: string | null;
+          url: string;
+        };
+        Insert: {
+          alt_text?: string | null;
+          created_at?: string;
+          id?: string;
+          uploaded_by?: string | null;
+          url: string;
+        };
+        Update: {
+          alt_text?: string | null;
+          created_at?: string;
+          id?: string;
+          uploaded_by?: string | null;
+          url?: string;
+        };
+        Relationships: [];
       };
       progress: {
-        Row: Progress;
-        Insert: Omit<Progress, "id" | "created_at"> & { id?: string };
-        Update: Partial<Omit<Progress, "id" | "created_at">>;
+        Row: {
+          created_at: string;
+          date: string | null;
+          description: string | null;
+          id: string;
+          image_alt: string | null;
+          image_url: string | null;
+          sort_order: number;
+          tag: string | null;
+          title: string;
+        };
+        Insert: {
+          created_at?: string;
+          date?: string | null;
+          description?: string | null;
+          id?: string;
+          image_alt?: string | null;
+          image_url?: string | null;
+          sort_order?: number;
+          tag?: string | null;
+          title: string;
+        };
+        Update: {
+          created_at?: string;
+          date?: string | null;
+          description?: string | null;
+          id?: string;
+          image_alt?: string | null;
+          image_url?: string | null;
+          sort_order?: number;
+          tag?: string | null;
+          title?: string;
+        };
+        Relationships: [];
       };
       project_meta: {
-        Row: ProjectMeta;
-        Insert: Omit<ProjectMeta, "id" | "created_at"> & { id?: string };
-        Update: Partial<Omit<ProjectMeta, "id" | "created_at">>;
+        Row: {
+          created_at: string;
+          id: string;
+          model_type: string | null;
+          project_name: string | null;
+          tags: string[] | null;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          model_type?: string | null;
+          project_name?: string | null;
+          tags?: string[] | null;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          model_type?: string | null;
+          project_name?: string | null;
+          tags?: string[] | null;
+        };
+        Relationships: [];
+      };
+      specs: {
+        Row: {
+          created_at: string;
+          id: string;
+          label: string;
+          section_title: string;
+          sort_order: number;
+          value: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          label: string;
+          section_title: string;
+          sort_order?: number;
+          value: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          label?: string;
+          section_title?: string;
+          sort_order?: number;
+          value?: string;
+        };
+        Relationships: [];
+      };
+      stats: {
+        Row: {
+          created_at: string;
+          featured: boolean | null;
+          id: string;
+          label: string;
+          value: string;
+        };
+        Insert: {
+          created_at?: string;
+          featured?: boolean | null;
+          id?: string;
+          label: string;
+          value: string;
+        };
+        Update: {
+          created_at?: string;
+          featured?: boolean | null;
+          id?: string;
+          label?: string;
+          value?: string;
+        };
+        Relationships: [];
+      };
+      steps: {
+        Row: {
+          category: Database["public"]["Enums"]["step_category"];
+          created_at: string;
+          date: string;
+          description: string;
+          id: string;
+          image_url: string | null;
+          sort_order: number;
+          title: string;
+        };
+        Insert: {
+          category: Database["public"]["Enums"]["step_category"];
+          created_at?: string;
+          date: string;
+          description: string;
+          id?: string;
+          image_url?: string | null;
+          sort_order?: number;
+          title: string;
+        };
+        Update: {
+          category?: Database["public"]["Enums"]["step_category"];
+          created_at?: string;
+          date?: string;
+          description?: string;
+          id?: string;
+          image_url?: string | null;
+          sort_order?: number;
+          title?: string;
+        };
+        Relationships: [];
+      };
+      task_images: {
+        Row: {
+          created_at: string;
+          image_id: string;
+          task_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          image_id: string;
+          task_id: string;
+        };
+        Update: {
+          created_at?: string;
+          image_id?: string;
+          task_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "task_images_image_id_fkey";
+            columns: ["image_id"];
+            isOneToOne: false;
+            referencedRelation: "images";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "task_images_task_id_fkey";
+            columns: ["task_id"];
+            isOneToOne: false;
+            referencedRelation: "tasks";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      tasks: {
+        Row: {
+          created_at: string;
+          details: string;
+          id: string;
+          phase_id: string | null;
+          status: Database["public"]["Enums"]["task_status"];
+          task: string;
+          task_id: string;
+          technical_notes: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          details: string;
+          id?: string;
+          phase_id?: string | null;
+          status?: Database["public"]["Enums"]["task_status"];
+          task: string;
+          task_id: string;
+          technical_notes?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          details?: string;
+          id?: string;
+          phase_id?: string | null;
+          status?: Database["public"]["Enums"]["task_status"];
+          task?: string;
+          task_id?: string;
+          technical_notes?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "tasks_phase_id_fkey";
+            columns: ["phase_id"];
+            isOneToOne: false;
+            referencedRelation: "timeline_phases";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      timeline_phases: {
+        Row: {
+          created_at: string;
+          duration: string;
+          id: string;
+          image_alt: string | null;
+          image_url: string | null;
+          phase_number: number;
+          title: string;
+        };
+        Insert: {
+          created_at?: string;
+          duration: string;
+          id?: string;
+          image_alt?: string | null;
+          image_url?: string | null;
+          phase_number: number;
+          title: string;
+        };
+        Update: {
+          created_at?: string;
+          duration?: string;
+          id?: string;
+          image_alt?: string | null;
+          image_url?: string | null;
+          phase_number?: number;
+          title?: string;
+        };
+        Relationships: [];
       };
     };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      [_ in never]: never;
+    };
+    Enums: {
+      step_category: "find" | "strip" | "build" | "finish";
+      task_status: "pending" | "completed";
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
   };
-}
+};
 
-// Helper type for timeline with nested tasks
-export interface TimelinePhaseWithTasks extends TimelinePhase {
-  tasks: Task[];
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">;
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<
+  keyof Database,
+  "public"
+>];
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
 }
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R;
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R;
+      }
+      ? R
+      : never
+    : never;
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I;
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I;
+      }
+      ? I
+      : never
+    : never;
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U;
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U;
+      }
+      ? U
+      : never
+    : never;
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never;
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never;
+
+export const Constants = {
+  public: {
+    Enums: {
+      step_category: ["find", "strip", "build", "finish"],
+      task_status: ["pending", "completed"],
+    },
+  },
+} as const;
+
+export type StepCategory = "find" | "strip" | "build" | "respray" | "finish";
+export type TaskStatus = "pending" | "completed";

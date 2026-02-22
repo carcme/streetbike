@@ -10,6 +10,7 @@ import {
   Clock,
   FileText,
   ChartBar,
+  Image, // Added Image icon
 } from "lucide-react";
 import { Link, useLocation } from "@tanstack/react-router";
 
@@ -19,6 +20,7 @@ const navItems = [
   { to: "/admin/steps", label: "Steps", icon: FileText },
   { to: "/admin/updates", label: "Updates", icon: Clock },
   { to: "/admin/stats", label: "Statistics", icon: ChartBar },
+  { to: "/admin/images", label: "Images", icon: Image }, // New Images link
 ];
 
 export function NavMain() {

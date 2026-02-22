@@ -188,9 +188,9 @@
     @apply text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight pt-8;
   }
 
-  .animate-bottom-in {
+  /* .animate-bottom-in {
     @apply animate-in fade-in duration-700 slide-in-from-bottom-40;
-  }
+  } */
 
   .timeline-line {
     background: linear-gradient(

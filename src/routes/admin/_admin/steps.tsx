@@ -9,7 +9,10 @@ import {
   useUpdateStep,
   useDeleteStep,
 } from "@/hooks/useSteps";
-import type { Step, StepCategory } from "@/types/database";
+import type { StepCategory } from "@/types/database";
+import type { Database } from "@/types/database";
+type Step = Database["public"]["Tables"]["steps"]["Row"];
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Pencil, Trash2, Plus, X } from "lucide-react";
@@ -18,7 +21,7 @@ const stepSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required"),
   date: z.string().min(1, "Date is required"),
-  category: z.enum(["find", "strip", "build", "respray", "finish"]),
+  category: z.enum(["find", "strip", "build", "finish"]),
   image_url: z.string().min(1, "Image URL is required"),
   sort_order: z.coerce.number().int().min(0),
 });
@@ -69,7 +72,7 @@ function StepsPage() {
       description: step.description,
       date: step.date,
       category: step.category,
-      image_url: step.image_url,
+      image_url: step.image_url ?? "",
       sort_order: step.sort_order,
     });
   };

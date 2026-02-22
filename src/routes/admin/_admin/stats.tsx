@@ -67,7 +67,7 @@ function StatsPage() {
     statForm.reset({
       label: stat.label,
       value: stat.value,
-      featured: stat.featured,
+      featured: stat.featured ?? false,
     });
   };
 

@@ -52,7 +52,7 @@ function Timeline() {
                 <Card className="h-full overflow-hidden border-none shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl cursor-pointer">
                   <div className="aspect-video relative overflow-hidden ">
                     <img
-                      src={step.image_url}
+                      src={step.image_url ?? undefined}
                       alt={step.title}
                       className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
                     />

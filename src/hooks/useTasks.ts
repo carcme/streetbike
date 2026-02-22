@@ -1,11 +1,15 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
-import type {
-  Task,
-  TimelinePhase,
-  TimelinePhaseWithTasks,
-  ProjectMeta,
-} from "@/types/database";
+import type { Database } from "@/types/database"; // Import the generated Database type
+
+// Define local types based on the generated Database type for cleaner code
+type TaskType = Database["public"]["Tables"]["tasks"]["Row"] & { images: ImageType[] }; // Extend with images
+type ImageType = Database["public"]["Tables"]["images"]["Row"];
+type TimelinePhaseType = Database["public"]["Tables"]["timeline_phases"]["Row"];
+type ProjectMetaType = Database["public"]["Tables"]["project_meta"]["Row"];
+
+// Adjust TimelinePhaseWithTasks to use the new TaskType
+type TimelinePhaseWithTasks = TimelinePhaseType & { tasks: TaskType[] };
 
 // Timeline Phases
 export function useTimelinePhases() {
@@ -18,7 +22,7 @@ export function useTimelinePhases() {
         .order("phase_number", { ascending: true });
 
       if (error) throw error;
-      return data as TimelinePhase[];
+      return data as TimelinePhaseType[];
     },
   });
 }
@@ -36,17 +40,32 @@ export function useTimelinePhasesWithTasks() {
 
       const { data: tasks, error: tasksError } = await supabase
         .from("tasks")
-        .select("*")
+        .select(
+          `
+          *,
+          task_images (
+            image_id,
+            images (
+              id, url, alt_text, uploaded_by, created_at
+            )
+          )
+        `
+        )
         .order("task_id", { ascending: true });
 
       if (tasksError) throw tasksError;
 
-      // Group tasks by phase
+      // Group tasks by phase and map images
       const phasesWithTasks: TimelinePhaseWithTasks[] = (
-        phases as TimelinePhase[]
+        phases as TimelinePhaseType[]
       ).map((phase) => ({
         ...phase,
-        tasks: (tasks as Task[]).filter((task) => task.phase_id === phase.id),
+        tasks: (tasks as (TaskType & { task_images: { images: ImageType }[] })[]) // Use ImageType here
+          .filter((task) => task.phase_id === phase.id)
+          .map((task) => ({
+            ...task,
+            images: task.task_images.map((ti) => ti.images),
+          })),
       }));
 
       return phasesWithTasks;
@@ -58,7 +77,7 @@ export function useCreatePhase() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (phase: Omit<TimelinePhase, "id" | "created_at">) => {
+    mutationFn: async (phase: Omit<TimelinePhaseType, "id" | "created_at">) => {
       const { data, error } = await supabase
         .from("timeline_phases")
         .insert(phase)
@@ -82,7 +101,7 @@ export function useUpdatePhase() {
     mutationFn: async ({
       id,
       ...updates
-    }: Partial<TimelinePhase> & { id: string }) => {
+    }: Partial<TimelinePhaseType> & { id: string }) => {
       const { data, error } = await supabase
         .from("timeline_phases")
         .update(updates)
@@ -132,7 +151,7 @@ export function useTasks(phaseId?: string) {
 
       const { data, error } = await query;
       if (error) throw error;
-      return data as Task[];
+      return data as TaskType[]; // Use TaskType here
     },
   });
 }
@@ -141,7 +160,7 @@ export function useCreateTask() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (task: Omit<Task, "id" | "created_at">) => {
+    mutationFn: async (task: Omit<TaskType, "id" | "created_at" | "images">) => { // Adjust Omit to exclude 'images'
       const { data, error } = await supabase
         .from("tasks")
         .insert(task)
@@ -162,7 +181,7 @@ export function useUpdateTask() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, ...updates }: Partial<Task> & { id: string }) => {
+    mutationFn: async ({ id, ...updates }: Partial<Omit<TaskType, 'images'>> & { id: string }) => { // Adjust Partial to omit 'images'
       const { data, error } = await supabase
         .from("tasks")
         .update(updates)
@@ -207,7 +226,7 @@ export function useProjectMeta() {
         .single();
 
       if (error && error.code !== "PGRST116") throw error; // PGRST116 = no rows
-      return data as ProjectMeta | null;
+      return data as ProjectMetaType | null;
     },
   });
 }
@@ -216,7 +235,7 @@ export function useUpdateProjectMeta() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (meta: Partial<ProjectMeta> & { id: string }) => {
+    mutationFn: async (meta: Partial<ProjectMetaType> & { id: string }) => {
       const { id, ...updates } = meta;
       const { data, error } = await supabase
         .from("project_meta")
@@ -230,6 +249,44 @@ export function useUpdateProjectMeta() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["project_meta"] });
+    },
+  });
+}
+
+export function useManageTaskImages() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ taskId, imageIds }: { taskId: string; imageIds: string[] }) => {
+      // 1. Delete existing associations for this taskId
+      const { error: deleteError } = await supabase
+        .from('task_images')
+        .delete()
+        .eq('task_id', taskId);
+
+      if (deleteError) {
+        console.error('Error deleting existing task images:', deleteError);
+        throw deleteError;
+      }
+
+      // 2. Insert new associations
+      if (imageIds.length > 0) {
+        const newAssociations = imageIds.map(imageId => ({
+          task_id: taskId,
+          image_id: imageId,
+        }));
+        const { error: insertError } = await supabase
+          .from('task_images')
+          .insert(newAssociations);
+
+        if (insertError) {
+          console.error('Error inserting new task images:', insertError);
+          throw insertError;
+        }
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["timeline_phases_with_tasks"] });
     },
   });
 }

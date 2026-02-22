@@ -8,7 +8,9 @@ import { Header } from "@/components/header";
 import Footer from "@/components/footer";
 import { queryClient } from "@/main"; // Import queryClient
 import { getStepQueryKey, getStepQueryFn } from "@/hooks/useSteps"; // Import query functions
-import type { Step } from "@/types/database"; // Import Step type
+
+import type { Database } from "@/types/database";
+type Step = Database["public"]["Tables"]["steps"]["Row"];
 
 export const Route = createFileRoute("/timeline/$stepId")({
   loader: async ({ params }) => {
@@ -64,7 +66,7 @@ function StepDetail() {
             <X className="h-8 w-8" />
           </Button>
           <img
-            src={step.image_url}
+            src={step.image_url ?? undefined}
             alt={step.title}
             className="max-w-full max-h-[95vh] object-contain shadow-2xl"
           />
@@ -123,7 +125,7 @@ function StepDetail() {
               aria-label="Expand image"
             >
               <img
-                src={step.image_url}
+                src={step.image_url ?? undefined}
                 alt={step.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />

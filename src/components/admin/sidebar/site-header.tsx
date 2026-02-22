@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { IconBrandGithub } from "@tabler/icons-react";
+import { Link } from "@tanstack/react-router";
 
 export function SiteHeader() {
   return (
@@ -12,9 +13,11 @@ export function SiteHeader() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4 bg-muted"
         />
-        <h1 className="text-base font-medium">
-          <span className="text-gold">R65</span> Playground
-        </h1>
+        <Link to="/">
+          <h1 className="text-base font-medium">
+            <span className="text-gold">R65</span> Playground
+          </h1>
+        </Link>
         <div className="ml-auto flex items-center gap-2">
           <Button variant="ghost" asChild size="icon-lg" className="flex">
             <a

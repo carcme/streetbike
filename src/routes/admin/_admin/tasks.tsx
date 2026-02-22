@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Import useEffect
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -11,17 +11,24 @@ import {
   useCreateTask,
   useUpdateTask,
   useDeleteTask,
+  useManageTaskImages, // Will create this soon
 } from "@/hooks/useTasks";
-import type { TimelinePhase, Task } from "@/types/database";
+import type { TimelinePhase } from "@/types/database";
+
+import type { Database } from "@/types/database";
+type Task = Database["public"]["Tables"]["tasks"]["Row"];
+
+type Image = Database["public"]["Tables"]["images"]["Row"];
+type TaskWithImages = Task & { images: Image[] };
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Pencil, Trash2, Plus, X, ChevronDown, ChevronUp } from "lucide-react";
-import { uploadImage } from "@/lib/supabase"; // Import uploadImage
+import { uploadImage } from "@/lib/supabase";
+import { ImageSelector } from "@/components/image-selector"; // Import ImageSelector
 
 const phaseSchema = z.object({
-  phase_number: z.string()
-    .transform((val) => Number(val))
-    .refine((val) => !isNaN(val) && val >= 1, { message: "Phase number must be a valid number and at least 1" }),
+  phase_number: z.coerce.number().int().min(1, "Phase number must be at least 1"),
   title: z.string().min(1, "Title is required"),
   duration: z.string().min(1, "Duration is required"),
   image_url: z.string().optional().nullable(),
@@ -35,6 +42,7 @@ const taskSchema = z.object({
   details: z.string().min(1, "Details are required"),
   technical_notes: z.string().nullable(),
   status: z.enum(["pending", "completed"]),
+  // images: z.array(z.string()).optional(), // No need to include in form schema directly
 });
 
 type PhaseForm = z.infer<typeof phaseSchema>;
@@ -52,6 +60,7 @@ function TasksPage() {
   const createTask = useCreateTask();
   const updateTask = useUpdateTask();
   const deleteTask = useDeleteTask();
+  const manageTaskImages = useManageTaskImages(); // Initialize the new hook
 
   const [expandedPhases, setExpandedPhases] = useState<Set<string>>(new Set());
   const [editingPhaseId, setEditingPhaseId] = useState<string | null>(null);
@@ -60,7 +69,12 @@ function TasksPage() {
   const [creatingTaskForPhase, setCreatingTaskForPhase] = useState<
     string | null
   >(null);
-  const [selectedImage, setSelectedImage] = useState<File | null>(null); // New state for selected image
+  const [selectedPhaseImage, setSelectedPhaseImage] = useState<File | null>(
+    null,
+  ); // Renamed for clarity
+  const [selectedTaskImageIds, setSelectedTaskImageIds] = useState<string[]>(
+    [],
+  ); // New state for selected task images
 
   const phaseForm = useForm<PhaseForm>({
     resolver: zodResolver(phaseSchema) as any,
@@ -76,6 +90,25 @@ function TasksPage() {
   const taskForm = useForm<TaskForm>({
     resolver: zodResolver(taskSchema),
   });
+
+  // Effect to reset selectedTaskImageIds when creating a new task or editing a different one
+  useEffect(() => {
+    if (creatingTaskForPhase) {
+      setSelectedTaskImageIds([]); // Reset for new task
+    } else if (editingTaskId) {
+      // Find the current task to get its images
+      const currentTask = phases
+        ?.flatMap((p) => p.tasks as TaskWithImages[])
+        .find((t) => t.id === editingTaskId);
+      if (currentTask && currentTask.images) {
+        setSelectedTaskImageIds(currentTask.images.map((img: Image) => img.id));
+      } else {
+        setSelectedTaskImageIds([]);
+      }
+    } else {
+      setSelectedTaskImageIds([]);
+    }
+  }, [creatingTaskForPhase, editingTaskId, phases]); // Depend on phases as well
 
   const togglePhase = (id: string) => {
     setExpandedPhases((prev) => {
@@ -93,8 +126,11 @@ function TasksPage() {
     let finalImageUrl: string | null = null;
     const finalImageAlt: string | null = data.image_alt || null; // Use existing alt or null
 
-    if (selectedImage) {
-      const uploadedUrl = await uploadImage(selectedImage, "timeline-images");
+    if (selectedPhaseImage) {
+      const uploadedUrl = await uploadImage(
+        selectedPhaseImage,
+        "timeline-images",
+      );
       if (uploadedUrl) {
         finalImageUrl = uploadedUrl;
       } else {
@@ -124,18 +160,32 @@ function TasksPage() {
       setIsCreatingPhase(false);
     }
     phaseForm.reset();
-    setSelectedImage(null); // Clear selected image after submission
+    setSelectedPhaseImage(null); // Clear selected image after submission
   };
 
   const onSubmitTask = async (data: TaskForm) => {
+    let taskIdToUpdate = editingTaskId;
     if (editingTaskId) {
+      // Update existing task
       await updateTask.mutateAsync({ id: editingTaskId, ...data });
-      setEditingTaskId(null);
     } else {
-      await createTask.mutateAsync(data);
-      setCreatingTaskForPhase(null);
+      // Create new task
+      const newTask = await createTask.mutateAsync(data);
+      taskIdToUpdate = newTask.id;
     }
+
+    // Manage task images
+    if (taskIdToUpdate) {
+      await manageTaskImages.mutateAsync({
+        taskId: taskIdToUpdate,
+        imageIds: selectedTaskImageIds,
+      });
+    }
+
+    setEditingTaskId(null);
+    setCreatingTaskForPhase(null);
     taskForm.reset();
+    setSelectedTaskImageIds([]); // Clear selected images after submission
   };
 
   const handleEditPhase = (phase: TimelinePhase) => {
@@ -148,20 +198,21 @@ function TasksPage() {
       image_url: phase.image_url,
       image_alt: phase.image_alt,
     });
-    setSelectedImage(null); // Clear selected image when editing a phase
+    setSelectedPhaseImage(null); // Clear selected image when editing a phase
   };
 
-  const handleEditTask = (task: Task) => {
+  const handleEditTask = (task: TaskWithImages) => {
     setEditingTaskId(task.id);
     setCreatingTaskForPhase(null);
     taskForm.reset({
-      phase_id: task.phase_id,
+      phase_id: task.phase_id ?? "",
       task_id: task.task_id,
       task: task.task,
       details: task.details,
-      technical_notes: task.technical_notes,
+      technical_notes: task.technical_notes ?? "",
       status: task.status,
     });
+    setSelectedTaskImageIds(task.images.map((img: Image) => img.id)); // Initialize selected images
   };
 
   const handleDeletePhase = async (id: string) => {
@@ -215,7 +266,7 @@ function TasksPage() {
                 setEditingPhaseId(null);
                 setIsCreatingPhase(false);
                 phaseForm.reset();
-                setSelectedImage(null); // Clear selected image on cancel
+                setSelectedPhaseImage(null); // Clear selected image on cancel
               }}
               aria-label="Cancel Phase Creation/Edit"
             >
@@ -244,14 +295,16 @@ function TasksPage() {
               <Input
                 type="file"
                 accept="image/*"
-                onChange={(e) => setSelectedImage(e.target.files?.[0] || null)}
+                onChange={(e) =>
+                  setSelectedPhaseImage(e.target.files?.[0] || null)
+                }
               />
-              {selectedImage && (
+              {selectedPhaseImage && (
                 <p className="text-sm text-muted-foreground">
-                  Selected: {selectedImage.name}
+                  Selected: {selectedPhaseImage.name}
                 </p>
               )}
-              {!selectedImage && phaseForm.watch("image_url") && (
+              {!selectedPhaseImage && phaseForm.watch("image_url") && (
                 <p className="text-sm text-muted-foreground">
                   Current image:{" "}
                   <a
@@ -351,33 +404,59 @@ function TasksPage() {
                     className="p-4 bg-muted/50 rounded-md space-y-3"
                   >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <Input
-                        {...taskForm.register("task_id")}
-                        placeholder="Task ID (e.g., 1.1)"
-                      />
-                      {/* {phase.id} . {phase.tasks.length() + 1} */}
-
-                      <Input
-                        {...taskForm.register("task")}
-                        placeholder="Task name"
-                      />
-                      <Input
-                        {...taskForm.register("details")}
-                        placeholder="Details"
-                        className="md:col-span-2"
-                      />
-                      <Input
-                        {...taskForm.register("technical_notes")}
-                        placeholder="Technical notes (optional)"
-                      />
-                      <select
-                        {...taskForm.register("status")}
-                        className="px-3 py-2 rounded-md border bg-background"
-                      >
-                        <option value="pending">Pending</option>
-                        <option value="completed">Completed</option>
-                      </select>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Task ID</label>
+                        <Input
+                          {...taskForm.register("task_id")}
+                          placeholder="Task ID (e.g., 1.1)"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Task Name</label>
+                        <Input
+                          {...taskForm.register("task")}
+                          placeholder="Task name"
+                        />
+                      </div>
+                      <div className="space-y-2 md:col-span-2">
+                        <label className="text-sm font-medium">Details</label>
+                        <Input
+                          {...taskForm.register("details")}
+                          placeholder="Details"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">
+                          Technical Notes (optional)
+                        </label>
+                        <Input
+                          {...taskForm.register("technical_notes")}
+                          placeholder="Technical notes (optional)"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Status</label>
+                        <select
+                          {...taskForm.register("status")}
+                          className="px-3 py-2 rounded-md border bg-background w-full"
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="completed">Completed</option>
+                        </select>
+                      </div>
                     </div>
+
+                    {/* Image Selector */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">
+                        Associated Images
+                      </label>
+                      <ImageSelector
+                        initialSelectedImageIds={selectedTaskImageIds}
+                        onSelectionChange={setSelectedTaskImageIds}
+                      />
+                    </div>
+
                     <div className="flex gap-2">
                       <Button type="submit" size="sm">
                         {editingTaskId ? "Update" : "Create"}
@@ -390,6 +469,7 @@ function TasksPage() {
                           setEditingTaskId(null);
                           setCreatingTaskForPhase(null);
                           taskForm.reset();
+                          setSelectedTaskImageIds([]); // Clear selected images on cancel
                         }}
                       >
                         Cancel
@@ -400,7 +480,7 @@ function TasksPage() {
 
                 {/* Tasks List */}
                 <div className="space-y-2">
-                  {phase.tasks.map((task) => (
+                  {phase.tasks.map((task: TaskWithImages) => (
                     <div
                       key={task.id}
                       className="p-3 bg-background rounded border flex items-center justify-between"
@@ -424,6 +504,18 @@ function TasksPage() {
                         <p className="text-xs text-muted-foreground">
                           {task.details}
                         </p>
+                        {task.images && task.images.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            {task.images.map((img) => (
+                              <img
+                                key={img.id}
+                                src={img.url}
+                                alt={img.alt_text || "Task image"}
+                                className="w-10 h-10 object-cover rounded-sm"
+                              />
+                            ))}
+                          </div>
+                        )}
                       </div>
                       <div className="flex gap-1">
                         <Button

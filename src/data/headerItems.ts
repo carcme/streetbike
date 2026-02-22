@@ -13,14 +13,14 @@ export const headerItems: {
     href: "/story",
     description: "The how and Why.",
   },
+  // {
+  //   title: "Todo's Example",
+  //   href: "/tasks/",
+  //   description: "Uses DUMMY-DATA.This just shows what it can look like.",
+  // },
   {
-    title: "Todo's Example",
-    href: "/tasks",
-    description: "Uses DUMMY-DATA.This just shows what it can look like.",
-  },
-  {
-    title: "Todo's DB",
-    href: "/tasksdb",
+    title: "Todo's",
+    href: "/tasksdb/",
     description:
       "Uses DATABASE. You'll have to upload the information as you progess though the project.",
   },

@@ -3,7 +3,7 @@ import { Header } from "@/components/header";
 import Footer from "@/components/footer";
 import RebuildTimelineDB from "@/components/rebuildTimelineDb";
 
-export const Route = createFileRoute("/tasksdb")({
+export const Route = createFileRoute("/tasksdb/")({
   component: RouteComponent,
 });
 

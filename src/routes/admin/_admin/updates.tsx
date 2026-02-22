@@ -9,7 +9,10 @@ import {
   useUpdateProgress,
   useDeleteProgress,
 } from "@/hooks/useStats";
-import type { Progress } from "@/types/database";
+
+import type { Database } from "@/types/database";
+type Progress = Database["public"]["Tables"]["progress"]["Row"];
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Pencil, Trash2, Plus, X } from "lucide-react";
@@ -70,11 +73,11 @@ function ProgressPage() {
     setIsCreating(false);
     reset({
       title: item.title,
-      date: item.date,
-      tag: item.tag,
-      image_alt: item.image_alt,
-      image_url: item.image_url,
-      description: item.description,
+      date: item.date ?? "",
+      tag: item.tag ?? "",
+      image_alt: item.image_alt ?? "",
+      image_url: item.image_url ?? "",
+      description: item.description ?? "",
       sort_order: item.sort_order,
     });
   };

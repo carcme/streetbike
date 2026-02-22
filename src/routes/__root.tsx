@@ -1,4 +1,5 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const Route = createRootRoute({
   component: () => (
@@ -7,6 +8,7 @@ export const Route = createRootRoute({
         {/* <Header /> */}
         <main className="flex-1">
           <Outlet />
+          <SpeedInsights />
         </main>
         {/* <Footer /> */}
       </div>

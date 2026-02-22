@@ -51,7 +51,7 @@ function Index() {
             <br />
             <p className="italic text-lg text-center font-bold pt-4 pb-8">
               "It's not just a Bike,
-              <span className="text-gold"> it's an Obsession.</span>"
+              <span className="text-gold"> it's an Obsession</span>."
             </p>
           </p>
         </div>
