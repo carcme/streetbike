@@ -47,13 +47,10 @@ const RebuildTimeline = () => {
                           key={task.id}
                           className="grid grid-cols-12 grid-rows-2 py-1 text-left"
                         >
-                          <p
-                            key={task.id}
-                            className="text-goldVegas text-sm col-span-11"
-                          >
+                          <p className="text-gold text-sm col-span-11">
                             {task.task}
                           </p>
-                          <div className="mt-3 flex gap-1 text-xs justify-center items-center text-muted-foreground col-span-1">
+                          <div className="mt-3 flex gap-1 text-xs justify-center items-center text-muted-foreground col-span-1 row-span-2">
                             {task.status === "completed" && (
                               <>
                                 {/* <span>{task.status}</span> */}
@@ -71,7 +68,7 @@ const RebuildTimeline = () => {
                               </>
                             )}
                           </div>
-                          <p className="text-muted-foreground text-xs  col-span-11">
+                          <p className="text-muted-foreground text-xs  col-span-11 line-clamp-2">
                             {task.details}
                           </p>
                         </div>
@@ -85,8 +82,8 @@ const RebuildTimeline = () => {
                       complete ? "bg-green-600" : "bg-gold ",
                     )}
                   />
-                  {/* image */}
 
+                  {/* image */}
                   <div
                     className={cn(
                       "md:w-5/12 ",

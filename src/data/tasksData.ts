@@ -112,8 +112,6 @@ const tasksData = {
           task: "Cylinder Head Service",
           details:
             "Inspect valve seats; evaluate for unleaded fuel conversion.",
-          technical_notes:
-            "Valve Clearances: $0.10mm$ Intake / $0.15mm$ Exhaust",
           img: "",
           imgAlt: "",
           status: "pending",

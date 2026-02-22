@@ -6,7 +6,7 @@ const PersonalStats = () => {
 
   return (
     <section className="py-16 bg-background border-t  border-t-muted-foreground border-b-muted-foreground">
-      <div className="max-w-6xl w-screen mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {stats &&
             stats.map((stat) => (

@@ -30,7 +30,10 @@ export function Header() {
             </Link>
           </div>
           <div className="grow">
-            <nav className="hidden md:flex items-start space-x-3 lg:space-x-6 text-sm font-medium" aria-label="Main navigation">
+            <nav
+              className="hidden md:flex items-start space-x-3 lg:space-x-6 text-sm font-medium"
+              aria-label="Main navigation"
+            >
               {headerItems.map((item) => (
                 <Link
                   key={item.title}
@@ -45,31 +48,26 @@ export function Header() {
           <div className="grow-0">
             <div className="flex justify-center items-center gap-2">
               <ModeToggle />
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                            >
-                              <Link to="/admin" aria-label="Admin Panel">
-                                {isAuthenticated && (
-                                  <ShieldCheck className="size-5 text-green-600" />
-                                )}
-                                {!isAuthenticated && <Shield className="size-5" />}
-                                <span className="sr-only">To Admin Panel</span>
-                              </Link>
-                            </Button>
+              <Button variant="ghost" size="icon">
+                <Link to="/admin" aria-label="Admin Panel">
+                  {isAuthenticated && (
+                    <ShieldCheck className="size-5 text-green-600" />
+                  )}
+                  {!isAuthenticated && <Shield className="size-5" />}
+                  <span className="sr-only">To Admin Panel</span>
+                </Link>
+              </Button>
 
               {/* add md:hidden to this div */}
-              <div className="block">
+              <div className="block md:hidden">
                 <Sheet>
                   <SheetTrigger asChild aria-label="Open main menu">
                     <Menu />
                   </SheetTrigger>
-                  <SheetContent
-                    className="absolute top-14"
-                  >
+                  <SheetContent className="top-14 rounded-l-2xl max-h-fit">
                     <SheetHeader>
                       <SheetTitle>
-                        {/* Project <span className="text-gold">R65</span> */}
+                        Project <span className="text-gold">R65</span>
                       </SheetTitle>
                     </SheetHeader>
                     <div className="grid flex-1 auto-rows-min gap-4 px-2">
@@ -79,7 +77,7 @@ export function Header() {
                           to={item.href}
                           className="transition-colors hover:text-gold group"
                         >
-                          <div className="flex flex-col gap-1 text-sm">
+                          <div className="flex flex-col text-sm">
                             <div className="leading-none font-medium px-2 group-hover:underline">
                               {item.title}
                             </div>
@@ -91,13 +89,9 @@ export function Header() {
                       ))}
                     </div>
                     <SheetFooter>
-                      {isAuthenticated && (
-                        <Button>Log out</Button>
-                      )}
+                      {isAuthenticated && <Button>Log out</Button>}
                       <SheetClose asChild>
-                        <Button variant="outline">
-                          Close
-                        </Button>
+                        <Button variant="outline">Close</Button>
                       </SheetClose>
                     </SheetFooter>
                   </SheetContent>

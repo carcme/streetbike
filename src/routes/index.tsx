@@ -89,6 +89,7 @@ function Index() {
                   <div className="rounded-xl overflow-hidden shadow-2xl border border-white/10 aspect-video relative">
                     <img
                       src={src}
+                      loading="lazy"
                       alt={`Concept bike ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
