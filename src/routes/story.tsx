@@ -24,7 +24,7 @@ function RouteComponent() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 animate-bottom-in">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1">
-              <div className="inline-block px-3 py-1 bg-rust/20 text-rust rounded-full text-xs uppercase tracking-wider mb-4 border border-rust/20">
+              <div className="inline-block px-3 py-1 bg-rust/50 dark:text-white text-background rounded-full text-xs uppercase tracking-wider mb-4 border border-rust">
                 The Discovery
               </div>
               <h2 className="font-display text-4xl text-foreground mb-6">
@@ -48,7 +48,7 @@ function RouteComponent() {
                 </p>
               </div>
 
-              <div className="mt-8 flex items-center gap-4 bg-gradient-to-b from-foreground/5 to-transparent dark:bg-background px-4 py-2 rounded-lg">
+              <div className="mt-8 flex items-center gap-4 bg-linear-to-b from-foreground/5 to-transparent dark:bg-background px-4 py-2 rounded-lg">
                 <div className="h-px flex-1 bg-linear-to-r from-gold to-transparent"></div>
                 <span className="text-gold font-display text-sm tracking-widest">
                   EST. 2024
@@ -61,14 +61,14 @@ function RouteComponent() {
                 <img
                   src="/shedbike.jpeg"
                   alt="Barn Find"
-                  className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                  className="w-full h-full object-cover opacity-80 group-hover:opacity-100 hover:scale-105 duration-300"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-motor-gray/80 to-transparent"></div>
+
                 <div className="absolute bottom-4 left-4 right-4">
-                  <p className="text-foreground font-display text-lg">
+                  <p className="text-background/80 dark:text-foreground font-display text-lg">
                     Day 0: Discovery
                   </p>
-                  <p className="text-foreground/80 text-sm">
+                  <p className="text-background/80 dark:text-foreground text-sm">
                     Covered in dust, full of potential
                   </p>
                 </div>

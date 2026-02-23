@@ -15,11 +15,7 @@ import {
 } from "@/hooks/useTasks";
 import type { TimelinePhase } from "@/types/database";
 
-import type { Database } from "@/types/database";
-type Task = Database["public"]["Tables"]["tasks"]["Row"];
-
-type Image = Database["public"]["Tables"]["images"]["Row"];
-type TaskWithImages = Task & { images: Image[] };
+import type { ImageType, TaskWithImages } from "@/types/database";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,7 +24,10 @@ import { uploadImage } from "@/lib/supabase";
 import { ImageSelector } from "@/components/image-selector"; // Import ImageSelector
 
 const phaseSchema = z.object({
-  phase_number: z.coerce.number().int().min(1, "Phase number must be at least 1"),
+  phase_number: z.coerce
+    .number()
+    .int()
+    .min(1, "Phase number must be at least 1"),
   title: z.string().min(1, "Title is required"),
   duration: z.string().min(1, "Duration is required"),
   image_url: z.string().optional().nullable(),
@@ -101,7 +100,9 @@ function TasksPage() {
         ?.flatMap((p) => p.tasks as TaskWithImages[])
         .find((t) => t.id === editingTaskId);
       if (currentTask && currentTask.images) {
-        setSelectedTaskImageIds(currentTask.images.map((img: Image) => img.id));
+        setSelectedTaskImageIds(
+          currentTask.images.map((img: ImageType) => img.id),
+        );
       } else {
         setSelectedTaskImageIds([]);
       }
@@ -212,7 +213,7 @@ function TasksPage() {
       technical_notes: task.technical_notes ?? "",
       status: task.status,
     });
-    setSelectedTaskImageIds(task.images.map((img: Image) => img.id)); // Initialize selected images
+    setSelectedTaskImageIds(task.images.map((img: ImageType) => img.id)); // Initialize selected images
   };
 
   const handleDeletePhase = async (id: string) => {

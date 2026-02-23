@@ -1,15 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
-import type { Database } from "@/types/database"; // Import the generated Database type
 
-// Define local types based on the generated Database type for cleaner code
-type TaskType = Database["public"]["Tables"]["tasks"]["Row"] & { images: ImageType[] }; // Extend with images
-type ImageType = Database["public"]["Tables"]["images"]["Row"];
-type TimelinePhaseType = Database["public"]["Tables"]["timeline_phases"]["Row"];
-type ProjectMetaType = Database["public"]["Tables"]["project_meta"]["Row"];
+import type {
+  TimelinePhaseType,
+  TaskWithImages,
+  ImageType,
+} from "@/types/database";
 
-// Adjust TimelinePhaseWithTasks to use the new TaskType
-type TimelinePhaseWithTasks = TimelinePhaseType & { tasks: TaskType[] };
+type TimelinePhaseWithTasks = TimelinePhaseType & { tasks: TaskWithImages[] };
 
 // Timeline Phases
 export function useTimelinePhases() {
@@ -49,7 +47,7 @@ export function useTimelinePhasesWithTasks() {
               id, url, alt_text, uploaded_by, created_at
             )
           )
-        `
+        `,
         )
         .order("task_id", { ascending: true });
 
@@ -60,7 +58,9 @@ export function useTimelinePhasesWithTasks() {
         phases as TimelinePhaseType[]
       ).map((phase) => ({
         ...phase,
-        tasks: (tasks as (TaskType & { task_images: { images: ImageType }[] })[]) // Use ImageType here
+        tasks: (
+          tasks as (TaskWithImages & { task_images: { images: ImageType }[] })[]
+        ) // Use ImageType here
           .filter((task) => task.phase_id === phase.id)
           .map((task) => ({
             ...task,
@@ -89,7 +89,9 @@ export function useCreatePhase() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["timeline_phases"] });
-      queryClient.invalidateQueries({ queryKey: ["timeline_phases_with_tasks"] });
+      queryClient.invalidateQueries({
+        queryKey: ["timeline_phases_with_tasks"],
+      });
     },
   });
 }
@@ -114,7 +116,9 @@ export function useUpdatePhase() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["timeline_phases"] });
-      queryClient.invalidateQueries({ queryKey: ["timeline_phases_with_tasks"] });
+      queryClient.invalidateQueries({
+        queryKey: ["timeline_phases_with_tasks"],
+      });
     },
   });
 }
@@ -133,7 +137,9 @@ export function useDeletePhase() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["timeline_phases"] });
-      queryClient.invalidateQueries({ queryKey: ["timeline_phases_with_tasks"] });
+      queryClient.invalidateQueries({
+        queryKey: ["timeline_phases_with_tasks"],
+      });
     },
   });
 }
@@ -151,7 +157,7 @@ export function useTasks(phaseId?: string) {
 
       const { data, error } = await query;
       if (error) throw error;
-      return data as TaskType[]; // Use TaskType here
+      return data as TaskWithImages[];
     },
   });
 }
@@ -160,7 +166,10 @@ export function useCreateTask() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (task: Omit<TaskType, "id" | "created_at" | "images">) => { // Adjust Omit to exclude 'images'
+    mutationFn: async (
+      task: Omit<TaskWithImages, "id" | "created_at" | "images">,
+    ) => {
+      // Adjust Omit to exclude 'images'
       const { data, error } = await supabase
         .from("tasks")
         .insert(task)
@@ -172,7 +181,9 @@ export function useCreateTask() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
-      queryClient.invalidateQueries({ queryKey: ["timeline_phases_with_tasks"] });
+      queryClient.invalidateQueries({
+        queryKey: ["timeline_phases_with_tasks"],
+      });
     },
   });
 }
@@ -181,7 +192,11 @@ export function useUpdateTask() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, ...updates }: Partial<Omit<TaskType, 'images'>> & { id: string }) => { // Adjust Partial to omit 'images'
+    mutationFn: async ({
+      id,
+      ...updates
+    }: Partial<Omit<TaskWithImages, "images">> & { id: string }) => {
+      // Adjust Partial to omit 'images'
       const { data, error } = await supabase
         .from("tasks")
         .update(updates)
@@ -194,7 +209,9 @@ export function useUpdateTask() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
-      queryClient.invalidateQueries({ queryKey: ["timeline_phases_with_tasks"] });
+      queryClient.invalidateQueries({
+        queryKey: ["timeline_phases_with_tasks"],
+      });
     },
   });
 }
@@ -210,45 +227,9 @@ export function useDeleteTask() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
-      queryClient.invalidateQueries({ queryKey: ["timeline_phases_with_tasks"] });
-    },
-  });
-}
-
-// Project Meta
-export function useProjectMeta() {
-  return useQuery({
-    queryKey: ["project_meta"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("project_meta")
-        .select("*")
-        .single();
-
-      if (error && error.code !== "PGRST116") throw error; // PGRST116 = no rows
-      return data as ProjectMetaType | null;
-    },
-  });
-}
-
-export function useUpdateProjectMeta() {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: async (meta: Partial<ProjectMetaType> & { id: string }) => {
-      const { id, ...updates } = meta;
-      const { data, error } = await supabase
-        .from("project_meta")
-        .update(updates)
-        .eq("id", id)
-        .select()
-        .single();
-
-      if (error) throw error;
-      return data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["project_meta"] });
+      queryClient.invalidateQueries({
+        queryKey: ["timeline_phases_with_tasks"],
+      });
     },
   });
 }
@@ -257,36 +238,44 @@ export function useManageTaskImages() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ taskId, imageIds }: { taskId: string; imageIds: string[] }) => {
+    mutationFn: async ({
+      taskId,
+      imageIds,
+    }: {
+      taskId: string;
+      imageIds: string[];
+    }) => {
       // 1. Delete existing associations for this taskId
       const { error: deleteError } = await supabase
-        .from('task_images')
+        .from("task_images")
         .delete()
-        .eq('task_id', taskId);
+        .eq("task_id", taskId);
 
       if (deleteError) {
-        console.error('Error deleting existing task images:', deleteError);
+        console.error("Error deleting existing task images:", deleteError);
         throw deleteError;
       }
 
       // 2. Insert new associations
       if (imageIds.length > 0) {
-        const newAssociations = imageIds.map(imageId => ({
+        const newAssociations = imageIds.map((imageId) => ({
           task_id: taskId,
           image_id: imageId,
         }));
         const { error: insertError } = await supabase
-          .from('task_images')
+          .from("task_images")
           .insert(newAssociations);
 
         if (insertError) {
-          console.error('Error inserting new task images:', insertError);
+          console.error("Error inserting new task images:", insertError);
           throw insertError;
         }
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["timeline_phases_with_tasks"] });
+      queryClient.invalidateQueries({
+        queryKey: ["timeline_phases_with_tasks"],
+      });
     },
   });
 }

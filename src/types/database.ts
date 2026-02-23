@@ -1,6 +1,15 @@
 export type Stat = Database["public"]["Tables"]["stats"]["Row"];
 export type Progress = Database["public"]["Tables"]["progress"]["Row"];
 export type Step = Database["public"]["Tables"]["steps"]["Row"];
+export type TimelinePhaseType =
+  Database["public"]["Tables"]["timeline_phases"]["Row"];
+// export type ProjectMetaType =
+//   Database["public"]["Tables"]["project_meta"]["Row"];
+
+export type ImageType = Database["public"]["Tables"]["images"]["Row"];
+
+export type Task = Database["public"]["Tables"]["tasks"]["Row"];
+export type TaskWithImages = Task & { images: ImageType[] };
 
 export interface TimelinePhase {
   id: string;
@@ -88,57 +97,57 @@ export type Database = {
         };
         Relationships: [];
       };
-      project_meta: {
-        Row: {
-          created_at: string;
-          id: string;
-          model_type: string | null;
-          project_name: string | null;
-          tags: string[] | null;
-        };
-        Insert: {
-          created_at?: string;
-          id?: string;
-          model_type?: string | null;
-          project_name?: string | null;
-          tags?: string[] | null;
-        };
-        Update: {
-          created_at?: string;
-          id?: string;
-          model_type?: string | null;
-          project_name?: string | null;
-          tags?: string[] | null;
-        };
-        Relationships: [];
-      };
-      specs: {
-        Row: {
-          created_at: string;
-          id: string;
-          label: string;
-          section_title: string;
-          sort_order: number;
-          value: string;
-        };
-        Insert: {
-          created_at?: string;
-          id?: string;
-          label: string;
-          section_title: string;
-          sort_order?: number;
-          value: string;
-        };
-        Update: {
-          created_at?: string;
-          id?: string;
-          label?: string;
-          section_title?: string;
-          sort_order?: number;
-          value?: string;
-        };
-        Relationships: [];
-      };
+      // project_meta: {
+      //   Row: {
+      //     created_at: string;
+      //     id: string;
+      //     model_type: string | null;
+      //     project_name: string | null;
+      //     tags: string[] | null;
+      //   };
+      //   Insert: {
+      //     created_at?: string;
+      //     id?: string;
+      //     model_type?: string | null;
+      //     project_name?: string | null;
+      //     tags?: string[] | null;
+      //   };
+      //   Update: {
+      //     created_at?: string;
+      //     id?: string;
+      //     model_type?: string | null;
+      //     project_name?: string | null;
+      //     tags?: string[] | null;
+      //   };
+      //   Relationships: [];
+      // };
+      // specs: {
+      //   Row: {
+      //     created_at: string;
+      //     id: string;
+      //     label: string;
+      //     section_title: string;
+      //     sort_order: number;
+      //     value: string;
+      //   };
+      //   Insert: {
+      //     created_at?: string;
+      //     id?: string;
+      //     label: string;
+      //     section_title: string;
+      //     sort_order?: number;
+      //     value: string;
+      //   };
+      //   Update: {
+      //     created_at?: string;
+      //     id?: string;
+      //     label?: string;
+      //     section_title?: string;
+      //     sort_order?: number;
+      //     value?: string;
+      //   };
+      //   Relationships: [];
+      // };
       stats: {
         Row: {
           created_at: string;

@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-import type { Database } from "@/types/database"; // Import the generated Database type
+import type { ImageType } from "@/types/database"; // Import the generated Database type
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { CheckCircle } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-
-type ImageType = Database["public"]["Tables"]["images"]["Row"];
 
 interface ImageSelectorProps {
   initialSelectedImageIds?: string[];
@@ -78,7 +76,7 @@ export function ImageSelector({
           <Card
             key={image.id}
             className={cn(
-              "relative cursor-pointer transition-all duration-200",
+              "relative p-0 cursor-pointer transition-all duration-200",
               isSelected
                 ? "border-2 border-primary ring-2 ring-primary"
                 : "hover:border-primary",
@@ -89,7 +87,7 @@ export function ImageSelector({
               <img
                 src={image.url}
                 alt={image.alt_text || `Image ${image.id}`}
-                className="object-cover w-full h-full rounded-md"
+                className="object-cover size-28 xs:size-32 md:size-40 lg:size-56 rounded-md"
               />
               {isSelected && (
                 <div className="absolute inset-0 bg-primary/20 flex items-center justify-center rounded-md">

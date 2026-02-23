@@ -9,9 +9,7 @@ import {
   useUpdateStep,
   useDeleteStep,
 } from "@/hooks/useSteps";
-import type { StepCategory } from "@/types/database";
-import type { Database } from "@/types/database";
-type Step = Database["public"]["Tables"]["steps"]["Row"];
+import type { Step, StepCategory } from "@/types/database";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

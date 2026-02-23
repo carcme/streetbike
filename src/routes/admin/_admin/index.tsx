@@ -3,6 +3,7 @@ import { useSteps } from "@/hooks/useSteps";
 import { useTimelinePhases } from "@/hooks/useTasks";
 import { useProgress } from "@/hooks/useStats";
 import { ListTodo, Clock, FileText } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/admin/_admin/")({
   component: AdminDashboard,
@@ -90,29 +91,17 @@ function AdminDashboard() {
       <div className="p-6 bg-card rounded-lg border">
         <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
         <div className="flex flex-wrap gap-3">
-          <Link
-            to="/admin/steps"
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors"
-          >
-            Add New Step
+          <Link to="/admin/tasks">
+            <Button variant={"default"}>Manage Todo's</Button>
           </Link>
-          <Link
-            to="/admin/updates"
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors"
-          >
-            Add Progress Update
+          <Link to="/admin/steps">
+            <Button variant={"outline"}>Add New Step</Button>
           </Link>
-          <Link
-            to="/admin/tasks"
-            className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md text-sm font-medium hover:bg-secondary/90 transition-colors"
-          >
-            Manage Todo's
+          <Link to="/admin/updates">
+            <Button variant={"outline"}>Add Progress Update</Button>
           </Link>
-          <Link
-            to="/admin/stats"
-            className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md text-sm font-medium hover:bg-secondary/90 transition-colors"
-          >
-            Stats's
+          <Link to="/admin/stats">
+            <Button variant={"outline"}>Stats</Button>
           </Link>
         </div>
       </div>

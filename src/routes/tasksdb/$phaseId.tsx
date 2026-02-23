@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useTimelinePhasesWithTasks } from "@/hooks/useTasks";
-import type { Database } from "@/types/database"; // Import the generated Database type
+import type { ImageType } from "@/types/database"; // Import the generated Database type
 import {
   Card,
   CardContent,
@@ -19,10 +19,7 @@ import {
 } from "@/components/ui/dialog";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Header } from "@/components/header";
-import { DialogTitle } from "@radix-ui/react-dialog";
-
-// Define the type for an image from the database
-type ImageType = Database["public"]["Tables"]["images"]["Row"];
+import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 
 // Define the route with a loader for a specific phase
 export const Route = createFileRoute("/tasksdb/$phaseId")({
@@ -140,6 +137,9 @@ function PhaseDetailComponent() {
                           <DialogContent className="max-w-6xl max-h-96 flex flex-col items-center justify-center p-0">
                             <DialogHeader className="sr-only">
                               <DialogTitle>{task.task}</DialogTitle>
+                              <DialogDescription>
+                                Full size image view for {task.task}
+                              </DialogDescription>
                             </DialogHeader>
                             <img
                               src={image.url}

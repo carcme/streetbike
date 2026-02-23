@@ -1,3 +1,4 @@
+// import UmamiAnalytics from "@/components/analytics/UmamiAnalytics";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createRootRoute({
@@ -5,6 +6,7 @@ export const Route = createRootRoute({
     <>
       <div className="min-h-screen flex flex-col">
         {/* <Header /> */}
+        {/* <UmamiAnalytics /> */}
         <main className="flex-1">
           <Outlet />
         </main>

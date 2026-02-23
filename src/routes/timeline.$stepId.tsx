@@ -9,8 +9,7 @@ import Footer from "@/components/footer";
 import { queryClient } from "@/main"; // Import queryClient
 import { getStepQueryKey, getStepQueryFn } from "@/hooks/useSteps"; // Import query functions
 
-import type { Database } from "@/types/database";
-type Step = Database["public"]["Tables"]["steps"]["Row"];
+import type { Step } from "@/types/database";
 
 export const Route = createFileRoute("/timeline/$stepId")({
   loader: async ({ params }) => {

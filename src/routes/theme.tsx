@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import Footer from "@/components/footer";
 import { Header } from "@/components/header";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export const Route = createFileRoute("/theme")({
   component: RouteComponent,
@@ -19,7 +19,7 @@ function RouteComponent() {
       <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center gap-10 p-10 transition-colors duration-500">
         <div className="flex items-center gap-3">
           <Label htmlFor="darkmode">Dark Mode</Label>
-          <Switch id="darkmode" />
+          <ModeToggle />
         </div>
 
         <Card className="w-[420px] shadow-2xl border border-border bg-card text-card-foreground">
@@ -34,12 +34,8 @@ function RouteComponent() {
             <div className="flex gap-2 flex-wrap">
               <Button variant="default">Primary</Button>
               <Button variant="secondary">Secondary</Button>
-              <Button
-                variant="destructive"
-                className="text-destructive-foreground"
-              >
-                Destructive
-              </Button>
+              <Button variant="destructive">Destructive</Button>
+              <Button variant="positive">Positive</Button>
               <Button variant="outline">Outline</Button>
               <Button variant="ghost">Ghost</Button>
               {/* <Button variant="hover">Hover</Button>

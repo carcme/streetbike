@@ -10,8 +10,7 @@ import {
   useDeleteProgress,
 } from "@/hooks/useStats";
 
-import type { Database } from "@/types/database";
-type Progress = Database["public"]["Tables"]["progress"]["Row"];
+import type { Progress } from "@/types/database";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

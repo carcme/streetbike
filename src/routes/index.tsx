@@ -41,7 +41,7 @@ function Index() {
     <>
       <Header />
       <div className="flex flex-col items-center justify-center text-center space-y-8 ">
-        <div className="space-y-4">
+        <div className="space-y-4 pb-4">
           <h1 className="page-title">
             <span className="text-gold">R65</span> Street Fighter
           </h1>
@@ -49,10 +49,10 @@ function Index() {
             From rusted shed find to a track-tearing monster. Follow the
             complete restoration journey of the BMW R65.
             <br />
-            <p className="italic text-lg text-center font-bold pt-4 pb-8">
-              "It's not just a Bike,
-              <span className="text-gold"> it's an Obsession</span>."
-            </p>
+          </p>
+          <p className="italic text-lg text-center font-bold pt-0">
+            "It's not just a Bike,
+            <span className="text-gold"> it's an Obsession</span>."
           </p>
         </div>
 
@@ -65,7 +65,7 @@ function Index() {
           <Button
             asChild
             size="lg"
-            variant={"secondary"}
+            variant={"outline"}
             className="text-lg px-8 py-6 h-auto"
           >
             <a href="#specs">Technical Specifications</a>

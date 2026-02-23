@@ -1,3 +1,4 @@
+import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -18,7 +19,9 @@ export function SiteHeader() {
             <span className="text-gold">R65</span> Playground
           </h1>
         </Link>
+
         <div className="ml-auto flex items-center gap-2">
+          <ModeToggle />
           <Button variant="ghost" asChild size="icon-lg" className="flex">
             <a
               href="https://github.com/carcme/streetbike"

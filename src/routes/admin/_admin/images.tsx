@@ -5,9 +5,8 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import type { Database } from "@/types/database"; // Import the generated Database type
-
-type DbImage = Database["public"]["Tables"]["images"]["Row"];
+import type { ImageType } from "@/types/database";
+import { cn } from "@/lib/utils";
 
 const BUCKET_NAME = "timeline-images";
 
@@ -17,7 +16,9 @@ export const Route = createFileRoute("/admin/_admin/images")({
     // If a file exists in storage but not in the DB, it's an orphaned file and not managed by this component.
     const { data: dbImages, error: dbError } = await supabase
       .from("images")
-      .select("*");
+      .select("*")
+      .order("created_at", { ascending: true });
+
     if (dbError) {
       console.error("Error fetching db images:", dbError);
       return { dbImages: [] };
@@ -30,7 +31,7 @@ export const Route = createFileRoute("/admin/_admin/images")({
 
 function ImagesComponent() {
   const { dbImages } = useLoaderData({ from: "/admin/_admin/images" }) as {
-    dbImages: DbImage[];
+    dbImages: ImageType[];
   };
 
   const [file, setFile] = useState<File | null>(null);
@@ -165,7 +166,14 @@ function ImagesComponent() {
             />
           </div>
           {uploadError && <p className="text-red-500 text-sm">{uploadError}</p>}
-          <Button onClick={handleUpload} disabled={isUploading || !file}>
+          <Button
+            className={cn(
+              "bg-positive",
+              isUploading || (!file && "bg-destructive"),
+            )}
+            onClick={handleUpload}
+            disabled={isUploading || !file}
+          >
             {isUploading ? "Uploading..." : "Upload Image"}
           </Button>
         </div>
@@ -178,20 +186,21 @@ function ImagesComponent() {
       {dbImages.length === 0 ? (
         <p>No images found. Upload some to get started!</p>
       ) : (
-        <div className="flex gap-4">
+        // <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 order-last">
+        <div className="flex justify-end flex-wrap gap-4 flex-row-reverse">
           {dbImages.map((image) => (
-            <Card key={image.id} className="flex flex-col py-4">
-              <CardContent className="px-4">
+            <Card key={image.id} className="py-4 px-0 gap-2 shadow-none">
+              <CardContent className="px-4 flex flex-col items-center">
                 <img
                   src={image.url}
                   alt={image.alt_text || `Image ${image.id}`}
-                  className="size-24 object-cover rounded-md text-center pt-2"
+                  className="size-24 object-cover rounded-md text-center"
                 />
-                <p className="w-24 text-sm text-muted-foreground truncate">
-                  {image.alt_text || image.id}
+                <p className="w-24 pt-2 text-sm text-muted-foreground truncate capitalize">
+                  {image.alt_text || "tag missing!"}
                 </p>
               </CardContent>
-              <CardFooter className="py-0">
+              <CardFooter className="py-0 flex flex-col items-center">
                 <Button
                   variant="destructive"
                   size="sm"

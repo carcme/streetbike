@@ -10,7 +10,7 @@ const calculateDaysActive = () => {
 
 const StatsGrid = ({ showDays }: { showDays?: boolean }) => {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-16 max-w-6xl mx-auto">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-16 mx-auto">
       {statsData.data.map((stat) => {
         return (
           <div key={stat.label} className="mechanical-border p-4 rounded-lg">
