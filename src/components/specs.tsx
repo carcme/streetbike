@@ -57,7 +57,7 @@ const Specifications = () => {
             >
               <Button
                 variant={"link"}
-                className=" text-white/80 bg-bmw-blue hover:bg-bmw-blue/80"
+                className=" text-white bg-bmw-blue hover:bg-bmw-blue/80"
               >
                 🇩🇪 Download
               </Button>
@@ -68,7 +68,7 @@ const Specifications = () => {
             >
               <Button
                 variant={"link"}
-                className=" text-white/80 bg-bmw-blue hover:bg-bmw-blue/80"
+                className=" text-white bg-bmw-blue hover:bg-bmw-blue/80"
               >
                 🇬🇧 Download
               </Button>

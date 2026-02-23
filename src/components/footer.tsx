@@ -13,12 +13,12 @@ const Footer = () => {
               {/* <span>MotoFighter</span> */}
             </Link>
           </div>
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-400 text-sm">
             Built with patience and coffee by
             <a
               href="https://hammer3.com"
               target="_blank"
-              className="text-gold/40 hover:underline"
+              className="text-gold/80 hover:underline"
             >
               {" "}
               Hammer3{" "}

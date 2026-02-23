@@ -47,7 +47,7 @@ export function Header() {
           </div>
           <div className="grow-0">
             <div className="flex justify-center items-center gap-2">
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" aria-label="View About me">
                 <Link to="/about">
                   <UserSearch />
                 </Link>
@@ -66,7 +66,11 @@ export function Header() {
               {/* add md:hidden to this div */}
               <div className="block md:hidden">
                 <Sheet>
-                  <SheetTrigger asChild aria-label="Open main menu">
+                  <SheetTrigger
+                    asChild
+                    aria-describedby="Open menu"
+                    aria-label="Open menu"
+                  >
                     <Menu />
                   </SheetTrigger>
                   <SheetContent className="top-14 rounded-l-2xl max-h-fit">
