@@ -59,7 +59,7 @@ function RouteComponent() {
             <div className="order-1 md:order-2 relative">
               <div className="aspect-4/3 rounded-lg overflow-hidden mechanical-border relative group">
                 <img
-                  src="/shedbike.jpeg"
+                  src="/shedbike.webp"
                   alt="Barn Find"
                   className="w-full h-full object-cover opacity-80 group-hover:opacity-100 hover:scale-105 duration-300"
                 />

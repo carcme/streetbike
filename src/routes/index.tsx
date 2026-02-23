@@ -22,17 +22,17 @@ import Footer from "@/components/footer";
 import PersonalStats from "@/components/personal-stats";
 
 const imageList = [
-  "concept.jpeg",
-  "concept2.jpeg",
-  "concept3.jpeg",
-  "concept4.jpeg",
-  "imageGen1.png",
-  "imageGen2.png",
-  "imageGen3.png",
-  "imageGen4.png",
-  "imageGen5.png",
-  "imageGen6.png",
-  "imageGen7.png",
+  "concept.webp",
+  "concept2.webp",
+  "concept3.webp",
+  "concept4.webp",
+  "imageGen1.webp",
+  "imageGen2.webp",
+  "imageGen3.webp",
+  "imageGen4.webp",
+  "imageGen5.webp",
+  "imageGen6.webp",
+  "imageGen7.webp",
 ];
 
 function Index() {

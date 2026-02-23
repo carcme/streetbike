@@ -2,39 +2,39 @@
 
 From a rusted shed find to a track-tearing monster. This project documents the complete restoration and modification journey of a classic BMW R65 motorcycle.
 
-![Shed find - the humble beginnings of the BMW R65 Street Fighter](./public/shedbike.jpeg)
+![Shed find - the humble beginnings of the BMW R65 Street Fighter](./public/shedbike.webp)
 
 This web application serves as a living document, a visual timeline, and a technical diary of the entire build process.
 
 ## ✨ Features
 
-*   **Interactive Timeline:** Follow the build process step-by-step, from the initial teardown to the final assembly.
-*   **High-Quality Gallery:** A visual feast of concept designs, work-in-progress shots, and final glamour shots.
-*   **Responsive Design:** A clean, modern interface that looks great on any device.
-*   **Dark Mode:** For comfortable late-night browsing.
+- **Interactive Timeline:** Follow the build process step-by-step, from the initial teardown to the final assembly.
+- **High-Quality Gallery:** A visual feast of concept designs, work-in-progress shots, and final glamour shots.
+- **Responsive Design:** A clean, modern interface that looks great on any device.
+- **Dark Mode:** For comfortable late-night browsing.
 
 ## 🚀 Tech Stack
 
 This project is built with a modern, performant, and scalable tech stack:
 
-*   **Framework:** [React](https://react.dev/) (with TypeScript)
-*   **Build Tool:** [Vite](https://vitejs.dev/)
-*   **Routing:** [TanStack Router](https://tanstack.com/router)
-*   **UI Components:** [shadcn/ui](https://ui.shadcn.com/) (built on Radix UI)
-*   **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-*   **Linting:** [ESLint](https://eslint.org/)
+- **Framework:** [React](https://react.dev/) (with TypeScript)
+- **Build Tool:** [Vite](https://vitejs.dev/)
+- **Routing:** [TanStack Router](https://tanstack.com/router)
+- **UI Components:** [shadcn/ui](https://ui.shadcn.com/) (built on Radix UI)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Linting:** [ESLint](https://eslint.org/)
 
 Here's a glimpse of the concepts that inspired the build:
 
 <p align="center">
-  <img src="./public/concept.jpeg" width="48%" alt="Concept 1">
+  <img src="./public/concept.webp" width="48%" alt="Concept 1">
   &nbsp;
-  <img src="./public/concept2.jpeg" width="48%" alt="Concept 2">
+  <img src="./public/concept2.webp" width="48%" alt="Concept 2">
 </p>
 <p align="center">
-  <img src="./public/concept3.jpeg" width="48%" alt="Concept 3">
+  <img src="./public/concept3.webp" width="48%" alt="Concept 3">
   &nbsp;
-  <img src="./public/concept4.jpeg" width="48%" alt="Concept 4">
+  <img src="./public/concept4.webp" width="48%" alt="Concept 4">
 </p>
 
 ## 🛠️ Getting Started
@@ -42,6 +42,7 @@ Here's a glimpse of the concepts that inspired the build:
 To run this project locally, follow these steps:
 
 1.  **Clone the repository:**
+
     ```bash
     git clone https://github.com/carcme/streetbike.git
     cd streetbike
@@ -49,6 +50,7 @@ To run this project locally, follow these steps:
 
 2.  **Install dependencies:**
     This project uses `npm` as its package manager.
+
     ```bash
     npm install
     ```

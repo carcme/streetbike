@@ -7,7 +7,7 @@ const tasksData = {
       phase: 1,
       title: "Documentation & Disassembly",
       duration: "1-2 Weeks",
-      img: "shedbike.jpeg",
+      img: "shedbike.webp",
       imgAlt: "",
       tasks: [
         {
@@ -95,7 +95,7 @@ const tasksData = {
       phase: 3,
       title: "Engine & Drivetrain",
       duration: "4-8 Weeks",
-      img: "engine.png",
+      img: "engine.webp",
       imgAlt: "Engine",
       tasks: [
         {
@@ -205,7 +205,7 @@ const tasksData = {
       phase: 6,
       title: "Commissioning & Break-in",
       duration: "1 Week",
-      img: "imageGen3.png",
+      img: "imageGen3.webp",
       imgAlt: "concept bike",
       tasks: [
         {

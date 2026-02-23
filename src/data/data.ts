@@ -15,7 +15,7 @@ export const steps: Step[] = [
       "Found this beauty gathering dust in an old shed. It had been sitting for 15 years. Mouse nests in the airbox, rusted chain, but the engine turned over.",
     date: "2023-04-15",
     category: "find",
-    imageUrl: "shedbike.jpeg",
+    imageUrl: "shedbike.webp",
   },
   {
     id: "2",
@@ -64,7 +64,7 @@ export const steps: Step[] = [
       "Putting it all back together. New wiring loom, LED headlight, digital dash, and performance exhaust fitted.",
     date: "2023-08-15",
     category: "build",
-    imageUrl: "/concept.jpeg",
+    imageUrl: "/concept.webp",
   },
   {
     id: "7",
@@ -73,6 +73,6 @@ export const steps: Step[] = [
       "Finished. Dyno tuned and ready for the track. It screams. 160HP at the wheel and looks mean standing still.",
     date: "2023-09-01",
     category: "finish",
-    imageUrl: "/final.png",
+    imageUrl: "/final.webp",
   },
 ];

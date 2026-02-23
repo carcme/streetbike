@@ -46,14 +46,14 @@ const helmetData: HelmetData = {
   common: {
     twitter: {
       card: "summary",
-      image: "/concept.jpeg",
+      image: "/concept.webp",
       imageAlt: "[Translate to English:]",
     },
     og: {
       title: "Home",
       siteName: "Project R65",
-      image: "/concept.jpeg",
-      imageUrl: "/concept.jpeg",
+      image: "/concept.webp",
+      imageUrl: "/concept.webp",
       imageWidth: "668",
       imageHeight: "350",
       imageAlt: "[Translate to English:]",

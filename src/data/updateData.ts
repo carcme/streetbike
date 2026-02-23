@@ -31,7 +31,7 @@ export const timelineProgress = {
       title: "First Look: The Shed Discovery",
       date: "07 OCT 2026",
       tag: "acquisition",
-      imageUrl: "shedbike.jpeg",
+      imageUrl: "shedbike.webp",
 
       description:
         "Drove 3 hours to pick up this barn find. Previous owner said it ran when parked... in 2004. The dust layer was impressive. Already in love with the patina.",

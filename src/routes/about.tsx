@@ -12,7 +12,7 @@ function RouteComponent() {
       <div className="relative text-white">
         <img
           className="fixed w-full h-[calc(100vh-60px)] object-cover"
-          src="/happyRob.jpeg"
+          src="/happyRob.webp"
           alt="A happy R65 owner"
         />
         <div className="absolute inset-0">
