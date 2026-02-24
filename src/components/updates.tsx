@@ -40,9 +40,18 @@ const Updates = ({ limited = false }: { limited?: boolean }) => {
                 className="p-4 transition-colors rounded-lg cursor-pointer mechanical-border hover:border-primary/80 group"
               >
                 <div className="flex items-start gap-4">
-                  <div className="flex items-center justify-center text-sm font-bold text-center rounded-lg shrink-0 size-16 bg-secondary group-hover:bg-primary text-primary-foreground">
-                    {section.date}
+                  <div className="flex flex-col items-center gap-2">
+                    <Badge
+                      variant={"secondary"}
+                      className="w-full p-1 text-white capitalize rounded-md dark:bg-secondary/20"
+                    >
+                      {section.tag}
+                    </Badge>
+                    <div className="flex items-center justify-center w-full p-1 text-sm font-bold text-center rounded-md shrink-0 size-16 bg-secondary group-hover:bg-primary text-primary-foreground">
+                      {section.date}
+                    </div>
                   </div>
+
                   <div className="flex-1">
                     <h3 className="mb-2 text-xl transition-colors text-foreground font-display group-hover:text-primary group-hover:font-bold">
                       {section.title}
@@ -55,12 +64,6 @@ const Updates = ({ limited = false }: { limited?: boolean }) => {
                         <Clock size={14} className="text-primary" />
                         {timeSince}
                       </span>
-                      <Badge
-                        variant={"secondary"}
-                        className="text-white capitalize bg-secondary group-hover:bg-primary"
-                      >
-                        {section.tag}
-                      </Badge>
                     </div>
                   </div>
                   <div className="hidden w-24 h-24 overflow-hidden rounded-lg xs:block mechanical-border shrink-0">
