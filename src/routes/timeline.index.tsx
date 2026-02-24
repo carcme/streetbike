@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import Footer from "@/components/footer";
 import { Header } from "@/components/header";
 import { useSteps } from "@/hooks/useSteps";
+import { Image } from "@lonik/oh-image/react";
 
 export const Route = createFileRoute("/timeline/")({
   component: Timeline,
@@ -51,11 +52,13 @@ function Timeline() {
               >
                 <Card className="h-full overflow-hidden border-none shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl cursor-pointer">
                   <div className="relative overflow-hidden aspect-video ">
-                    <img
-                      src={step.image_url ?? undefined}
-                      alt={step.title}
-                      className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
-                    />
+                    {step.image_url && (
+                      <Image
+                        src={step.image_url ?? undefined}
+                        alt={step.title}
+                        className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
+                      />
+                    )}
                     <div className="absolute top-2 right-2">
                       <Badge
                         variant={

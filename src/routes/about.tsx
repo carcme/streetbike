@@ -1,4 +1,5 @@
 import { Header } from "@/components/header";
+import { Image } from "@lonik/oh-image/react";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/about")({
@@ -10,7 +11,7 @@ function RouteComponent() {
     <>
       <Header />
       <div className="relative text-white">
-        <img
+        <Image
           className="fixed w-full h-[calc(100vh-60px)] object-cover"
           src="/happyRob.webp"
           alt="A happy R65 owner"

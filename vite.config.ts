@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import path from "path";
 import { visualizer } from "rollup-plugin-visualizer"; // Import visualizer
+import { ohImage } from "@lonik/oh-image/plugin";
 
 // https://vite.dev/config/
 export default defineConfig(({ command }) => ({
@@ -11,6 +12,7 @@ export default defineConfig(({ command }) => ({
     tanstackRouter({ autoCodeSplitting: true }),
     react(),
     tailwindcss({ optimize: true }),
+    ohImage(),
     command === "build" &&
       visualizer({
         open: false,

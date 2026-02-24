@@ -15,6 +15,7 @@ import type { Progress } from "@/types/database";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Pencil, Trash2, Plus, X } from "lucide-react";
+import { Image } from "@lonik/oh-image/react";
 
 const progressSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -99,7 +100,7 @@ function ProgressPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Progress Updates</h1>
           <p className="text-muted-foreground">
@@ -117,9 +118,9 @@ function ProgressPage() {
       {(isCreating || editingId) && (
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="p-6 bg-card rounded-lg border space-y-4"
+          className="p-6 space-y-4 border rounded-lg bg-card"
         >
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">
               {editingId ? "Edit Update" : "New Update"}
             </h2>
@@ -134,7 +135,7 @@ function ProgressPage() {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <label className="text-sm font-medium">Title</label>
               <Input {...register("title")} placeholder="Update title" />
@@ -202,7 +203,7 @@ function ProgressPage() {
               <textarea
                 {...register("description")}
                 rows={4}
-                className="w-full px-3 py-2 rounded-md border bg-background resize-none"
+                className="w-full px-3 py-2 border rounded-md resize-none bg-background"
                 placeholder="Write your update..."
               />
               {errors.description && (
@@ -231,17 +232,17 @@ function ProgressPage() {
         {progress?.map((item) => (
           <div
             key={item.id}
-            className="p-4 bg-card rounded-lg border flex gap-4"
+            className="flex gap-4 p-4 border rounded-lg bg-card"
           >
             {item.image_url && (
-              <div className="w-24 h-24 rounded overflow-hidden shrink-0 bg-muted">
-                <img
+              <div className="w-24 h-24 overflow-hidden rounded shrink-0 bg-muted">
+                <Image
                   src={item.image_url}
                   alt={item.title}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = "none";
-                  }}
+                  className="object-cover w-full h-full"
+                  // onError={(e) => {
+                  //   (e.target as HTMLImageElement).style.display = "none";
+                  // }}
                 />
               </div>
             )}

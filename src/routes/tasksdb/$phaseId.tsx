@@ -20,6 +20,7 @@ import {
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Header } from "@/components/header";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
+import { Image } from "@lonik/oh-image/react";
 
 // Define the route with a loader for a specific phase
 export const Route = createFileRoute("/tasksdb/$phaseId")({
@@ -123,7 +124,7 @@ function PhaseDetailComponent() {
                           <DialogTrigger asChild>
                             <Card className="py-0 overflow-hidden cursor-pointer group">
                               <AspectRatio ratio={16 / 9}>
-                                <img
+                                <Image
                                   src={image.url}
                                   alt={
                                     image.alt_text || `Image for ${task.task}`
@@ -141,7 +142,7 @@ function PhaseDetailComponent() {
                                 Full size image view for {task.task}
                               </DialogDescription>
                             </DialogHeader>
-                            <img
+                            <Image
                               src={image.url}
                               aria-describedby={task.task}
                               alt={

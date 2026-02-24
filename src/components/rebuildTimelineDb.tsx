@@ -1,8 +1,9 @@
-import { CheckCircle, Image, LockKeyhole } from "lucide-react";
+import { CheckCircle, ImageIcon, LockKeyhole } from "lucide-react";
 // import tasksData from "@/data/tasksData"; // No longer needed
 import { cn } from "@/lib/utils";
 import { useTimelinePhasesWithTasks } from "@/hooks/useTasks"; // Import the hook
 import { Link } from "@tanstack/react-router";
+import { Image } from "@lonik/oh-image/react";
 
 const RebuildTimelineDB = () => {
   const { data: phases, isLoading, isError } = useTimelinePhasesWithTasks();
@@ -107,7 +108,7 @@ const RebuildTimelineDB = () => {
                                     </>
                                   )}
                                   {task.images.length > 0 && (
-                                    <Image className="size-4" />
+                                    <ImageIcon className="size-4" />
                                   )}
                                 </div>
                               </div>
@@ -135,9 +136,9 @@ const RebuildTimelineDB = () => {
                       >
                         <div className="relative overflow-hidden rounded-lg aspect-square mechanical-border">
                           {phase.image_url ? ( // Use phase.image_url
-                            <img
+                            <Image
                               src={phase.image_url}
-                              alt={phase.image_alt || phase.title} // Use phase.image_alt
+                              alt={phase.image_alt || phase.title}
                               className="object-cover w-full h-full"
                             />
                           ) : (

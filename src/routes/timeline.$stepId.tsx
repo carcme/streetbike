@@ -10,6 +10,7 @@ import { queryClient } from "@/main"; // Import queryClient
 import { getStepQueryKey, getStepQueryFn } from "@/hooks/useSteps"; // Import query functions
 
 import type { Step } from "@/types/database";
+import { Image } from "@lonik/oh-image/react";
 
 export const Route = createFileRoute("/timeline/$stepId")({
   loader: async ({ params }) => {
@@ -52,44 +53,46 @@ function StepDetail() {
       <Header />
       {isFullScreen && (
         <div
-          className="fixed inset-0 z-100 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
+          className="fixed inset-0 flex items-center justify-center p-4 duration-200 z-100 bg-black/95 backdrop-blur-sm animate-in fade-in"
           onClick={() => setIsFullScreen(false)}
         >
           <Button
             variant="ghost"
             size="icon"
-            className="absolute top-4 right-4 text-white hover:bg-white/20 rounded-full h-12 w-12"
+            className="absolute w-12 h-12 text-white rounded-full top-4 right-4 hover:bg-white/20"
             onClick={() => setIsFullScreen(false)}
             aria-label="Close full screen image"
           >
-            <X className="h-8 w-8" />
+            <X className="w-8 h-8" />
           </Button>
-          <img
-            src={step.image_url ?? undefined}
-            alt={step.title}
-            className="max-w-full max-h-[95vh] object-contain shadow-2xl"
-          />
+          {step.image_url && (
+            <Image
+              src={step.image_url ?? undefined}
+              alt={step.title}
+              className="max-w-full max-h-[95vh] object-contain shadow-2xl"
+            />
+          )}
         </div>
       )}
 
-      <div className="px-4 md:px-8 md:py-8 animate-in fade-in duration-300">
+      <div className="px-4 duration-300 md:px-8 md:py-8 animate-in fade-in">
         {/* Back Button */}
         <div className="mb-6">
           <Button asChild variant="outline" size="sm" className="gap-2">
             <Link to="/timeline">
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="w-4 h-4" />
               Back to Timeline
             </Link>
           </Button>
         </div>
 
         {/* Main Content - Side by Side on Large Screens */}
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col gap-8 lg:flex-row">
           {/* Content Area - Left on Large Screens */}
-          <div className="lg:w-1/3 flex flex-col justify-center">
-            <div className="bg-card lg:aspect-video rounded-xl p-8 shadow-lg border space-y-6">
+          <div className="flex flex-col justify-center lg:w-1/3">
+            <div className="p-8 space-y-6 border shadow-lg bg-card lg:aspect-video rounded-xl">
               <div className="space-y-2 text-center lg:text-left">
-                <div className="flex items-center justify-center lg:justify-start gap-3">
+                <div className="flex items-center justify-center gap-3 lg:justify-start">
                   <Badge
                     variant={
                       step.category === "finish" ? "default" : "secondary"
@@ -98,7 +101,7 @@ function StepDetail() {
                   >
                     {step.category}
                   </Badge>
-                  <span className="text-sm text-muted-foreground font-mono">
+                  <span className="font-mono text-sm text-muted-foreground">
                     {step.date}
                   </span>
                 </div>
@@ -109,7 +112,7 @@ function StepDetail() {
 
               <div className="w-full h-px bg-border" />
 
-              <p className="text-lg text-muted-foreground leading-relaxed text-center lg:text-left">
+              <p className="text-lg leading-relaxed text-center text-muted-foreground lg:text-left">
                 {step.description}
               </p>
             </div>
@@ -118,20 +121,22 @@ function StepDetail() {
           {/* Image Area - Right on Large Screens */}
           <div className="lg:w-2/3">
             <div
-              className="relative aspect-video w-full rounded-xl overflow-hidden shadow-2xl bg-black border border-white/10 group cursor-zoom-in"
+              className="relative w-full overflow-hidden bg-black border shadow-2xl aspect-video rounded-xl border-white/10 group cursor-zoom-in"
               onClick={() => setIsFullScreen(true)}
               role="button"
               aria-label="Expand image"
             >
-              <img
-                src={step.image_url ?? undefined}
-                alt={step.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
+              {step.image_url && (
+                <Image
+                  src={step.image_url ?? undefined}
+                  alt={step.title}
+                  className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                />
+              )}
 
               {/* Zoom Hint */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 pointer-events-none">
-                <div className="bg-black/30 text-white px-4 py-2 rounded-full flex items-center gap-2 backdrop-blur-xs">
+              <div className="absolute inset-0 flex items-center justify-center transition-opacity opacity-0 pointer-events-none group-hover:opacity-100 bg-black/20">
+                <div className="flex items-center gap-2 px-4 py-2 text-white rounded-full bg-black/30 backdrop-blur-xs">
                   <Maximize2 className="size-4" />
                   <span className="text-sm font-medium">Click to Expand</span>
                 </div>

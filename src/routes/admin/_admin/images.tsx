@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import type { ImageType } from "@/types/database";
 import { cn } from "@/lib/utils";
+import { Image } from "@lonik/oh-image/react";
 
 const BUCKET_NAME = "timeline-images";
 
@@ -139,13 +140,13 @@ function ImagesComponent() {
   };
 
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-6">Image Management</h1>
+    <div className="container py-8 mx-auto">
+      <h1 className="mb-6 text-3xl font-bold">Image Management</h1>
 
       {/* Image Upload Section */}
-      <Card className="mb-8 p-6">
-        <h2 className="text-2xl font-semibold mb-4">Upload New Image</h2>
-        <div className="grid w-full items-center gap-4">
+      <Card className="p-6 mb-8">
+        <h2 className="mb-4 text-2xl font-semibold">Upload New Image</h2>
+        <div className="grid items-center w-full gap-4">
           <div className="flex flex-col space-y-2">
             <Label htmlFor="picture">Image File</Label>
             <Input
@@ -165,7 +166,7 @@ function ImagesComponent() {
               placeholder="e.g., 'BMW R65 front view'"
             />
           </div>
-          {uploadError && <p className="text-red-500 text-sm">{uploadError}</p>}
+          {uploadError && <p className="text-sm text-red-500">{uploadError}</p>}
           <Button
             className={cn(
               "bg-positive",
@@ -180,27 +181,27 @@ function ImagesComponent() {
       </Card>
 
       {/* Image Gallery */}
-      <h2 className="text-2xl font-semibold mb-4">
+      <h2 className="mb-4 text-2xl font-semibold">
         Existing Images ({dbImages.length})
       </h2>
       {dbImages.length === 0 ? (
         <p>No images found. Upload some to get started!</p>
       ) : (
-        // <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 order-last">
-        <div className="flex justify-end flex-wrap gap-4 flex-row-reverse">
+        // <div className="grid order-last grid-cols-2 gap-4 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        <div className="flex flex-row-reverse flex-wrap justify-end gap-4">
           {dbImages.map((image) => (
-            <Card key={image.id} className="py-4 px-0 gap-2 shadow-none">
-              <CardContent className="px-4 flex flex-col items-center">
-                <img
+            <Card key={image.id} className="gap-2 px-0 py-4 shadow-none">
+              <CardContent className="flex flex-col items-center px-4">
+                <Image
                   src={image.url}
                   alt={image.alt_text || `Image ${image.id}`}
-                  className="size-24 object-cover rounded-md text-center"
+                  className="object-cover text-center rounded-md size-24"
                 />
-                <p className="w-24 pt-2 text-sm text-muted-foreground truncate capitalize">
+                <p className="w-24 pt-2 text-sm capitalize truncate text-muted-foreground">
                   {image.alt_text || "tag missing!"}
                 </p>
               </CardContent>
-              <CardFooter className="py-0 flex flex-col items-center">
+              <CardFooter className="flex flex-col items-center py-0">
                 <Button
                   variant="destructive"
                   size="sm"

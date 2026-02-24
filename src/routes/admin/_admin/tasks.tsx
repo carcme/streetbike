@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Pencil, Trash2, Plus, X, ChevronDown, ChevronUp } from "lucide-react";
 import { uploadImage } from "@/lib/supabase";
 import { ImageSelector } from "@/components/image-selector"; // Import ImageSelector
+import { Image } from "@lonik/oh-image/react";
 
 const phaseSchema = z.object({
   phase_number: z.coerce
@@ -234,7 +235,7 @@ function TasksPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Rebuild Todo's</h1>
           <p className="text-muted-foreground">
@@ -253,9 +254,9 @@ function TasksPage() {
       {(isCreatingPhase || editingPhaseId) && (
         <form
           onSubmit={phaseForm.handleSubmit(onSubmitPhase)}
-          className="p-6 bg-card rounded-lg border space-y-4"
+          className="p-6 space-y-4 border rounded-lg bg-card"
         >
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">
               {editingPhaseId ? "Edit Phase" : "New Phase"}
             </h2>
@@ -275,7 +276,7 @@ function TasksPage() {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <label className="text-sm font-medium">Phase Number</label>
               <Input type="number" {...phaseForm.register("phase_number")} />
@@ -336,10 +337,10 @@ function TasksPage() {
         {phases?.map((phase) => (
           <div
             key={phase.id}
-            className="bg-card rounded-lg border overflow-hidden"
+            className="overflow-hidden border rounded-lg bg-card"
           >
             <div
-              className="p-4 flex items-center justify-between cursor-pointer hover:bg-muted/50"
+              className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50"
               onClick={() => togglePhase(phase.id)}
             >
               <div className="flex items-center gap-3">
@@ -379,7 +380,7 @@ function TasksPage() {
 
             {expandedPhases.has(phase.id) && (
               <div className="p-4 pt-0 space-y-3">
-                <div className="flex justify-between items-center">
+                <div className="flex items-center justify-between">
                   <span className="text-sm font-medium">
                     Tasks ({phase.tasks.length})
                   </span>
@@ -402,9 +403,9 @@ function TasksPage() {
                     phase.tasks.some((t) => t.id === editingTaskId))) && (
                   <form
                     onSubmit={taskForm.handleSubmit(onSubmitTask)}
-                    className="p-4 bg-muted/50 rounded-md space-y-3"
+                    className="p-4 space-y-3 rounded-md bg-muted/50"
                   >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                       <div className="space-y-2">
                         <label className="text-sm font-medium">Task ID</label>
                         <Input
@@ -439,7 +440,7 @@ function TasksPage() {
                         <label className="text-sm font-medium">Status</label>
                         <select
                           {...taskForm.register("status")}
-                          className="px-3 py-2 rounded-md border bg-background w-full"
+                          className="w-full px-3 py-2 border rounded-md bg-background"
                         >
                           <option value="pending">Pending</option>
                           <option value="completed">Completed</option>
@@ -484,11 +485,11 @@ function TasksPage() {
                   {phase.tasks.map((task: TaskWithImages) => (
                     <div
                       key={task.id}
-                      className="p-3 bg-background rounded border flex items-center justify-between"
+                      className="flex items-center justify-between p-3 border rounded bg-background"
                     >
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
-                          <span className="text-xs font-mono bg-muted px-1 rounded">
+                          <span className="px-1 font-mono text-xs rounded bg-muted">
                             {task.task_id}
                           </span>
                           <span
@@ -501,18 +502,18 @@ function TasksPage() {
                             {task.status}
                           </span>
                         </div>
-                        <p className="font-medium text-sm mt-1">{task.task}</p>
+                        <p className="mt-1 text-sm font-medium">{task.task}</p>
                         <p className="text-xs text-muted-foreground">
                           {task.details}
                         </p>
                         {task.images && task.images.length > 0 && (
                           <div className="flex flex-wrap gap-2 mt-2">
                             {task.images.map((img) => (
-                              <img
+                              <Image
                                 key={img.id}
                                 src={img.url}
                                 alt={img.alt_text || "Task image"}
-                                className="w-10 h-10 object-cover rounded-sm"
+                                className="object-cover w-10 h-10 rounded-sm"
                               />
                             ))}
                           </div>

@@ -1,6 +1,7 @@
-import { CheckCircle, Image, LockKeyhole } from "lucide-react";
+import { CheckCircle, ImageIcon, LockKeyhole } from "lucide-react";
 import tasksData from "@/data/tasksData";
 import { cn } from "@/lib/utils";
+import { Image } from "@lonik/oh-image/react";
 
 const RebuildTimeline = () => {
   let complete = false;
@@ -55,7 +56,7 @@ const RebuildTimeline = () => {
                               <>
                                 {/* <span>{task.status}</span> */}
                                 <CheckCircle className="text-green-500 size-4" />
-                                <Image className="size-4 text-muted-foreground" />
+                                <ImageIcon className="size-4 text-muted-foreground" />
                                 {(complete = true)}
                               </>
                             )}
@@ -63,7 +64,7 @@ const RebuildTimeline = () => {
                               <>
                                 {/* <span>{task.status}</span> */}
                                 <CheckCircle className="size-4 text-muted-foreground" />
-                                <Image className="size-4 text-muted-foreground" />
+                                <ImageIcon className="size-4 text-muted-foreground" />
                                 {(complete = false)}
                               </>
                             )}
@@ -92,7 +93,7 @@ const RebuildTimeline = () => {
                   >
                     <div className="relative overflow-hidden rounded-lg aspect-square mechanical-border">
                       {phase.img !== "" ? (
-                        <img
+                        <Image
                           src={phase.img}
                           alt={phase.imgAlt}
                           className="object-cover w-full h-full"

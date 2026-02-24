@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { CheckCircle } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Image } from "@lonik/oh-image/react";
 
 interface ImageSelectorProps {
   initialSelectedImageIds?: string[];
@@ -54,7 +55,7 @@ export function ImageSelector({
     return (
       <div className="grid grid-cols-3 gap-4">
         {[...Array(6)].map((_, i) => (
-          <Skeleton key={i} className="h-32 w-full" />
+          <Skeleton key={i} className="w-full h-32" />
         ))}
       </div>
     );
@@ -69,7 +70,7 @@ export function ImageSelector({
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 max-h-96 overflow-y-auto pr-2">
+    <div className="grid grid-cols-2 gap-4 pr-2 overflow-y-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 max-h-96">
       {images.map((image) => {
         const isSelected = selectedIds.includes(image.id);
         return (
@@ -83,15 +84,15 @@ export function ImageSelector({
             )}
             onClick={() => handleImageClick(image.id)}
           >
-            <CardContent className="flex aspect-square items-center justify-center p-1">
-              <img
+            <CardContent className="flex items-center justify-center p-1 aspect-square">
+              <Image
                 src={image.url}
                 alt={image.alt_text || `Image ${image.id}`}
-                className="object-cover size-28 xs:size-32 md:size-40 lg:size-56 rounded-md"
+                className="object-cover rounded-md size-28 xs:size-32 md:size-40 lg:size-56"
               />
               {isSelected && (
-                <div className="absolute inset-0 bg-primary/20 flex items-center justify-center rounded-md">
-                  <CheckCircle className="h-8 w-8 text-primary-foreground" />
+                <div className="absolute inset-0 flex items-center justify-center rounded-md bg-primary/20">
+                  <CheckCircle className="w-8 h-8 text-primary-foreground" />
                 </div>
               )}
             </CardContent>

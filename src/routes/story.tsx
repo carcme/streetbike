@@ -1,5 +1,6 @@
 import Footer from "@/components/footer";
 import { Header } from "@/components/header";
+import { Image } from "@lonik/oh-image/react";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/story")({
@@ -58,7 +59,7 @@ function RouteComponent() {
             </div>
             <div className="relative order-1 md:order-2">
               <div className="relative overflow-hidden rounded-lg aspect-4/3 mechanical-border group">
-                <img
+                <Image
                   src="/shedbike.webp"
                   alt="Barn Find"
                   className="object-cover w-full h-full duration-300 opacity-80 group-hover:opacity-100 group-hover:scale-105"

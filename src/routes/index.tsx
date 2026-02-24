@@ -13,6 +13,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Image } from "@lonik/oh-image/react";
 import StatsGrid from "@/components/statsGrid";
 import Specifications from "@/components/specs";
 import Updates from "@/components/updates";
@@ -20,7 +21,6 @@ import { Badge } from "@/components/ui/badge";
 import { Header } from "@/components/header";
 import Footer from "@/components/footer";
 import PersonalStats from "@/components/personal-stats";
-import { tr } from "zod/v4/locales";
 
 const imageList = [
   "concept.webp",
@@ -88,9 +88,8 @@ function Index() {
               <CarouselItem key={index}>
                 <div className="relative p-0">
                   <div className="relative overflow-hidden border shadow-2xl rounded-xl border-white/10 aspect-video">
-                    <img
+                    <Image
                       src={src}
-                      loading="lazy"
                       alt={`Concept bike ${index + 1}`}
                       className="object-cover w-full h-full"
                     />
