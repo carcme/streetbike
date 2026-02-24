@@ -129,8 +129,7 @@ function PhaseDetailComponent() {
                                   alt={
                                     image.alt_text || `Image for ${task.task}`
                                   }
-                                  aria-describedby={task.task}
-                                  className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                                                                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                                 />
                               </AspectRatio>
                             </Card>
@@ -144,8 +143,7 @@ function PhaseDetailComponent() {
                             </DialogHeader>
                             <Image
                               src={image.url}
-                              aria-describedby={task.task}
-                              alt={
+                                                            alt={
                                 image.alt_text ||
                                 `Full screen image for ${task.task}`
                               }

@@ -68,7 +68,6 @@ export function Header() {
                 <Sheet>
                   <SheetTrigger
                     asChild
-                    aria-describedby="Open menu"
                     aria-label="Open menu"
                   >
                     <Menu />

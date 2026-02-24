@@ -81,7 +81,7 @@ const Updates = ({ limited = false }: { limited?: boolean }) => {
 
         <div className="mt-8 text-center">
           <Link to="/updates">
-            <Button variant={"secondary"}>View All Updates</Button>
+            <Button>View All Updates</Button>
           </Link>
         </div>
       </div>

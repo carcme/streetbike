@@ -84,3 +84,6 @@ This project is a labor of love, combining a passion for motorcycles with the ar
 - **Palette Generator:** [tweakcn.com](https://tweakcn.com/editor/theme)
 
 - **Palette Preview:** [Add URL as Custom](https://tweakcn.com/editor/theme?p=custom)
+
+Mobile ![Mobile](./public/perfMobile.png "Mobile")
+Desktop![Desktop](./public/perfDesktop.png "Desktop")

@@ -124,7 +124,9 @@ function StepDetail() {
               className="relative w-full overflow-hidden bg-black border shadow-2xl aspect-video rounded-xl border-white/10 group cursor-zoom-in"
               onClick={() => setIsFullScreen(true)}
               role="button"
+              tabIndex={0}
               aria-label="Expand image"
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setIsFullScreen(true); }}
             >
               {step.image_url && (
                 <Image
