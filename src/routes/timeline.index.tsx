@@ -33,7 +33,7 @@ function Timeline() {
       <Header />
       <div className="px-4 space-y-8">
         <div className="mb-8 text-center">
-          <h3 className="text-transparent page-title bg-linear-to-r from-white to-gray-500 bg-clip-text">
+          <h3 className="page-title text-foreground">
             <span className="text-primary">Build</span> Timeline
           </h3>
           <p className="text-muted-foreground">
@@ -64,7 +64,7 @@ function Timeline() {
                         variant={
                           step.category === "finish" ? "default" : "secondary"
                         }
-                        className="text-xs font-bold uppercase text-primary"
+                        className="text-xs font-bold uppercase rounded-lg text-primary-foreground"
                       >
                         {step.category}
                       </Badge>

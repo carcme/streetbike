@@ -10,7 +10,7 @@
     ],
     "module": "ESNext",
     "types": [
-      "vite/client"
+     "@lonik/oh-image/client", "vite/client"
     ],
     "skipLibCheck": true,
     /* Bundler mode */
@@ -35,6 +35,6 @@
     }
   },
   "include": [
-    "src"
+    "src", "@lonik/oh-image/client"
   ]
 }

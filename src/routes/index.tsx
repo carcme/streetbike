@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { lazy, Suspense } from "react";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -15,12 +16,18 @@ import {
 } from "@/components/ui/carousel";
 import { Image } from "@lonik/oh-image/react";
 import StatsGrid from "@/components/statsGrid";
-import Specifications from "@/components/specs";
-import Updates from "@/components/updates";
 import { Badge } from "@/components/ui/badge";
 import { Header } from "@/components/header";
-import Footer from "@/components/footer";
-import PersonalStats from "@/components/personal-stats";
+
+// import Specifications from "@/components/specs";
+// import Updates from "@/components/updates";
+// import PersonalStats from "@/components/personal-stats";
+// import Footer from "@/components/footer";
+
+const Specifications = lazy(() => import("@/components/specs"));
+const Updates = lazy(() => import("@/components/updates"));
+const PersonalStats = lazy(() => import("@/components/personal-stats"));
+const Footer = lazy(() => import("@/components/footer"));
 
 const imageList = [
   "concept.webp",
@@ -104,8 +111,11 @@ function Index() {
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>
+
         <div id={"specs"}>
-          <Specifications />
+          <Suspense fallback={null}>
+            <Specifications />
+          </Suspense>
         </div>
 
         <div id="updates" className="pt-16">
@@ -116,11 +126,15 @@ function Index() {
             </p>
           </div>
 
-          <Updates limited={true} />
+          <Suspense fallback={null}>
+            <Updates limited={true} />
+          </Suspense>
         </div>
         {/* <Newsletter /> */}
       </div>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
     </>
   );
 }

@@ -5,7 +5,7 @@ import { Badge } from "./ui/badge";
 import { Clock, X } from "lucide-react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Image } from "@lonik/oh-image/react";
 dayjs.extend(relativeTime);
 
@@ -36,12 +36,7 @@ const Updates = ({ limited = false }: { limited?: boolean }) => {
             return (
               <article
                 key={section.title}
-                onClick={useCallback(
-                  () => setSelected(section),
-                  [
-                    /* deps */
-                  ],
-                )}
+                onClick={() => setSelected(section)}
                 className="p-4 transition-colors rounded-lg cursor-pointer mechanical-border hover:border-primary/80 group"
               >
                 <div className="flex items-start gap-4">
@@ -49,7 +44,7 @@ const Updates = ({ limited = false }: { limited?: boolean }) => {
                     {section.date}
                   </div>
                   <div className="flex-1">
-                    <h3 className="mb-2 text-xl transition-colors text-foreground font-display group-hover:text-primary">
+                    <h3 className="mb-2 text-xl transition-colors text-foreground font-display group-hover:text-primary group-hover:font-bold">
                       {section.title}
                     </h3>
                     <p className="mb-4 text-sm text-muted-foreground line-clamp-2">
@@ -60,14 +55,19 @@ const Updates = ({ limited = false }: { limited?: boolean }) => {
                         <Clock size={14} className="text-primary" />
                         {timeSince}
                       </span>
-                      <Badge variant={"secondary"}>{section.tag}</Badge>
+                      <Badge
+                        variant={"secondary"}
+                        className="text-white capitalize bg-secondary group-hover:bg-primary"
+                      >
+                        {section.tag}
+                      </Badge>
                     </div>
                   </div>
                   <div className="hidden w-24 h-24 overflow-hidden rounded-lg xs:block mechanical-border shrink-0">
-                    <img
+                    <Image
                       src={section.imageUrl}
                       alt="Update"
-                      className="object-cover w-full h-full"
+                      className="object-cover w-full h-full group-hover:scale-105"
                     />
                   </div>
                 </div>

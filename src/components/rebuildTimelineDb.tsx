@@ -112,7 +112,7 @@ const RebuildTimelineDB = () => {
                                   )}
                                 </div>
                               </div>
-                              <p className="col-span-11 text-xs text-gray-400">
+                              <p className="col-span-11 text-xs text-shadow-muted-foreground">
                                 {task.details}
                               </p>
                             </div>

@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router";
 
 const Footer = () => {
   return (
-    <footer className="w-full border-t border-foreground/10 py-4">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="w-full py-4 border-t border-foreground/10">
+      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="flex flex-col items-end ">
           <div className="flex items-center space-x-2">
             <Link to="/" className="flex font-bold">
@@ -13,12 +13,12 @@ const Footer = () => {
               {/* <span>MotoFighter</span> */}
             </Link>
           </div>
-          <p className="text-gray-400 text-sm">
+          <p className="text-sm text-muted-foreground">
             Built with patience and coffee by
             <a
               href="https://hammer3.com"
               target="_blank"
-              className="text-primary/80 hover:underline"
+              className="text-primary hover:underline"
             >
               {" "}
               Hammer3{" "}
