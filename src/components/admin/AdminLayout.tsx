@@ -27,15 +27,15 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="flex min-h-screen">
       {/* Sidebar */}
 
-      <aside className="w-64 bg-card border-r flex flex-col">
+      <aside className="flex flex-col w-64 border-r bg-card">
         <div className="p-4 border-b">
           <h1 className="text-xl font-bold">
-            <span className="text-gold">Rob's</span> Playground
+            <span className="text-primary">Rob's</span> Playground
           </h1>
-          <p className="text-sm text-muted-foreground truncate">
+          <p className="text-sm truncate text-muted-foreground">
             {user?.email}
           </p>
         </div>
@@ -51,7 +51,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                 to={item.to}
                 className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   isActive
-                    ? "bg-gold text-primary-foreground"
+                    ? "bg-primary text-primary-foreground"
                     : "hover:bg-muted"
                 }`}
               >
@@ -62,18 +62,18 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           })}
         </nav>
 
-        <div className="px-4 border-t space-y-2">
+        <div className="px-4 space-y-2 border-t">
           <Link
             to="/"
             target="_blank"
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium hover:bg-muted transition-colors"
+            className="flex items-center gap-3 px-3 py-2 text-sm font-medium transition-colors rounded-md hover:bg-muted"
           >
             <Home className="w-4 h-4" />
             View Site
           </Link>
           <Button
             variant="outline"
-            className="w-full justify-start gap-3"
+            className="justify-start w-full gap-3"
             onClick={handleSignOut}
           >
             <LogOut className="w-4 h-4" />
@@ -83,7 +83,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 p-8 bg-background overflow-auto">{children}</main>
+      <main className="flex-1 p-8 overflow-auto bg-background">{children}</main>
     </div>
   );
 }

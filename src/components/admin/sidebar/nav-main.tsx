@@ -40,7 +40,7 @@ export function NavMain() {
                   to={item.to}
                   className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                     isActive
-                      ? "bg-gold text-primary-foreground"
+                      ? "bg-primary text-primary-foreground"
                       : "hover:bg-muted"
                   }`}
                 >

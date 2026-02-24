@@ -39,13 +39,13 @@ function PhaseDetailComponent() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto py-8">Loading phase details...</div>
+      <div className="container py-8 mx-auto">Loading phase details...</div>
     );
   }
 
   if (isError || !phases) {
     return (
-      <div className="container mx-auto py-8 text-red-500">
+      <div className="container py-8 mx-auto text-red-500">
         Error loading phase details.
       </div>
     );
@@ -55,8 +55,8 @@ function PhaseDetailComponent() {
 
   if (!phase) {
     return (
-      <div className="container mx-auto py-8">
-        <h1 className="text-3xl font-bold mb-4">Phase Not Found</h1>
+      <div className="container py-8 mx-auto">
+        <h1 className="mb-4 text-3xl font-bold">Phase Not Found</h1>
         <p>The requested phase could not be found.</p>
         <Button onClick={() => navigate({ to: "/tasksdb" })} className="mt-4">
           Back to Timeline
@@ -66,9 +66,9 @@ function PhaseDetailComponent() {
   }
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container py-8 mx-auto">
       <Header />
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+      <div className="max-w-6xl px-4 pt-4 mx-auto sm:px-6 lg:px-8">
         <Button
           onClick={() => navigate({ to: "/tasksdb" })}
           variant="outline"
@@ -77,8 +77,8 @@ function PhaseDetailComponent() {
           &larr; Back to Timeline
         </Button>
 
-        <h1 className="text-4xl font-bold mb-4">{phase.title}</h1>
-        <p className="text-muted-foreground mb-8">Duration: {phase.duration}</p>
+        <h1 className="mb-4 text-4xl font-bold">{phase.title}</h1>
+        <p className="mb-8 text-muted-foreground">Duration: {phase.duration}</p>
 
         <div className="space-y-12">
           {phase.tasks.length === 0 ? (
@@ -90,12 +90,12 @@ function PhaseDetailComponent() {
               <Card key={task.id} className="p-6">
                 <CardHeader className="p-0 mb-4">
                   <CardTitle className="text-2xl font-semibold">
-                    <div className="flex flex-col items-start sm:items-center sm:flex-row gap-2">
+                    <div className="flex flex-col items-start gap-2 sm:items-center sm:flex-row">
                       <span
                         className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
                           task.status === "completed"
                             ? "bg-green-600 text-white"
-                            : "bg-gold text-background"
+                            : "bg-primary text-background"
                         }`}
                       >
                         {task.status}
@@ -115,13 +115,13 @@ function PhaseDetailComponent() {
                   )}
                   <div className="mb-4"></div>
 
-                  <h3 className="text-xl font-semibold mb-4">Task Images</h3>
+                  <h3 className="mb-4 text-xl font-semibold">Task Images</h3>
                   {task.images && task.images.length > 0 ? (
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
                       {task.images.map((image: ImageType) => (
                         <Dialog key={image.id}>
                           <DialogTrigger asChild>
-                            <Card className="cursor-pointer overflow-hidden py-0  group">
+                            <Card className="py-0 overflow-hidden cursor-pointer group">
                               <AspectRatio ratio={16 / 9}>
                                 <img
                                   src={image.url}
@@ -134,7 +134,7 @@ function PhaseDetailComponent() {
                               </AspectRatio>
                             </Card>
                           </DialogTrigger>
-                          <DialogContent className="max-w-6xl max-h-96 flex flex-col items-center justify-center p-0">
+                          <DialogContent className="flex flex-col items-center justify-center max-w-6xl p-0 max-h-96">
                             <DialogHeader className="sr-only">
                               <DialogTitle>{task.task}</DialogTitle>
                               <DialogDescription>
@@ -148,7 +148,7 @@ function PhaseDetailComponent() {
                                 image.alt_text ||
                                 `Full screen image for ${task.task}`
                               }
-                              className="max-w-full max-h-full object-cover"
+                              className="object-cover max-w-full max-h-full"
                             />
                             <DialogFooter className="sm:justify-start">
                               <DialogClose asChild>
@@ -160,7 +160,7 @@ function PhaseDetailComponent() {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-muted-foreground italic">
+                    <p className="italic text-muted-foreground">
                       No images available for this task.
                     </p>
                   )}

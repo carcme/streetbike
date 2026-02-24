@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import Footer from "@/components/footer";
 import { Header } from "@/components/header";
 import { ModeToggle } from "@/components/mode-toggle";
+import { Badge } from "@/components/ui/badge";
 
 export const Route = createFileRoute("/theme")({
   component: RouteComponent,
@@ -16,7 +17,7 @@ function RouteComponent() {
     <>
       <Header />
 
-      <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center gap-10 p-10 transition-colors duration-500">
+      <div className="flex flex-col items-center justify-center min-h-screen gap-10 p-10 transition-colors duration-500 bg-background text-foreground">
         <div className="flex items-center gap-3">
           <Label htmlFor="darkmode">Dark Mode</Label>
           <ModeToggle />
@@ -31,41 +32,30 @@ function RouteComponent() {
               placeholder="Search Berlin landmarks..."
               className="border-input"
             />
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex flex-wrap gap-2">
               <Button variant="default">Primary</Button>
               <Button variant="secondary">Secondary</Button>
               <Button variant="destructive">Destructive</Button>
               <Button variant="positive">Positive</Button>
               <Button variant="outline">Outline</Button>
               <Button variant="ghost">Ghost</Button>
-              {/* <Button variant="hover">Hover</Button>
-            <Button variant="berlin">Berlin</Button> */}
             </div>
-            <div className="flex items-center justify-center h-20 w-full bg-linear-to-tl from-goldLight to-goldDark text-primary rounded-md font-semibold">
-              light
+            <div className="flex items-center justify-center w-full h-20 font-semibold rounded-md bg-linear-to-tl from-brand-primary to-brand-secondary text-primary">
+              brand primary to secondary
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
-              <div className="bg-goldLight  text-background p-3 rounded-md text-center font-medium">
-                goldLight
-              </div>
-              <div className="bg-goldDark  text-background p-3 rounded-md text-center font-medium">
-                goldDark
-              </div>
-              <div className="bg-goldenrod secondary text-background p-3 rounded-md text-center font-medium">
-                Bright Yellow
-              </div>
-              <div className="bg-goldSatin text-background p-3 rounded-md text-center font-medium">
-                goldSatin
-              </div>
-              <div className="bg-goldVegas text-background p-3 rounded-md text-center font-medium">
-                goldVegas
-              </div>
-              <div className="bg-goldenrod text-background p-3 rounded-md text-center font-medium">
-                goldenrod
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-center text-sm text-muted-foreground border-t border-border pt-4">
+            <Badge variant={"outline"}>Buttons</Badge>
+
+            <Button>Primary Button</Button>
+            <Button variant={"secondary"}>Secondary</Button>
+            <Button variant={"destructive"}>Destructive Button</Button>
+            <Button variant={"positive"}>Positive Button</Button>
+            <Button variant={"ghost"}>Ghost Button</Button>
+            <Button variant={"link"}>Link Button</Button>
+            <Button variant={"outline"}>Outline Button</Button>
+            <Button variant={"shed"}>Shed Button</Button>
+
+            <div className="flex flex-col items-center justify-center pt-4 text-sm border-t text-muted-foreground border-border">
               <p>
                 Inspired by Berlin’s industrial past, Bauhaus design, and
                 vibrant nightlife.

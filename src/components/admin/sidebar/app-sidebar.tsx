@@ -29,11 +29,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className="data-[slot=sidebar-menu-button]:p-1.5!"
             >
               <Link to="/">
                 <IconInnerShadowTop className="size-5!" />
-                <span className="text-gold">Rob's</span> Playground
+                <span className="text-primary">Rob's</span> Playground
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -45,18 +45,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       <SidebarFooter>
-        <div className="px-4 border-t space-y-2">
+        <div className="px-4 space-y-2 border-t">
           <Link
             to="/"
             target="_blank"
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium hover:bg-muted transition-colors"
+            className="flex items-center gap-3 px-3 py-2 text-sm font-medium transition-colors rounded-md hover:bg-muted"
           >
             <Home className="w-4 h-4" />
             View Site
           </Link>
           <Button
             variant="outline"
-            className="w-full justify-start gap-3"
+            className="justify-start w-full gap-3"
             onClick={handleSignOut}
           >
             <LogOut className="w-4 h-4" />

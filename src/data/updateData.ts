@@ -2,7 +2,7 @@ export const timelineProgress = {
   section: [
     {
       title: "ROB - This isn't on the database yet",
-      date: "07 OCT 2026",
+      date: "07 OCT 2025",
       tag: "acquisition",
       imageUrl:
         "https://i.ytimg.com/vi/PUsSJXulRPk/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCnbQlT5e-CZ7zN081vkboD7u-RYQ",
@@ -11,7 +11,7 @@ export const timelineProgress = {
     },
     {
       title: "Carburetors Cleaned & Rebuilt",
-      date: "15 NOV 2026",
+      date: "15 NOV 2025",
       tag: "engine",
       imageUrl:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSljdZyln_Yokl7sSFrX8VAj8-Z8oppNIkiKA&s",
@@ -20,7 +20,7 @@ export const timelineProgress = {
     },
     {
       title: "Compression Test Results",
-      date: "02 NOV 2026",
+      date: "02 NOV 2025",
       tag: "diagnostics",
       imageUrl:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSljdZyln_Yokl7sSFrX8VAj8-Z8oppNIkiKA&s",
@@ -29,7 +29,7 @@ export const timelineProgress = {
     },
     {
       title: "First Look: The Shed Discovery",
-      date: "07 OCT 2026",
+      date: "01 FEB 2026",
       tag: "acquisition",
       imageUrl: "shedbike.webp",
 
@@ -38,7 +38,7 @@ export const timelineProgress = {
     },
     {
       title: "Filler 1",
-      date: "07 OCT 2026",
+      date: "07 Sept 2025",
       tag: "acquisition",
       imageUrl: "bmw.svg",
       description:
@@ -46,7 +46,7 @@ export const timelineProgress = {
     },
     {
       title: "Filler 2",
-      date: "07 OCT 2026",
+      date: "07 Aug 2025",
       tag: "acquisition",
       imageUrl: "bmw.svg",
       description:

@@ -18,14 +18,14 @@ function RouteComponent() {
         <div className="absolute inset-0">
           <div className="relative text-center">
             <h1 className="page-title">
-              Why is<span className="text-gold"> Hagen</span>
+              Why is<span className="text-primary"> Hagen</span>
             </h1>
-            <p className="italic text-sm sm:text-lg lg:text-3xl text-center font-extralight tracking-widest pt-4 pb-8">
-              <span className="text-gold">"My Job can be done</span> by Rain"
+            <p className="pt-4 pb-8 text-sm italic font-bold tracking-widest text-center sm:text-lg lg:text-3xl">
+              <span className="text-primary">"My Job can be done</span> by Rain"
             </p>
           </div>
-          <div className="max-w-6xl w-4/6 px-4 mx-auto">
-            <p className="text-justify font-light tracking-wide pb-8">
+          <div className="w-4/6 max-w-6xl px-4 mx-auto">
+            <p className="pb-8 font-light tracking-wide text-justify">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit.
               Recusandae cupiditate repellendus vero dignissimos? Sunt,
               accusantium alias necessitatibus perferendis pariatur asperiores

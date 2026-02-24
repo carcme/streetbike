@@ -11,26 +11,26 @@ function RouteComponent() {
     <>
       <Header />
       <section className="pb-8">
-        <div className="page-title text-center mb-8">
+        <div className="mb-8 text-center page-title">
           <h3 className="">
-            <span className="text-gold">The How </span>and Why
+            <span className="text-primary">The How </span>and Why
           </h3>
         </div>
-        <p className="italic text-center font-bold pt-4 pb-8">
+        <p className="pt-4 pb-8 italic font-bold text-center">
           From the Shadows of the Shed
-          <span className="text-gold"> to the Center of the Circuit</span>
+          <span className="text-primary"> to the Center of the Circuit</span>
         </p>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 animate-bottom-in">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="max-w-6xl px-4 mx-auto sm:px-6 lg:px-8 animate-bottom-in">
+          <div className="grid items-center gap-12 md:grid-cols-2">
             <div className="order-2 md:order-1">
-              <div className="inline-block px-3 py-1 bg-rust/50 dark:text-white text-background rounded-full text-xs uppercase tracking-wider mb-4 border border-rust">
+              <div className="inline-block px-3 py-1 mb-4 text-xs tracking-wider uppercase border rounded-full bg-primary/70 text-background border-primary">
                 The Discovery
               </div>
-              <h2 className="font-display text-4xl text-foreground mb-6">
+              <h2 className="mb-6 text-4xl font-display text-foreground">
                 Twenty Years in the Dark
               </h2>
-              <div className="space-y-4 text-gray-400 leading-relaxed">
+              <div className="space-y-4 leading-relaxed text-muted-foreground">
                 <p>
                   Found tucked behind rusted garden tools and forgotten boxes,
                   this 1980s BMW R65 sat silently for two decades. The tires
@@ -48,34 +48,36 @@ function RouteComponent() {
                 </p>
               </div>
 
-              <div className="mt-8 flex items-center gap-4 bg-linear-to-b from-foreground/5 to-transparent dark:bg-background px-4 py-2 rounded-lg">
-                <div className="h-px flex-1 bg-linear-to-r from-gold to-transparent"></div>
-                <span className="text-gold font-display text-sm tracking-widest">
+              <div className="flex items-center gap-4 px-4 py-2 mt-8 rounded-lg">
+                <div className="flex-1 h-px "></div>
+                <span className="text-sm tracking-widest text-primary font-display">
                   EST. 2024
                 </span>
-                <div className="h-px flex-1 bg-linear-to-l from-gold to-transparent"></div>
+                <div className="flex-1 h-px"></div>
               </div>
             </div>
-            <div className="order-1 md:order-2 relative">
-              <div className="aspect-4/3 rounded-lg overflow-hidden mechanical-border relative group">
+            <div className="relative order-1 md:order-2">
+              <div className="relative overflow-hidden rounded-lg aspect-4/3 mechanical-border group">
                 <img
                   src="/shedbike.webp"
                   alt="Barn Find"
-                  className="w-full h-full object-cover opacity-80 group-hover:opacity-100 hover:scale-105 duration-300"
+                  className="object-cover w-full h-full duration-300 opacity-80 group-hover:opacity-100 group-hover:scale-105"
                 />
 
+                <div className="absolute inset-0 transition-opacity duration-300 ease-in-out bg-black opacity-50 group-hover:opacity-0 "></div>
+
                 <div className="absolute bottom-4 left-4 right-4">
-                  <p className="text-background/80 dark:text-foreground font-display text-lg">
+                  <p className="z-10 text-lg text-white font-display">
                     Day 0: Discovery
                   </p>
-                  <p className="text-background/80 dark:text-foreground text-sm">
-                    Covered in dust, full of potential
+                  <p className="text-sm text-white">
+                    Covered in Dust, Full of Potential
                   </p>
                 </div>
               </div>
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-motor-dark mechanical-border rounded-lg flex items-center justify-center border-2 border-gold/20">
+              <div className="absolute flex items-center justify-center w-24 h-24 border-2 rounded-lg -bottom-4 -right-4 bg-motor-dark mechanical-border border-primary">
                 <div className="text-center">
-                  <div className="text-2xl font-display text-gold">1984</div>
+                  <div className="text-2xl font-display text-primary">1984</div>
                   <div className="text-xs text-muted-foreground">
                     Model Year
                   </div>

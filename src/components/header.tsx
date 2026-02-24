@@ -20,18 +20,18 @@ export function Header() {
   const { isAuthenticated } = useAuth();
   return (
     <header className="sticky top-0 z-50 w-full border-b">
-      <div className="mx-auto max-w-6xl bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 ">
-        <div className="flex h-14 flex-row gap-8 items-center mx-4">
+      <div className="max-w-6xl mx-auto bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 ">
+        <div className="flex flex-row items-center gap-8 mx-4 h-14">
           <div className="grow-0">
             <Link to="/" className="flex font-bold">
               <span className="text-lg">
-                Project<span className="text-gold">R65</span>
+                Project<span className="text-primary">R65</span>
               </span>
             </Link>
           </div>
           <div className="grow">
             <nav
-              className="hidden md:flex items-start space-x-3 lg:space-x-6 text-sm font-medium"
+              className="items-start hidden space-x-3 text-sm font-medium md:flex lg:space-x-6"
               aria-label="Main navigation"
             >
               {headerItems.map((item) => (
@@ -46,22 +46,22 @@ export function Header() {
             </nav>
           </div>
           <div className="grow-0">
-            <div className="flex justify-center items-center gap-2">
-              <Button variant="ghost" size="icon" aria-label="View About me">
-                <Link to="/about">
+            <div className="flex items-center justify-center gap-2">
+              <Link to="/about">
+                <Button variant="ghost" size="icon" aria-label="View About me">
                   <UserSearch />
-                </Link>
-              </Button>
+                </Button>
+              </Link>
               <ModeToggle />
-              <Button variant="ghost" size="icon">
-                <Link to="/admin" aria-label="Admin Panel">
+              <Link to="/admin" aria-label="Admin Panel">
+                <Button variant="ghost" size="icon">
                   {isAuthenticated && (
-                    <ShieldCheck className="size-5 text-green-600" />
+                    <ShieldCheck className="text-green-600 size-5" />
                   )}
                   {!isAuthenticated && <Shield className="size-5" />}
                   <span className="sr-only">To Admin Panel</span>
-                </Link>
-              </Button>
+                </Button>
+              </Link>
 
               {/* add md:hidden to this div */}
               <div className="block md:hidden">
@@ -76,21 +76,21 @@ export function Header() {
                   <SheetContent className="top-14 rounded-l-2xl max-h-fit">
                     <SheetHeader>
                       <SheetTitle>
-                        Project <span className="text-gold">R65</span>
+                        Project <span className="text-primary">R65</span>
                       </SheetTitle>
                     </SheetHeader>
-                    <div className="grid flex-1 auto-rows-min gap-4 px-2">
+                    <div className="grid flex-1 gap-4 px-2 auto-rows-min">
                       {headerItems.map((item) => (
                         <Link
                           key={item.title}
                           to={item.href}
-                          className="transition-colors hover:text-gold group"
+                          className="transition-colors hover:text-primary group"
                         >
                           <div className="flex flex-col text-sm">
-                            <div className="leading-none font-medium px-2 group-hover:underline">
+                            <div className="px-2 font-medium leading-none group-hover:underline">
                               {item.title}
                             </div>
-                            <div className="text-muted-foreground line-clamp-2 px-2">
+                            <div className="px-2 text-muted-foreground line-clamp-2">
                               {item.description}
                             </div>
                           </div>

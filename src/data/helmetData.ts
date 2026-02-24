@@ -40,8 +40,8 @@ export interface HelmetData {
 const helmetData: HelmetData = {
   home: {
     title: "Project R65 | BMW R65 Custom Build & Restoration",
-    desc: "Follow the journey of restoring and customizing a classic BMW R65 motorcycle. Detailed build logs, technical specs, and a high-quality gallery of the Street Fighter project",
-    keys: "BMW R65, custom motorcycle, cafe racer, street fighter, motorcycle restoration, BMW motorcycle build, R65 restoration",
+    desc: "Follow the journey of restoring and customizing a classic BMW R65 motorcycle. Detailed build logs, technical specs, and a high-quality gallery of the Coffee Racer project",
+    keys: "BMW R65, custom motorcycle, cafe racer, Coffee Racer, street fighter, motorcycle restoration, BMW motorcycle build, R65 restoration",
   },
   common: {
     twitter: {
@@ -57,7 +57,7 @@ const helmetData: HelmetData = {
       imageWidth: "668",
       imageHeight: "350",
       imageAlt: "[Translate to English:]",
-      desc: "Follow the journey of restoring and customizing a classic BMW R65 motorcycle. Detailed build logs, technical specs, and a high-quality gallery of the Street Fighter project",
+      desc: "Follow the journey of restoring and customizing a classic BMW R65 motorcycle. Detailed build logs, technical specs, and a high-quality gallery of the Street Fighter (Coffee Racer) project",
     },
     charset: "utf-8",
     robots: "index, follow, max-image-preview:large",

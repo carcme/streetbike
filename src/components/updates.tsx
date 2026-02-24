@@ -1,54 +1,58 @@
 import { timelineProgress } from "@/data/updateData";
 import { Link } from "@tanstack/react-router";
 import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
+import { Clock } from "lucide-react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { useMemo } from "react";
+dayjs.extend(relativeTime);
 
-const Updates = () => {
+const Updates = ({ limited = false }: { limited?: boolean }) => {
+  const numItems = limited ? 3 : timelineProgress.section.length;
+
+  const sortedSections = useMemo(() => {
+    return [...timelineProgress.section].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    );
+  }, [timelineProgress.section]);
+
   return (
-    <section className="pt-16 bg-background pb-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8">
-          <h2 className="font-display text-4xl text-foreground mb-2">
-            Build Updates
-          </h2>
-          <p className="text-muted-foreground">
-            Latest progress from the garage
-          </p>
-        </div>
-
+    <section className="py-8 bg-background">
+      <div className="max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
         <div className="space-y-4">
-          {timelineProgress.section.slice(0, 3).map((section) => {
+          {sortedSections.slice(0, numItems).map((section) => {
+            const timeSince = dayjs(section.date).fromNow();
+            console.log("🚀 ~ Updates ~ timeSince:", timeSince);
             return (
               <article
                 key={section.title}
-                className="mechanical-border rounded-lg p-2 sm:p-6 hover:border-gold/30 transition-colors cursor-pointer group"
+                className="p-4 transition-colors rounded-lg cursor-pointer mechanical-border hover:border-primary/80 group"
               >
                 <div className="flex items-start gap-4">
-                  <div className="shrink-0 size-16 rounded-lg bg-foreground/30 group-hover:bg-gold  flex items-center justify-center text-muted-background dark:text-background font-bold text-sm">
+                  <div className="flex items-center justify-center text-sm font-bold text-center rounded-lg shrink-0 size-16 bg-secondary group-hover:bg-primary text-primary-foreground">
                     {section.date}
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-foreground font-display text-xl mb-2 group-hover:text-gold transition-colors">
+                    <h3 className="mb-2 text-xl transition-colors text-foreground font-display group-hover:text-primary">
                       {section.title}
                     </h3>
-                    <p className="text-gray-400 text-sm mb-4 line-clamp-2">
+                    <p className="mb-4 text-sm text-gray-400 line-clamp-2">
                       {section.description}
                     </p>
                     <div className="flex items-center gap-4 text-xs text-gray-500">
                       <span className="flex items-center gap-1">
-                        <i data-lucide="clock" className="w-3 h-3"></i>4 hours
-                        ago
+                        <Clock size={14} className="text-primary" />
+                        {timeSince}
                       </span>
-                      <span className="flex items-center gap-1">
-                        <i data-lucide="tag" className="w-3 h-3"></i>
-                        {section.tag}
-                      </span>
+                      <Badge variant={"secondary"}>{section.tag}</Badge>
                     </div>
                   </div>
-                  <div className="hidden xs:block w-24 h-24 rounded-lg overflow-hidden mechanical-border shrink-0">
+                  <div className="hidden w-24 h-24 overflow-hidden rounded-lg xs:block mechanical-border shrink-0">
                     <img
                       src={section.imageUrl}
                       alt="Update"
-                      className="w-full h-full object-cover"
+                      className="object-cover w-full h-full"
                     />
                   </div>
                 </div>
@@ -59,12 +63,7 @@ const Updates = () => {
 
         <div className="mt-8 text-center">
           <Link to="/updates">
-            <Button
-              variant={"secondary"}
-              className="hover:bg-gold bg-goldSatin text-motor-dark transition-colors duration-300"
-            >
-              View All Updates
-            </Button>
+            <Button variant={"secondary"}>View All Updates</Button>
           </Link>
         </div>
       </div>

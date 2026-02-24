@@ -8,7 +8,7 @@ import { Link } from "@tanstack/react-router";
 export function SiteHeader() {
   return (
     <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
-      <div className="flex w-full items-center gap-1 lg:gap-2 lg:px-6">
+      <div className="flex items-center w-full gap-1 lg:gap-2 lg:px-6">
         <SidebarTrigger className="-ml-1" />
         <Separator
           orientation="vertical"
@@ -16,11 +16,11 @@ export function SiteHeader() {
         />
         <Link to="/">
           <h1 className="text-base font-medium">
-            <span className="text-gold">R65</span> Playground
+            <span className="text-primary">R65</span> Playground
           </h1>
         </Link>
 
-        <div className="ml-auto flex items-center gap-2">
+        <div className="flex items-center gap-2 ml-auto">
           <ModeToggle />
           <Button variant="ghost" asChild size="icon-lg" className="flex">
             <a

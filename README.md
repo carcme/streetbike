@@ -78,3 +78,9 @@ The codebase is organized to be clean, modular, and easy to navigate.
 ---
 
 This project is a labor of love, combining a passion for motorcycles with the art of web development.
+
+#### Palette Generator
+
+- **Palette Generator:** [tweakcn.com](https://tweakcn.com/editor/theme)
+
+- **Palette Preview:** [Add URL as Custom](https://tweakcn.com/editor/theme?p=custom)

@@ -84,7 +84,7 @@ function StatsPage() {
 
       {/* Stats Section */}
       <section className="space-y-4">
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">Quick Stats</h2>
           {!isCreatingStat && !editingStatId && (
             <Button
@@ -103,9 +103,9 @@ function StatsPage() {
         {(isCreatingStat || editingStatId) && (
           <form
             onSubmit={statForm.handleSubmit(onSubmitStat)}
-            className="p-4 bg-card rounded-lg border space-y-3"
+            className="p-4 space-y-3 border rounded-lg bg-card"
           >
-            <div className="flex justify-between items-center ">
+            <div className="flex items-center justify-between ">
               <h3 className="font-medium">
                 {editingStatId ? "Edit Stat" : "New Stat"}
               </h3>
@@ -123,7 +123,7 @@ function StatsPage() {
                 <X className="w-4 h-4" />
               </Button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
+            <div className="grid items-end grid-cols-1 gap-3 md:grid-cols-3">
               <div className="space-y-2">
                 <label className="text-sm font-medium">Label</label>
                 <Input
@@ -137,7 +137,7 @@ function StatsPage() {
                 <Input {...statForm.register("value")} placeholder="e.g., 3" />
               </div>
 
-              <div className="flex items-center gap-4 h-10">
+              <div className="flex items-center h-10 gap-4">
                 <label className="text-sm font-medium">Featured</label>
                 <Controller
                   name="featured"
@@ -157,17 +157,17 @@ function StatsPage() {
           </form>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
           {stats?.map((stat) => (
             <div
               key={stat.id}
-              className="p-4 bg-card rounded-lg border flex justify-between items-center"
+              className="flex items-center justify-between p-4 border rounded-lg bg-card"
             >
               <div>
                 <div className="flex items-center gap-2">
                   <p className="text-sm text-muted-foreground">{stat.label}</p>
                   {stat.featured && (
-                    <span className="text-[10px] bg-gold text-background px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">
+                    <span className="text-[10px] bg-primary text-background px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">
                       Featured
                     </span>
                   )}

@@ -9,8 +9,8 @@ const RebuildTimelineDB = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-48">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+      <div className="flex items-center justify-center h-48">
+        <div className="w-8 h-8 border-b-2 rounded-full animate-spin border-primary" />
       </div>
     );
   }
@@ -24,12 +24,12 @@ const RebuildTimelineDB = () => {
   // Handle case where no phases are loaded or available
   if (!phases || phases.length === 0) {
     return (
-      <section id="progress" className="bg-background py-12">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section id="progress" className="py-12 bg-background">
+        <div className="max-w-6xl px-4 mx-auto text-center sm:px-6 lg:px-8">
           <h2 className="page-title ">
-            <span className="text-gold">Rebuild</span> Timeline
+            <span className="text-primary">Rebuild</span> Timeline
           </h2>
-          <p className="text-muted-foreground mt-4">
+          <p className="mt-4 text-muted-foreground">
             No timeline phases available yet.
           </p>
         </div>
@@ -40,23 +40,23 @@ const RebuildTimelineDB = () => {
   return (
     <>
       <section id="progress" className="bg-background">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="page-title ">
-              <span className="text-gold">Rebuild</span> Timeline
+              <span className="text-primary">Rebuild</span> Timeline
             </h2>
-            <span className="text-center text-sm font-normal tracking-widest text-muted-foreground">
+            <span className="text-sm font-normal tracking-widest text-center text-muted-foreground">
               Type 248 (Short-Stroke Airhead)
             </span>
-            <p className="italic font-bold pt-4 pb-8">
+            <p className="pt-4 pb-8 italic font-bold">
               Discovered in the Dust{" "}
-              <span className="text-gold">Rebuilt for the Redline</span>
+              <span className="text-primary">Rebuilt for the Redline</span>
             </p>
           </div>
 
           <div className="relative animate-bottom-in">
             {/* <!-- Timeline Line --> */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-px timeline-line hidden md:block " />
+            <div className="absolute hidden w-px h-full transform -translate-x-1/2 left-1/2 timeline-line md:block " />
 
             {phases.map((phase, order) => {
               const isPhaseComplete = phase.tasks.every(
@@ -67,18 +67,18 @@ const RebuildTimelineDB = () => {
               return (
                 <div key={phase.id} className="relative mb-12 md:mb-24">
                   <Link to="/tasksdb/$phaseId" params={{ phaseId: phase.id }}>
-                    <div className="md:flex items-center justify-between">
+                    <div className="items-center justify-between md:flex">
                       <div
                         className={cn(
                           "md:w-5/12 md:text-right mb-4 md:mb-0",
                           order % 2 ? "md:order-2" : "",
                         )}
                       >
-                        <div className="mechanical-border p-6 rounded-lg inline-block text-left md:text-right w-full">
-                          <span className="text-gold text-xs font-bold uppercase tracking-wider">
+                        <div className="inline-block w-full p-6 text-left rounded-lg mechanical-border md:text-right">
+                          <span className="text-xs font-bold tracking-wider uppercase text-primary">
                             {phase.duration}
                           </span>
-                          <h3 className="text-foreground font-display text-xl">
+                          <h3 className="text-xl text-foreground font-display">
                             {phase.title}
                           </h3>
                           {phase.tasks.map((task) => (
@@ -88,11 +88,11 @@ const RebuildTimelineDB = () => {
                             >
                               <p
                                 key={task.id}
-                                className="text-gold text-sm col-span-11"
+                                className="col-span-11 text-sm text-primary"
                               >
                                 {task.task}
                               </p>
-                              <div className="mt-3 flex gap-1 text-xs justify-center items-center text-muted-foreground col-span-1 row-span-2">
+                              <div className="flex items-center justify-center col-span-1 row-span-2 gap-1 mt-3 text-xs text-muted-foreground">
                                 <div className="flex flex-row gap-2">
                                   {task.status === "completed" && (
                                     <>
@@ -111,7 +111,7 @@ const RebuildTimelineDB = () => {
                                   )}
                                 </div>
                               </div>
-                              <p className="text-gray-400 text-xs  col-span-11">
+                              <p className="col-span-11 text-xs text-gray-400">
                                 {task.details}
                               </p>
                             </div>
@@ -122,7 +122,7 @@ const RebuildTimelineDB = () => {
                       <div
                         className={cn(
                           "absolute left-1/2 transform -translate-x-1/2 size-5  rounded-full z-10 hidden md:block",
-                          isPhaseComplete ? "bg-green-600" : "bg-gold ",
+                          isPhaseComplete ? "bg-green-600" : "bg-primary ",
                         )}
                       />
                       {/* image */}
@@ -133,15 +133,15 @@ const RebuildTimelineDB = () => {
                           order % 2 ? "md:pr-12" : "md:pl-12",
                         )}
                       >
-                        <div className="relative aspect-square rounded-lg overflow-hidden mechanical-border">
+                        <div className="relative overflow-hidden rounded-lg aspect-square mechanical-border">
                           {phase.image_url ? ( // Use phase.image_url
                             <img
                               src={phase.image_url}
                               alt={phase.image_alt || phase.title} // Use phase.image_alt
-                              className="w-full h-full object-cover"
+                              className="object-cover w-full h-full"
                             />
                           ) : (
-                            <LockKeyhole className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 size-20 text-muted-foreground" />
+                            <LockKeyhole className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 size-20 text-muted-foreground" />
                           )}
                         </div>
                       </div>

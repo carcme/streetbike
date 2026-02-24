@@ -20,6 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import { Header } from "@/components/header";
 import Footer from "@/components/footer";
 import PersonalStats from "@/components/personal-stats";
+import { tr } from "zod/v4/locales";
 
 const imageList = [
   "concept.webp",
@@ -40,25 +41,25 @@ function Index() {
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center justify-center text-center space-y-8 ">
-        <div className="space-y-4 pb-4">
+      <div className="flex flex-col items-center justify-center space-y-8 text-center ">
+        <div className="pb-4 space-y-4">
           <h1 className="page-title">
-            <span className="text-gold">R65</span> Street Fighter
+            R65<span className="text-primary"> Coffee Racer</span>
           </h1>
-          <p className="text-base text-muted-foreground leading-relaxed">
+          <p className="text-base leading-relaxed text-muted-foreground">
             From rusted shed find to a track-tearing monster. Follow the
             complete restoration journey of the BMW R65.
             <br />
           </p>
-          <p className="italic text-lg text-center font-bold pt-0">
+          <p className="pt-0 text-lg italic font-bold text-center">
             "It's not just a Bike,
-            <span className="text-gold"> it's an Obsession</span>."
+            <span className="text-primary"> it's an Obsession</span>."
           </p>
         </div>
 
         <StatsGrid showDays={true} />
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Button asChild size="lg" className="text-lg px-8 py-6 h-auto">
+        <div className="flex flex-col gap-4 sm:flex-row">
+          <Button asChild size="lg" className="h-auto px-8 py-6 text-lg">
             <Link to="/timeline">Start the Journey</Link>
           </Button>
 
@@ -66,7 +67,7 @@ function Index() {
             asChild
             size="lg"
             variant={"outline"}
-            className="text-lg px-8 py-6 h-auto"
+            className="h-auto px-8 py-6 text-lg"
           >
             <a href="#specs">Technical Specifications</a>
           </Button>
@@ -74,8 +75,8 @@ function Index() {
           <Button
             asChild
             size="lg"
-            variant={"secondary"}
-            className="text-lg px-8 py-6 h-auto"
+            variant={"outline"}
+            className="h-auto px-8 py-6 text-lg"
           >
             <a href="#updates">Build Updates</a>
           </Button>
@@ -86,14 +87,14 @@ function Index() {
             {imageList.map((src, index) => (
               <CarouselItem key={index}>
                 <div className="relative p-0">
-                  <div className="rounded-xl overflow-hidden shadow-2xl border border-white/10 aspect-video relative">
+                  <div className="relative overflow-hidden border shadow-2xl rounded-xl border-white/10 aspect-video">
                     <img
                       src={src}
                       loading="lazy"
                       alt={`Concept bike ${index + 1}`}
-                      className="w-full h-full object-cover"
+                      className="object-cover w-full h-full"
                     />
-                    <Badge className="absolute top-2 right-1/2 transform translate-x-1/2 bg-black/50 text-white">
+                    <Badge className="absolute transform translate-x-1/2 text-primary-foreground top-2 right-1/2 bg-primary">
                       Concept Image {index + 1}/{imgTotal}
                     </Badge>
                   </div>
@@ -107,8 +108,16 @@ function Index() {
         <div id={"specs"}>
           <Specifications />
         </div>
-        <div id="updates">
-          <Updates />
+
+        <div id="updates" className="pt-16">
+          <div className="text-center">
+            <h2 className="mb-2 text-4xl text-primary">Build Updates</h2>
+            <p className="text-muted-foreground">
+              Latest updates from the garage
+            </p>
+          </div>
+
+          <Updates limited={true} />
         </div>
         {/* <Newsletter /> */}
       </div>

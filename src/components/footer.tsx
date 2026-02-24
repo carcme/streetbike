@@ -8,7 +8,7 @@ const Footer = () => {
           <div className="flex items-center space-x-2">
             <Link to="/" className="flex font-bold">
               <span className="text-lg">
-                Project<span className="text-gold">R65</span>
+                Project<span className="text-primary">R65</span>
               </span>
               {/* <span>MotoFighter</span> */}
             </Link>
@@ -18,7 +18,7 @@ const Footer = () => {
             <a
               href="https://hammer3.com"
               target="_blank"
-              className="text-gold/80 hover:underline"
+              className="text-primary/80 hover:underline"
             >
               {" "}
               Hammer3{" "}
