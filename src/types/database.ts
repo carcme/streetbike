@@ -3,23 +3,11 @@ export type Progress = Database["public"]["Tables"]["progress"]["Row"];
 export type Step = Database["public"]["Tables"]["steps"]["Row"];
 export type TimelinePhaseType =
   Database["public"]["Tables"]["timeline_phases"]["Row"];
-// export type ProjectMetaType =
-//   Database["public"]["Tables"]["project_meta"]["Row"];
 
 export type ImageType = Database["public"]["Tables"]["images"]["Row"];
 
 export type Task = Database["public"]["Tables"]["tasks"]["Row"];
 export type TaskWithImages = Task & { images: ImageType[] };
-
-export interface TimelinePhase {
-  id: string;
-  phase_number: number;
-  title: string;
-  duration: string;
-  image_url: string | null; // Can be null
-  image_alt: string | null; // Can be null
-  created_at?: string;
-}
 
 export type Json =
   | string

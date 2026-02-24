@@ -19,11 +19,6 @@ import StatsGrid from "@/components/statsGrid";
 import { Badge } from "@/components/ui/badge";
 import { Header } from "@/components/header";
 
-// import Specifications from "@/components/specs";
-// import Updates from "@/components/updates";
-// import PersonalStats from "@/components/personal-stats";
-// import Footer from "@/components/footer";
-
 const Specifications = lazy(() => import("@/components/specs"));
 const Updates = lazy(() => import("@/components/updates"));
 const PersonalStats = lazy(() => import("@/components/personal-stats"));

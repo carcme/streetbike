@@ -21,8 +21,8 @@ function AdminLayoutRoute() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-8 h-8 border-b-2 rounded-full animate-spin border-primary" />
       </div>
     );
   }
@@ -46,8 +46,5 @@ function AdminLayoutRoute() {
         <Outlet />
       </SidebarInset>
     </SidebarProvider>
-    // <AdminLayout>
-    //   <Outlet />
-    // </AdminLayout>
   );
 }

@@ -1,7 +1,6 @@
 import { CheckCircle, ImageIcon, LockKeyhole } from "lucide-react";
-// import tasksData from "@/data/tasksData"; // No longer needed
 import { cn } from "@/lib/utils";
-import { useTimelinePhasesWithTasks } from "@/hooks/useTasks"; // Import the hook
+import { useTimelinePhasesWithTasks } from "@/hooks/useTasks";
 import { Link } from "@tanstack/react-router";
 import { Image } from "@lonik/oh-image/react";
 
@@ -62,8 +61,7 @@ const RebuildTimelineDB = () => {
             {phases.map((phase, order) => {
               const isPhaseComplete = phase.tasks.every(
                 (task) => task.status === "completed",
-              ); // Determine phase completion
-              console.log("🚀 ~ RebuildTimelineDB ~ tasks:", phase.tasks);
+              );
 
               return (
                 <div key={phase.id} className="relative mb-12 md:mb-24">

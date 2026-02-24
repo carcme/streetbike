@@ -13,7 +13,7 @@ import {
   useDeleteTask,
   useManageTaskImages, // Will create this soon
 } from "@/hooks/useTasks";
-import type { TimelinePhase } from "@/types/database";
+import type { TimelinePhaseType } from "@/types/database";
 
 import type { ImageType, TaskWithImages } from "@/types/database";
 
@@ -190,7 +190,7 @@ function TasksPage() {
     setSelectedTaskImageIds([]); // Clear selected images after submission
   };
 
-  const handleEditPhase = (phase: TimelinePhase) => {
+  const handleEditPhase = (phase: TimelinePhaseType) => {
     setEditingPhaseId(phase.id);
     setIsCreatingPhase(false);
     phaseForm.reset({

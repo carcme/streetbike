@@ -8,7 +8,7 @@ import { Header } from "@/components/header";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Badge } from "@/components/ui/badge";
 
-export const Route = createFileRoute("/theme")({
+export const Route = createFileRoute("/theme/dev")({
   component: RouteComponent,
 });
 
