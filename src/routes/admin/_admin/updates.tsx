@@ -236,6 +236,7 @@ function ProgressPage() {
             {item.image_url && (
               <div className="w-24 h-24 overflow-hidden rounded shrink-0 bg-muted">
                 <Image
+                  fill={true}
                   src={item.image_url}
                   alt={item.title}
                   className="object-cover w-full h-full"

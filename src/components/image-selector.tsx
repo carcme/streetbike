@@ -86,6 +86,7 @@ export function ImageSelector({
           >
             <CardContent className="flex items-center justify-center p-1 aspect-square">
               <Image
+                fill={true}
                 src={image.url}
                 alt={image.alt_text || `Image ${image.id}`}
                 className="object-cover rounded-md size-28 xs:size-32 md:size-40 lg:size-56"

@@ -510,6 +510,7 @@ function TasksPage() {
                           <div className="flex flex-wrap gap-2 mt-2">
                             {task.images.map((img) => (
                               <Image
+                                fill={true}
                                 key={img.id}
                                 src={img.url}
                                 alt={img.alt_text || "Task image"}

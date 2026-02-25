@@ -135,6 +135,7 @@ const RebuildTimelineDB = () => {
                         <div className="relative overflow-hidden rounded-lg aspect-square mechanical-border">
                           {phase.image_url ? ( // Use phase.image_url
                             <Image
+                              fill={true}
                               src={phase.image_url}
                               alt={phase.image_alt || phase.title}
                               className="object-cover w-full h-full"

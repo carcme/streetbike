@@ -2,7 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSteps } from "@/hooks/useSteps";
 import { useTimelinePhases } from "@/hooks/useTasks";
 import { useProgress } from "@/hooks/useStats";
-import { ListTodo, Clock, FileText } from "lucide-react";
+import { usePageViews, useUniqueVisitors, useTopReferrer } from "@/hooks/usePageViews";
+import { ListTodo, Clock, FileText, Eye, Users, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/admin/_admin/")({
@@ -15,6 +16,9 @@ function AdminDashboard() {
   // const { data: stats } = useStats();
   // const { data: specs } = useSpecs();
   const { data: progress } = useProgress();
+  const { data: pageViews } = usePageViews();
+  const { data: uniqueVisitors } = useUniqueVisitors();
+  const { data: topReferrer } = useTopReferrer();
 
   const cards = [
     {
@@ -52,6 +56,27 @@ function AdminDashboard() {
       icon: Clock,
       to: "/admin/updates",
       description: "Blog-style updates",
+    },
+  ];
+
+  const userAnalysis = [
+    {
+      title: "Page Views",
+      count: pageViews ?? 0,
+      icon: Eye,
+      description: "Total site visits",
+    },
+    {
+      title: "Unique Visitors",
+      count: uniqueVisitors ?? 0,
+      icon: Users,
+      description: "Distinct sessions",
+    },
+    {
+      title: "Top Referrer",
+      count: topReferrer ? `${topReferrer.host} (${topReferrer.count})` : "None yet",
+      icon: ExternalLink,
+      description: "Most common traffic source",
     },
   ];
 
@@ -103,6 +128,30 @@ function AdminDashboard() {
           <Link to="/admin/stats">
             <Button variant={"outline"}>Stats</Button>
           </Link>
+        </div>
+      </div>
+      <div className="p-6 border rounded-lg bg-card">
+        <h2 className="mb-4 text-xl font-semibold">User Interaction</h2>
+        <div className="flex flex-wrap gap-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {userAnalysis.map((card) => {
+              const Icon = card.icon;
+              return (
+                <div key={card.title} className="flex items-center gap-4">
+                  <div className="p-3 rounded-lg bg-primary/10">
+                    <Icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold truncate max-w-[160px]">{card.count}</p>
+                    <p className="text-sm font-medium">{card.title}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {card.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

@@ -67,6 +67,7 @@ function StepDetail() {
           </Button>
           {step.image_url && (
             <Image
+              fill={true}
               src={step.image_url ?? undefined}
               alt={step.title}
               className="max-w-full max-h-[95vh] object-contain shadow-2xl"
@@ -132,6 +133,7 @@ function StepDetail() {
             >
               {step.image_url && (
                 <Image
+                  fill={true}
                   src={step.image_url ?? undefined}
                   alt={step.title}
                   className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"

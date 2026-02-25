@@ -1,9 +1,11 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import Helmet from "@/components/helmet";
 import helmetData from "@/data/helmetData";
+import { usePageTracking } from "@/hooks/usePageTracking";
 
-export const Route = createRootRoute({
-  component: () => (
+function RootComponent() {
+  usePageTracking();
+  return (
     <>
       <div className="flex flex-col min-h-screen">
         <Helmet page={helmetData.home} common={helmetData.common} />
@@ -12,5 +14,9 @@ export const Route = createRootRoute({
         </main>
       </div>
     </>
-  ),
+  );
+}
+
+export const Route = createRootRoute({
+  component: RootComponent,
 });

@@ -44,7 +44,12 @@ const Specifications = () => {
         <div className="flex flex-col flex-wrap items-center justify-between gap-4 p-4 mt-8 rounded-lg mechanical-border xs:p-8 xs:flex-nowrap xs:flex-row">
           <div className="flex items-start gap-4">
             <div className="rounded-full size-12">
-              <Image src="/bmw.svg" alt="BMW Logo" className="size-12" />
+              <Image
+                fill={true}
+                src="/bmw.svg"
+                alt="BMW Logo"
+                className="size-12"
+              />
             </div>
             <div>
               <p className="text-primary">Original Manual</p>

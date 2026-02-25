@@ -18,6 +18,7 @@ import { Image } from "@lonik/oh-image/react";
 import StatsGrid from "@/components/statsGrid";
 import { Badge } from "@/components/ui/badge";
 import { Header } from "@/components/header";
+import { usePageViews } from "@/hooks/usePageViews";
 
 const Specifications = lazy(() => import("@/components/specs"));
 const Updates = lazy(() => import("@/components/updates"));
@@ -97,6 +98,7 @@ function Index() {
                   <div className="relative overflow-hidden border shadow-2xl rounded-xl border-white/10 aspect-video">
                     <Image
                       src={src}
+                      fill={true}
                       alt={`Concept bike ${index + 1}`}
                       className="object-cover w-full h-full"
                     />

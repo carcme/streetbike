@@ -94,6 +94,7 @@ const RebuildTimeline = () => {
                     <div className="relative overflow-hidden rounded-lg aspect-square mechanical-border">
                       {phase.img !== "" ? (
                         <Image
+                          fill={true}
                           src={phase.img}
                           alt={phase.imgAlt}
                           className="object-cover w-full h-full"

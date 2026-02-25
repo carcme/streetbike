@@ -68,6 +68,7 @@ const Updates = ({ limited = false }: { limited?: boolean }) => {
                   </div>
                   <div className="hidden w-24 h-24 overflow-hidden rounded-lg xs:block mechanical-border shrink-0">
                     <Image
+                      fill={true}
                       src={section.imageUrl}
                       alt="Update"
                       className="object-cover w-full h-full group-hover:scale-105"
@@ -113,6 +114,7 @@ const Updates = ({ limited = false }: { limited?: boolean }) => {
               onClick={() => setImageFullscreen(true)}
             >
               <Image
+                fill={true}
                 src={selected.imageUrl}
                 alt={selected.title}
                 className="object-cover w-full max-h-64"
@@ -154,6 +156,7 @@ const Updates = ({ limited = false }: { limited?: boolean }) => {
             <X />
           </Button>
           <Image
+            fill={true}
             src={selected.imageUrl}
             alt={selected.title}
             className="object-cover sm:w-[80vw] sm:h-[80vh] max-w-full max-h-full"

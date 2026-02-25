@@ -54,6 +54,7 @@ function Timeline() {
                   <div className="relative overflow-hidden aspect-video ">
                     {step.image_url && (
                       <Image
+                        fill={true}
                         src={step.image_url ?? undefined}
                         alt={step.title}
                         className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"

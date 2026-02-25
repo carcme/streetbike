@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ModeToggle } from "@/components/mode-toggle";
 import { headerItems } from "@/data/headerItems";
 
-import { Menu, Shield, ShieldCheck, UserSearch } from "lucide-react";
+import { Menu, Shield, ShieldCheck, UserSearch, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -79,9 +79,12 @@ export function Header() {
                     aria-controls="menu-list"
                     aria-haspopup="true"
                   >
-                    <Menu />
+                    {openMenu ? <X /> : <Menu />}
                   </SheetTrigger>
-                  <SheetContent className="top-14 rounded-l-2xl max-h-fit">
+                  <SheetContent
+                    aria-describedby={void 0}
+                    className="top-14 rounded-l-2xl max-h-fit "
+                  >
                     <SheetHeader>
                       <SheetTitle>
                         Project <span className="text-primary">R65</span>
