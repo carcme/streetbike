@@ -9,7 +9,11 @@ This web application serves as a living document, a visual timeline, and a techn
 ## ✨ Features
 
 - **Interactive Timeline:** Follow the build process step-by-step, from the initial teardown to the final assembly.
+- **Rebuild Todo's:** Phase-based task tracker showing the status of every job on the bike.
+- **Progress Updates:** Blog-style updates documenting each stage of the restoration.
 - **High-Quality Gallery:** A visual feast of concept designs, work-in-progress shots, and final glamour shots.
+- **Admin Panel:** Password-protected dashboard to manage content (tasks, timeline steps, updates, images).
+- **Visitor Analytics:** Lightweight page view and unique visitor tracking stored in Supabase — no third-party analytics service.
 - **Responsive Design:** A clean, modern interface that looks great on any device.
 - **Dark Mode:** For comfortable late-night browsing.
 
@@ -20,8 +24,13 @@ This project is built with a modern, performant, and scalable tech stack:
 - **Framework:** [React](https://react.dev/) (with TypeScript)
 - **Build Tool:** [Vite](https://vitejs.dev/)
 - **Routing:** [TanStack Router](https://tanstack.com/router)
+- **Data Fetching:** [TanStack Query](https://tanstack.com/query)
 - **UI Components:** [shadcn/ui](https://ui.shadcn.com/) (built on Radix UI)
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Database & Auth:** [Supabase](https://supabase.com/)
+- **Image Optimisation:** [@lonik/oh-image](https://www.npmjs.com/package/@lonik/oh-image)
+- **Drag & Drop:** [dnd-kit](https://dndkit.com/)
+- **Performance Monitoring:** <s>[Vercel Speed Insights](https://vercel.com/docs/speed-insights)</s>
 - **Linting:** [ESLint](https://eslint.org/)
 
 Here's a glimpse of the concepts that inspired the build:
@@ -55,7 +64,15 @@ To run this project locally, follow these steps:
     npm install
     ```
 
-3.  **Run the development server:**
+3.  **Set up environment variables:**
+    Create a `.env.local` file in the project root with your Supabase credentials:
+
+    ```env
+    VITE_SUPABASE_URL=your_supabase_project_url
+    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+    ```
+
+4.  **Run the development server:**
     This will start the Vite development server, typically on `http://localhost:5173`.
     ```bash
     npm run dev
@@ -67,11 +84,17 @@ The codebase is organized to be clean, modular, and easy to navigate.
 
 ```
 /src
-├── assets/         # Static assets like SVGs
-├── components/     # Reusable UI components (mostly from shadcn/ui)
-├── lib/            # Utility functions and shared logic
-├── routes/         # Route-based components managed by TanStack Router
-├── main.tsx        # The main application entry point
+├── assets/         # Static assets (images, fonts)
+├── components/     # Reusable UI components (shadcn/ui + custom)
+│   └── admin/      # Admin panel layout and sidebar
+├── data/           # Static data and local content
+├── hooks/          # Custom React hooks (data fetching, auth, analytics)
+├── lib/            # Supabase client and utility functions
+├── routes/         # File-based routes via TanStack Router
+│   ├── admin/      # Protected admin panel routes
+│   └── tasksdb/    # Public task/phase detail routes
+├── types/          # TypeScript types including Supabase database types
+├── main.tsx        # Application entry point
 └── index.css       # Global styles and Tailwind CSS imports
 ```
 

@@ -12,23 +12,7 @@ export default defineConfig(({ command }) => ({
     tanstackRouter({ autoCodeSplitting: true }),
     react(),
     tailwindcss({ optimize: true }),
-    ohImage({
-      distDir: "oh-images",
-      // Default transformations for the main image
-      transforms: {
-        format: "webp",
-        quality: 80,
-      },
-      // Breakpoints for responsive srcSet
-      breakpoints: [640, 768, 1024],
-      // Enable/Disable placeholder generation globally
-      pl_show: true,
-      // Default transformations for the placeholder image
-      placeholder: {
-        format: "webp",
-        blur: 20,
-      },
-    }),
+    ohImage(),
     command === "build" &&
       visualizer({
         open: false,
