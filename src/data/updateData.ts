@@ -7,7 +7,7 @@ export const timelineProgress = {
       imageUrl:
         "https://i.ytimg.com/vi/PUsSJXulRPk/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCnbQlT5e-CZ7zN081vkboD7u-RYQ",
       description:
-        "ROB - This section is still stored locally... If you change the admin section for this, you won't see any changes. I haven't done the database transfer yet. Its just to have a look... can always change it if you don't like /  have a better idea :)",
+        "ROB - This section is still stored locally... If you change the admin section for this, you won't see any changes. I haven't done the database transfer yet. Its just to have a look... can always change it if you don't like /  have a better idea :)         ROB - This section is still stored locally... If you change the admin section for this, you won't see any changes. I haven't done the database transfer yet. Its just to have a look... can always change it if you don't like /  have a better idea :) ROB - This section is still stored locally... If you change the admin section for this, you won't see any changes. I haven't done the database transfer yet. Its just to have a look... can always change it if you don't like /  have a better idea :)",
     },
     {
       title: "Carburetors Cleaned & Rebuilt",
@@ -41,8 +41,7 @@ export const timelineProgress = {
       date: "07 Sept 2025",
       tag: "acquisition",
       imageUrl: "bmw.svg",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam sed nesciunt molestias! Beatae, reiciendis libero! Dignissimos, nihil perspiciatis maiores veritatis consequuntur nisi, blanditiis, sapiente architecto ut minima ullam. Explicabo, consequatur.",
+      description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
     },
     {
       title: "Filler 2",

@@ -75,9 +75,9 @@ function StepDetail() {
         </div>
       )}
 
-      <div className="px-4 duration-300 md:px-8 md:py-8 animate-in fade-in">
+      <div className="px-4 duration-300 md:px-8 animate-in fade-in">
         {/* Back Button */}
-        <div className="mb-6">
+        <div className="mt-4 mb-6">
           <Button asChild variant="outline" size="sm" className="gap-2">
             <Link to="/timeline">
               <ChevronLeft className="w-4 h-4" />
@@ -126,7 +126,9 @@ function StepDetail() {
               role="button"
               tabIndex={0}
               aria-label="Expand image"
-              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setIsFullScreen(true); }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") setIsFullScreen(true);
+              }}
             >
               {step.image_url && (
                 <Image

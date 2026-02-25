@@ -101,9 +101,9 @@ function StepsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Steps</h1>
+          <h1 className="text-3xl font-bold">Timeline</h1>
           <p className="text-muted-foreground">Manage restoration milestones</p>
         </div>
         {!isCreating && !editingId && (
@@ -117,9 +117,9 @@ function StepsPage() {
       {(isCreating || editingId) && (
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="p-6 bg-card rounded-lg border space-y-4"
+          className="p-6 space-y-4 border rounded-lg bg-card"
         >
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">
               {editingId ? "Edit Step" : "New Step"}
             </h2>
@@ -134,7 +134,7 @@ function StepsPage() {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <label className="text-sm font-medium">Title</label>
               <Input {...register("title")} placeholder="Step title" />
@@ -159,7 +159,7 @@ function StepsPage() {
               <label className="text-sm font-medium">Category</label>
               <select
                 {...register("category")}
-                className="w-full px-3 py-2 rounded-md border bg-background"
+                className="w-full px-3 py-2 border rounded-md bg-background"
               >
                 {categories.map((cat) => (
                   <option key={cat} value={cat}>
@@ -202,7 +202,7 @@ function StepsPage() {
               <textarea
                 {...register("description")}
                 rows={3}
-                className="w-full px-3 py-2 rounded-md border bg-background resize-none"
+                className="w-full px-3 py-2 border rounded-md resize-none bg-background"
                 placeholder="Describe this step..."
               />
               {errors.description && (
@@ -231,11 +231,11 @@ function StepsPage() {
         {steps?.map((step) => (
           <div
             key={step.id}
-            className="p-4 bg-card rounded-lg border flex items-start justify-between gap-4"
+            className="flex items-start justify-between gap-4 p-4 border rounded-lg bg-card"
           >
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <span className="px-2 py-0.5 bg-primary/10 text-primary text-xs rounded">
+                <span className="px-2 capitalize py-0.5 bg-primary/10 text-primary text-xs rounded">
                   {step.category}
                 </span>
                 <span className="text-xs text-muted-foreground">

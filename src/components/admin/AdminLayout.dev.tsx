@@ -13,7 +13,7 @@ import {
 const navItems = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { to: "/admin/tasks", label: "Rebuild Todo's", icon: Clock },
-  { to: "/admin/steps", label: "Steps", icon: ListTodo },
+  { to: "/admin/steps", label: "Timeline", icon: ListTodo },
   { to: "/admin/updates", label: "Updates", icon: Clock },
   { to: "/admin/stats", label: "Statistics", icon: ChartBar },
 ];

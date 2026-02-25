@@ -15,9 +15,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useState } from "react";
 
 export function Header() {
   const { isAuthenticated } = useAuth();
+  const [openMenu, setMenuOpen] = useState(false);
+
   return (
     <header className="sticky top-0 z-50 w-full border-b">
       <div className="max-w-6xl mx-auto bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 ">
@@ -65,10 +68,16 @@ export function Header() {
 
               {/* add md:hidden to this div */}
               <div className="block md:hidden">
-                <Sheet>
+                <Sheet
+                  open={openMenu}
+                  onOpenChange={() => setMenuOpen(!openMenu)}
+                >
                   <SheetTrigger
-                    asChild
-                    aria-label="Open menu"
+                    aria-roledescription="button"
+                    aria-label="Menu"
+                    aria-expanded={openMenu}
+                    aria-controls="menu-list"
+                    aria-haspopup="true"
                   >
                     <Menu />
                   </SheetTrigger>
@@ -80,26 +89,36 @@ export function Header() {
                     </SheetHeader>
                     <div className="grid flex-1 gap-4 px-2 auto-rows-min">
                       {headerItems.map((item) => (
-                        <Link
+                        <button
                           key={item.title}
-                          to={item.href}
-                          className="transition-colors hover:text-primary group"
+                          aria-label={item.title}
+                          className="text-left"
                         >
-                          <div className="flex flex-col text-sm">
-                            <div className="px-2 font-medium leading-none group-hover:underline">
-                              {item.title}
+                          <Link
+                            to={item.href}
+                            className="transition-colors hover:text-primary group"
+                          >
+                            <div className="flex flex-col text-sm">
+                              <div className="px-2 font-medium leading-none group-hover:underline">
+                                {item.title}
+                              </div>
+                              <div className="px-2 text-muted-foreground line-clamp-2">
+                                {item.description}
+                              </div>
                             </div>
-                            <div className="px-2 text-muted-foreground line-clamp-2">
-                              {item.description}
-                            </div>
-                          </div>
-                        </Link>
+                          </Link>
+                        </button>
                       ))}
                     </div>
                     <SheetFooter>
                       {isAuthenticated && <Button>Log out</Button>}
                       <SheetClose asChild>
-                        <Button variant="outline">Close</Button>
+                        <Button
+                          onClick={() => setMenuOpen(false)}
+                          variant="outline"
+                        >
+                          Close
+                        </Button>
                       </SheetClose>
                     </SheetFooter>
                   </SheetContent>

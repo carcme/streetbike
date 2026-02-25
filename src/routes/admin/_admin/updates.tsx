@@ -62,7 +62,6 @@ function ProgressPage() {
       // ensure image_alt is present for DB insert
       const payload = { ...(data as any), image_alt: data.image_alt ?? "" };
       await createProgress.mutateAsync(payload);
-      console.log("🚀 ~ onSubmit ~ data:", data);
       setIsCreating(false);
     }
     reset();

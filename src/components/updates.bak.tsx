@@ -39,9 +39,15 @@ const Updates = ({ limited = false }: { limited?: boolean }) => {
                 onClick={() => setSelected(section)}
                 className="p-4 transition-colors rounded-lg cursor-pointer mechanical-border hover:border-primary/80 group"
               >
-                <div className="flex items-center gap-4 ">
+                <div className="flex items-start gap-4">
                   <div className="flex flex-col items-center gap-2">
-                    <div className="flex items-center justify-center text-sm text-center rounded-xl size-16 bg-primary/80 group-hover:bg-primary text-primary-foreground">
+                    <Badge
+                      variant={"secondary"}
+                      className="w-full p-1 text-white capitalize rounded-md dark:bg-secondary/20"
+                    >
+                      {section.tag}
+                    </Badge>
+                    <div className="flex items-center justify-center w-full p-1 text-sm font-bold text-center rounded-md shrink-0 size-16 bg-secondary group-hover:bg-primary text-primary-foreground">
                       {section.date}
                     </div>
                   </div>
@@ -54,12 +60,6 @@ const Updates = ({ limited = false }: { limited?: boolean }) => {
                       {section.description}
                     </p>
                     <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                      <Badge
-                        variant={"secondary"}
-                        className="p-1 text-white capitalize dark:bg-secondary/20"
-                      >
-                        {section.tag}
-                      </Badge>
                       <span className="flex items-center gap-1">
                         <Clock size={14} className="text-primary" />
                         {timeSince}
@@ -79,13 +79,11 @@ const Updates = ({ limited = false }: { limited?: boolean }) => {
           })}
         </div>
 
-        {limited && (
-          <div className="mt-8 text-center">
-            <Link to="/updates">
-              <Button>View All Updates</Button>
-            </Link>
-          </div>
-        )}
+        <div className="mt-8 text-center">
+          <Link to="/updates">
+            <Button>View All Updates</Button>
+          </Link>
+        </div>
       </div>
 
       {/* Detail modal */}
@@ -102,7 +100,7 @@ const Updates = ({ limited = false }: { limited?: boolean }) => {
               variant={"outline"}
               size={"icon-sm"}
               onClick={closeModal}
-              className="absolute z-50 transition-colors text-text-foreground top-8 right-8"
+              className="absolute transition-colors text-foreground top-8 right-8 hover:text-primary"
             >
               <X />
             </Button>
@@ -112,7 +110,7 @@ const Updates = ({ limited = false }: { limited?: boolean }) => {
               className="relative overflow-hidden rounded-lg not-last:mb-4 mechanical-border cursor-zoom-in"
               onClick={() => setImageFullscreen(true)}
             >
-              <Image
+              <img
                 src={selected.imageUrl}
                 alt={selected.title}
                 className="object-cover w-full max-h-64"
@@ -120,21 +118,19 @@ const Updates = ({ limited = false }: { limited?: boolean }) => {
               <div className="absolute flex items-center justify-center text-sm font-bold text-center rounded-lg inset-2 shrink-0 size-16 bg-primary/80 text-primary-foreground">
                 {selected.date}
               </div>
+              <Badge className="absolute top-2 right-2">{selected.tag}</Badge>
             </div>
 
-            <h2 className="mb-3 text-2xl font-display text-foreground">
+            <h2 className="mb-3 text-2xl font-display text-primary">
               {selected.title}
             </h2>
             <p className="overflow-y-auto text-sm leading-relaxed text-muted-foreground max-h-52">
               {selected.description}
             </p>
-            <div className="flex items-center justify-between pt-4 capitalize">
-              <Badge>{selected.tag} </Badge>
-              <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                <Clock size={12} className="text-primary" />
-                {dayjs(selected.date).fromNow()}
-              </span>
-            </div>
+            <span className="flex items-center gap-1 pt-4 text-xs text-muted-foreground">
+              <Clock size={12} className="text-primary" />
+              {dayjs(selected.date).fromNow()}
+            </span>
           </div>
         </div>
       )}

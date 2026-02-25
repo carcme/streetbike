@@ -59,14 +59,16 @@ function Index() {
           </p>
         </div>
 
-        <StatsGrid showDays={true} />
         <div className="flex flex-col gap-4 sm:flex-row">
-          <Button asChild size="lg" className="h-auto px-8 py-6 text-lg">
-            <Link to="/timeline">Start the Journey</Link>
+          <Button
+            variant={"outline"}
+            size="lg"
+            className="h-auto px-8 py-6 text-lg"
+          >
+            <Link to="/tasksdb">Start the Journey</Link>
           </Button>
 
           <Button
-            asChild
             size="lg"
             variant={"outline"}
             className="h-auto px-8 py-6 text-lg"
@@ -75,7 +77,6 @@ function Index() {
           </Button>
 
           <Button
-            asChild
             size="lg"
             variant={"outline"}
             className="h-auto px-8 py-6 text-lg"
@@ -83,7 +84,11 @@ function Index() {
             <a href="#updates">Build Updates</a>
           </Button>
         </div>
+
+        <StatsGrid showDays={true} />
+
         <PersonalStats />
+
         <Carousel className="w-full max-w-5xl mx-auto" opts={{ loop: true }}>
           <CarouselContent>
             {imageList.map((src, index) => (

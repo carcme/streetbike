@@ -21,6 +21,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Header } from "@/components/header";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import { Image } from "@lonik/oh-image/react";
+import { ChevronLeft } from "lucide-react";
 
 // Define the route with a loader for a specific phase
 export const Route = createFileRoute("/tasksdb/$phaseId")({
@@ -67,7 +68,7 @@ function PhaseDetailComponent() {
   }
 
   return (
-    <div className="container py-8 mx-auto">
+    <>
       <Header />
       <div className="max-w-6xl px-4 pt-4 mx-auto sm:px-6 lg:px-8">
         <Button
@@ -75,7 +76,8 @@ function PhaseDetailComponent() {
           variant="outline"
           className="mb-6"
         >
-          &larr; Back to Timeline
+          <ChevronLeft className="w-4 h-4" />
+          Back to Timeline
         </Button>
 
         <h1 className="mb-4 text-4xl font-bold">{phase.title}</h1>
@@ -129,7 +131,7 @@ function PhaseDetailComponent() {
                                   alt={
                                     image.alt_text || `Image for ${task.task}`
                                   }
-                                                                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                                  className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                                 />
                               </AspectRatio>
                             </Card>
@@ -143,7 +145,7 @@ function PhaseDetailComponent() {
                             </DialogHeader>
                             <Image
                               src={image.url}
-                                                            alt={
+                              alt={
                                 image.alt_text ||
                                 `Full screen image for ${task.task}`
                               }
@@ -169,6 +171,6 @@ function PhaseDetailComponent() {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }

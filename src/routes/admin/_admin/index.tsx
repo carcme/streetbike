@@ -26,7 +26,7 @@ function AdminDashboard() {
     },
 
     {
-      title: "Steps",
+      title: "Timeline",
       count: steps?.length ?? 0,
       icon: FileText,
       to: "/admin/steps",
@@ -59,20 +59,20 @@ function AdminDashboard() {
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-muted-foreground mt-1">Overview of your content</p>
+        <p className="mt-1 text-muted-foreground">Overview of your content</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {cards.map((card) => {
           const Icon = card.icon;
           return (
             <Link
               key={card.title}
               to={card.to}
-              className="p-6 bg-card rounded-lg border hover:border-primary transition-colors"
+              className="p-6 transition-colors border rounded-lg bg-card hover:border-primary"
             >
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-primary/10 rounded-lg">
+                <div className="p-3 rounded-lg bg-primary/10">
                   <Icon className="w-6 h-6 text-primary" />
                 </div>
                 <div>
@@ -88,8 +88,8 @@ function AdminDashboard() {
         })}
       </div>
 
-      <div className="p-6 bg-card rounded-lg border">
-        <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
+      <div className="p-6 border rounded-lg bg-card">
+        <h2 className="mb-4 text-xl font-semibold">Quick Actions</h2>
         <div className="flex flex-wrap gap-3">
           <Link to="/admin/tasks">
             <Button variant={"default"}>Manage Todo's</Button>

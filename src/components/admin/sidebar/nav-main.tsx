@@ -17,7 +17,7 @@ import { Link, useLocation } from "@tanstack/react-router";
 const navItems = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { to: "/admin/tasks", label: "Todo's", icon: ListTodo },
-  { to: "/admin/steps", label: "Steps", icon: FileText },
+  { to: "/admin/steps", label: "Timeline", icon: FileText },
   { to: "/admin/updates", label: "Updates", icon: Clock },
   { to: "/admin/stats", label: "Statistics", icon: ChartBar },
   { to: "/admin/images", label: "Images", icon: Image }, // New Images link

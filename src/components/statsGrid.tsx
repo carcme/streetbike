@@ -10,14 +10,14 @@ const calculateDaysActive = () => {
 
 const StatsGrid = ({ showDays }: { showDays?: boolean }) => {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-16 mx-auto">
+    <div className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-4 md:gap-16">
       {statsData.data.map((stat) => {
         return (
-          <div key={stat.label} className="mechanical-border p-4 rounded-lg">
+          <div key={stat.label} className="p-4 rounded-lg mechanical-border">
             <div className="text-2xl font-display text-foreground">
               {stat.value}
             </div>
-            <div className="text-xs text-primary uppercase tracking-wider">
+            <div className="text-xs tracking-wider uppercase text-muted-foreground">
               {stat.label}
             </div>
           </div>
@@ -25,14 +25,14 @@ const StatsGrid = ({ showDays }: { showDays?: boolean }) => {
       })}
 
       {showDays && (
-        <div className="mechanical-border p-4 rounded-lg">
+        <div className="p-4 rounded-lg mechanical-border">
           <div
             className="text-2xl font-display text-foreground"
             id="days-counter"
           >
             {calculateDaysActive()}
           </div>
-          <div className="text-xs text-primary uppercase tracking-wider">
+          <div className="text-xs tracking-wider uppercase text-muted-foreground">
             Days Active
           </div>
         </div>
