@@ -1,4 +1,4 @@
-# Project: Street Fighter
+# Project: R65
 
 From a rusted shed find to a track-tearing monster. This project documents the complete restoration and modification journey of a classic BMW R65 motorcycle.
 
@@ -81,9 +81,26 @@ This project is a labor of love, combining a passion for motorcycles with the ar
 
 #### Palette Generator
 
-- **Palette Generator:** [tweakcn.com](https://tweakcn.com/editor/theme)
+- **Palette Generator:** [Tweakcn](https://tweakcn.com/editor/theme)
 
 - **Palette Preview:** [Add URL as Custom](https://tweakcn.com/editor/theme?p=custom)
 
-Mobile ![Mobile](./public/perfMobile.png "Mobile")
-Desktop![Desktop](./public/perfDesktop.png "Desktop")
+---
+
+#### PageSpeed Insights
+
+###### <u>Mobile</u>
+
+<center>
+
+![Mobile](./public/perfMobile.png "Mobile")
+
+</center>
+
+###### <u>Desktop</u>
+
+<center>
+
+![Desktop](./public/perfDesktop.png "Desktop")
+
+</center>
