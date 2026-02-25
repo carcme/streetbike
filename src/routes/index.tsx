@@ -18,7 +18,6 @@ import { Image } from "@lonik/oh-image/react";
 import StatsGrid from "@/components/statsGrid";
 import { Badge } from "@/components/ui/badge";
 import { Header } from "@/components/header";
-import { usePageViews } from "@/hooks/usePageViews";
 
 const Specifications = lazy(() => import("@/components/specs"));
 const Updates = lazy(() => import("@/components/updates"));
